@@ -1,1166 +1,688 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="classic">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Casuarina Tree - Complete Interactive Masterclass & 200 MCQ Engine</title>
-  <style>
-    :root {
-      --primary: #2c5e3b;
-      --primary-light: #e8f5e9;
-      --secondary: #8e24aa;
-      --accent: #d81b60;
-      --bg: #f4f7f6;
-      --card-bg: #ffffff;
-      --text: #212121;
-      --text-muted: #616161;
-      --border: #e0e0e0;
-      --correct: #2e7d32;
-      --wrong: #c62828;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Night Train at Deoli — Complete Literature Engine</title>
+    <style>
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f3f5;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent-color: #2b6cb0;
+            --accent-hover: #1c4ed8;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --content-width: 900px;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        [data-theme="dark"] {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --accent-color: #63b3ed;
+            --accent-hover: #90cdf4;
+            --border-color: #404040;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding-bottom: 60px;
-    }
+        [data-theme="study"] {
+            --bg-primary: #f4f1ea;
+            --bg-secondary: #fefcf7;
+            --bg-tertiary: #e7e0d3;
+            --text-primary: #2c221e;
+            --text-secondary: #705e52;
+            --accent-color: #7c2d12;
+            --accent-hover: #9a3412;
+            --border-color: #d6cebe;
+        }
 
-    header {
-      background: linear-gradient(135deg, #1b4332, #2d6a4f);
-      color: white;
-      text-align: center;
-      padding: 2.5rem 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
 
-    header h1 {
-      font-size: 2.4rem;
-      margin-bottom: 0.5rem;
-      font-family: 'Georgia', serif;
-    }
+        .app-container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
 
-    header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
+        header {
+            grid-column: 1 / -1;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #081c15;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
+        .brand-title { font-size: 1.25rem; font-weight: 700; color: var(--accent-color); }
+        .brand-subtitle { font-size: 0.8rem; color: var(--text-secondary); }
 
-    nav button {
-      background: none;
-      border: none;
-      color: #b7e4c7;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-bottom: 3px solid transparent;
-    }
+        .btn {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn:hover { background-color: var(--accent-hover); }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
 
-    nav button:hover, nav button.active {
-      color: #ffffff;
-      background-color: rgba(255,255,255,0.1);
-      border-bottom-color: #52b788;
-    }
+        sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
+        .nav-item {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .nav-item:hover, .nav-item.active { background-color: var(--bg-tertiary); color: var(--accent-color); }
 
-    .tab-content {
-      display: none;
-    }
+        main { padding: 2rem; overflow-y: auto; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-    .tab-content.active {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .para-block { margin-bottom: 1.5rem; position: relative; padding-left: 2.5rem; max-width: var(--content-width); }
+        .para-num {
+            position: absolute; left: 0; top: 0;
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--accent-color); background: var(--bg-tertiary);
+            padding: 2px 6px; border-radius: 4px;
+        }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      border: 1px solid var(--border);
-    }
+        .clickable-word {
+            background-color: rgba(255, 235, 59, 0.35);
+            border-bottom: 2px solid var(--accent-color);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+        .clickable-word:hover { background-color: rgba(255, 235, 59, 0.8); }
 
-    h2 {
-      color: var(--primary);
-      margin-bottom: 1.2rem;
-      border-bottom: 2px solid var(--primary-light);
-      padding-bottom: 0.5rem;
-      font-size: 1.6rem;
-    }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-card {
+            background: var(--bg-secondary); padding: 2rem; border-radius: 10px;
+            max-width: 500px; width: 90%; border: 1px solid var(--border-color);
+        }
 
-    h3 {
-      color: var(--secondary);
-      margin: 1rem 0 0.5rem 0;
-    }
+        .timer-bar {
+            height: 6px; background-color: var(--accent-color);
+            width: 100%; transition: width 1s linear; border-radius: 3px; margin-bottom: 1rem;
+        }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin: 1rem 0; }
+        .option-btn {
+            text-align: left; padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color); background: var(--bg-primary);
+            color: var(--text-primary); border-radius: 6px; cursor: pointer;
+        }
+        .option-btn.correct { background: #28a745; color: white; border-color: #28a745; }
+        .option-btn.incorrect { background: #dc3545; color: white; border-color: #dc3545; }
 
-    /* Poem Text Styling */
-    .poem-stanza {
-      background-color: #fcfdfc;
-      border-left: 4px solid var(--primary);
-      padding: 1.5rem 2rem;
-      margin-bottom: 1.5rem;
-      font-family: 'Georgia', serif;
-      font-size: 1.15rem;
-      line-height: 1.9;
-      border-radius: 0 8px 8px 0;
-    }
+        #animation-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; overflow: hidden;
+        }
 
-    /* Clickable Meanings */
-    .vocab-word {
-      color: #1b4332;
-      font-weight: 600;
-      text-decoration: underline dotted #52b788;
-      cursor: pointer;
-      padding: 2px 4px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease;
-      position: relative;
-    }
+        .dashboard-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+        }
+        .stat-card {
+            background: var(--bg-secondary); padding: 1.25rem;
+            border-radius: 8px; border: 1px solid var(--border-color); text-align: center;
+        }
+        .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent-color); }
 
-    .vocab-word:hover {
-      background-color: #d8f3dc;
-      color: #081c15;
-    }
-
-    /* Modal / Tooltip */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-card {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 450px;
-      width: 90%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      text-align: center;
-      position: relative;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .modal-card h3 {
-      color: var(--primary);
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .modal-card .bn-meaning {
-      font-size: 1.5rem;
-      color: var(--secondary);
-      font-weight: bold;
-      margin: 0.8rem 0;
-    }
-
-    .modal-card .en-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .close-btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Analysis Grid */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .analysis-box {
-      background-color: #f8f9fa;
-      padding: 1.2rem;
-      border-radius: 8px;
-      border: 1px solid #e9ecef;
-    }
-
-    /* Quiz Engine Styling */
-    .quiz-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      background-color: #081c15;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
-
-    .timer-bar-container {
-      width: 100%;
-      height: 8px;
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 0.8rem;
-    }
-
-    .timer-bar {
-      height: 100%;
-      width: 100%;
-      background-color: #52b788;
-      transition: width 1s linear, background-color 0.3s ease;
-    }
-
-    .section-selector {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-    }
-
-    .sec-btn {
-      background-color: #e0e0e0;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-    }
-
-    .sec-btn.active {
-      background-color: var(--primary);
-      color: white;
-    }
-
-    .question-box {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .options-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-    }
-
-    .option-btn {
-      background-color: #f8f9fa;
-      border: 2px solid #e0e0e0;
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: left;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-    }
-
-    .option-btn:hover {
-      background-color: #e8f5e9;
-      border-color: #a5d6a7;
-    }
-
-    .option-btn.correct {
-      background-color: #d4edda !important;
-      border-color: var(--correct) !important;
-      color: #155724;
-      font-weight: bold;
-    }
-
-    .option-btn.wrong {
-      background-color: #f8d7da !important;
-      border-color: var(--wrong) !important;
-      color: #721c24;
-    }
-
-    .explanation-box {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background-color: #e8f4f8;
-      border-left: 4px solid #2980b9;
-      border-radius: 4px;
-      display: none;
-    }
-
-    .quiz-nav {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1.5rem;
-    }
-
-    .quiz-btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.8rem;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .quiz-btn:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    /* Animation Overlays */
-    #animation-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 2000;
-    }
-
-    /* Jumping Baboon Container */
-    #baboon-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 2001;
-      display: none;
-    }
-
-    .baboon-sprite {
-      position: absolute;
-      bottom: -150px;
-      left: 10%;
-      font-size: 100px;
-      transition: all 0.1s ease;
-    }
-
-    @keyframes baboonJump {
-      0% { bottom: -150px; left: 10%; transform: rotate(0deg) scale(1); }
-      50% { bottom: 40vh; left: 45%; transform: rotate(180deg) scale(1.4); }
-      100% { bottom: -150px; left: 80%; transform: rotate(360deg) scale(1); }
-    }
-
-    .animate-baboon {
-      animation: baboonJump 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    /* Dictionary Table */
-    .dict-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    .dict-table th, .dict-table td {
-      border: 1px solid var(--border);
-      padding: 0.8rem;
-      text-align: left;
-    }
-
-    .dict-table th {
-      background-color: var(--primary);
-      color: white;
-    }
-
-    .dict-table tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    @media (max-width: 768px) {
-      nav { flex-wrap: wrap; }
-      nav button { flex: 1 1 50%; padding: 0.8rem; font-size: 0.9rem; }
-      header h1 { font-size: 1.8rem; }
-      .poem-stanza { font-size: 1rem; padding: 1rem; }
-    }
-  </style>
+        @media (max-width: 768px) {
+            .app-container { grid-template-columns: 1fr; }
+            sidebar { flex-direction: row; overflow-x: auto; }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Our Casuarina Tree</h1>
-    <p>By Toru Dutt (1856–1877) — Complete Text, Analysis & Interactive Exam Portal</p>
-  </header>
+<div id="animation-container"></div>
 
-  <nav>
-    <button class="tab-btn active" onclick="switchTab('text-tab')">Text & Vocabulary</button>
-    <button class="tab-btn" onclick="switchTab('analysis-tab')">Critical Analysis & Rhetoric</button>
-    <button class="tab-btn" onclick="switchTab('dict-tab')">English-Bengali Dictionary</button>
-    <button class="tab-btn" onclick="switchTab('quiz-tab')">200 MCQ Practice Exam</button>
-  </nav>
-
-  <div class="container">
-
-    <!-- TAB 1: TEXT & OVERVIEW -->
-    <div id="text-tab" class="tab-content active">
-      
-      <div class="card">
-        <h2>About the Poet</h2>
-        <p><strong>Toru Dutt (1856-1877)</strong> was a pioneering Indian poet and translator, often acclaimed as one of the founding figures of Indo-Anglian literature. Born on March 4, 1856, in Rambagan, Kolkata, into an affluent, highly educated, and culturally progressive Christian family, she was the youngest daughter of Govin Chunder Dutt. Despite living a tragic life cut short at the young age of 21 by tuberculosis, Toru achieved extraordinary literary milestones in both English and French.</p>
-        <br>
-        <p>Having traveled extensively across France and England during her youth, she possessed a fluent command of French, English, and Sanskrit. Her literary legacy includes <em>"A Sheaf Gleaned in French Fields"</em> (1876), a novel in French titled <em>"Le Journal de Mlle d'Arvers"</em>, and her masterpiece volume <em>"Ancient Ballads and Legends of Hindustan"</em> (1882), published posthumously by her father. "Our Casuarina Tree" stands out in this final collection as her most famous autobiographical lyric poem, seamlessly blending Western Romantic aesthetics with deep Indian sensibilities.</p>
-      </div>
-
-      <div class="card">
-        <h2>About the Poem</h2>
-        <p><em>"Our Casuarina Tree"</em> is an exquisite 55-line lyric poem structured into five 11-line stanzas. Composed around 1876, it serves as a passionate, nostalgic elegy dedicated to a majestic casuarina tree growing in the garden of Toru Dutt's ancestral home (Baugmaree, Kolkata). More than a physical feature of nature, the tree acts as a living monument connected to her happiest childhood memories and her beloved deceased siblings, Abju and Aru, who both succumbed to illness at early ages.</p>
-        <br>
-        <p>The poem unfolds through a deliberate progression of thought across its five stanzas:</p>
-        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 1.8;">
-          <li><strong>Stanza 1 (Objective Description):</strong> Focuses on the grand physical architecture of the tree, its choked embrace by a python-like creeper, its red blossoms, and the wildlife (birds and bees) singing late into the night.</li>
-          <li><strong>Stanza 2 (Dawn Scene & Morning Landscape):</strong> Paints a vivid landscape of morning in Bengal — a grey baboon perched on the tree's crest, its offspring playing below, kokilas singing, cows moving to pastures, and white water-lilies blooming on the pond like snow.</li>
-          <li><strong>Stanza 3 (Shift to Subjectivity & Nostalgia):</strong> Declares that the tree is dear not merely for its external beauty, but because it is bound up with memories of her departed siblings. The poet hears a mournful, dirge-like murmur from the tree.</li>
-          <li><strong>Stanza 4 (Transcendence Across Space):</strong> Describes how this ghostly lament follows her across oceans to distant lands (France and Italy), evoking the inner vision of the tree as she knew it in her native home.</li>
-          <li><strong>Stanza 5 (Consecration & Immortality):</strong> The poet seeks to consecrate a verse to honor the tree, invoking the "deathless trees" of Borrowdale in Wordsworth's poetry, hoping that Love will preserve her beloved tree from the curse of Oblivion.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>Complete Poem (Click highlighted words for English-Bengali Meaning)</h2>
-        
-        <div class="poem-stanza">
-          <strong>Stanza 1</strong><br><br>
-          Like a <span class="vocab-word" onclick="showModal('Huge', 'বিশাল / প্রকাণ্ড', 'Enormous or vast in size.')">huge</span> <span class="vocab-word" onclick="showModal('Python', 'বিশাল অজগর সাপ', 'A large snake; here, the creeper is compared to a python coiling around the tree.')">Python</span>, <span class="vocab-word" onclick="showModal('Winding', 'পাকানো / পেঁচানো', 'Twisting or coiling around something.')">winding</span> round and round<br>
-          The <span class="vocab-word" onclick="showModal('Rugged', 'খসখসে / অসমান', 'Rough, uneven surface of the tree trunk.')">rugged</span> trunk, <span class="vocab-word" onclick="showModal('Indented', 'গভীর ক্ষতচিহ্নযুক্ত', 'Marked with deep cuts, grooves, or scars.')">indented</span> deep with <span class="vocab-word" onclick="showModal('Scars', 'ক্ষতচিহ্ন', 'Permanent marks left on the bark by the tight creeper.')">scars</span>,<br>
-          Up to its very <span class="vocab-word" onclick="showModal('Summit', 'চূড়া / শীর্ষদেশ', 'The highest point or peak of the tree.')">summit</span> near the stars,<br>
-          A creeper climbs, in whose <span class="vocab-word" onclick="showModal('Embraces', 'আলিঙ্গন', 'Tight hold or hugging clasp.')">embraces</span> <span class="vocab-word" onclick="showModal('Bound', 'আবদ্ধ / বাঁধা', 'Firmly tied or constrained.')">bound</span><br>
-          No other tree could live. But <span class="vocab-word" onclick="showModal('Gallantly', 'বীরত্বের সাথে', 'Bravely, heroically, or chivalrously.')">gallantly</span><br>
-          The <span class="vocab-word" onclick="showModal('Giant', 'দানবতুল্য মহীরুহ', 'Referring to the massive casuarina tree.')">giant</span> wears the <span class="vocab-word" onclick="showModal('Scarf', 'উত্তরীয় / স্কার্ফ', 'The creeper draped over the tree like a decorative scarf.')">scarf</span>, and flowers are hung<br>
-          In <span class="vocab-word" onclick="showModal('Crimson', 'গাঢ় লাল / সিঁদুরে', 'Deep rich red color.')">crimson</span> <span class="vocab-word" onclick="showModal('Clusters', 'গুচ্ছ', 'Groups of flowers growing closely together.')">clusters</span> all the <span class="vocab-word" onclick="showModal('Boughs', 'গাছের বড় শাখা', 'Main large branches of the tree.')">boughs</span> among,<br>
-          Whereon all day are gathered bird and bee;<br>
-          And <span class="vocab-word" onclick="showModal('Oft', 'প্রায়শই', 'Archaic poetic form for often.')">oft</span> at nights the garden <span class="vocab-word" onclick="showModal('Overflows', 'উপচে পড়া', 'Filled to overflowing with music.')">overflows</span><br>
-          With one sweet song that seems to have no close,<br>
-          Sung <span class="vocab-word" onclick="showModal('Darkling', 'অন্ধকারে', 'In the dark or growing darkness.')">darkling</span> from our tree, while men <span class="vocab-word" onclick="showModal('Repose', 'বিশ্রাম নেওয়া / ঘুমানো', 'Rest, sleep, or lie at peace.')">repose</span>.
-        </div>
-
-        <div class="poem-stanza">
-          <strong>Stanza 2</strong><br><br>
-          When first my <span class="vocab-word" onclick="showModal('Casement', 'জানালার পাল্লা', 'A window sash opening on hinges.')">casement</span> is wide open thrown<br>
-          At dawn, my eyes <span class="vocab-word" onclick="showModal('Delighted', 'আনন্দিত / প্রীত', 'Filled with delight or joy.')">delighted</span> on it rest;<br>
-          Sometimes, and most in winter, - on its <span class="vocab-word" onclick="showModal('Crest', 'শীর্ষ / চূড়া', 'The highest top portion of the tree.')">crest</span><br>
-          A grey <span class="vocab-word" onclick="showModal('Baboon', 'বাবুন বানর', 'A large Old World monkey.')">baboon</span> sits <span class="vocab-word" onclick="showModal('Statue-like', 'মূর্তির মতো নিশ্চল', 'Still, motionless like a sculpted statue.')">statue-like</span> alone<br>
-          Watching the sunrise; while on lower boughs<br>
-          His <span class="vocab-word" onclick="showModal('Puny', 'ক্ষুদ্র ও দুর্বল / ছোট', 'Small, weak, or tiny.')">puny</span> <span class="vocab-word" onclick="showModal('Offspring', 'সন্তান / ছানা', 'Young ones / babies of the baboon.')">offspring</span> leap about and play;<br>
-          And far and near <span class="vocab-word" onclick="showModal('Kokilas', 'কোকিল পাখি', 'Indian cuckoo birds known for sweet morning calls.')">kokilas</span> hail the day;<br>
-          And to their pastures <span class="vocab-word" onclick="showModal('Wend', 'পথ চলা / যাওয়া', 'To go, travel, or direct one\'s course.')">wend</span> our sleepy cows;<br>
-          And in the shadow, on the broad <span class="vocab-word" onclick="showModal('Tank', 'দিঘি / পুকুর', 'A large water pond or reservoir.')">tank</span> cast<br>
-          By that <span class="vocab-word" onclick="showModal('Hoar', 'ধূসর / প্রবীণ ও শুভ্র', 'Grey or white with age; majestic and ancient.')">hoar</span> tree, so beautiful and vast,<br>
-          The water-lilies spring, like <span class="vocab-word" onclick="showModal('Snow enmassed', 'পুঞ্জীভূত তুষার', 'Refers to white water lilies covering the surface resemblng accumulated snow.')">snow enmassed</span>.
-        </div>
-
-        <div class="poem-stanza">
-          <strong>Stanza 3</strong><br><br>
-          But not because of its <span class="vocab-word" onclick="showModal('Magnificence', 'মহিমা / জাকজমক', 'Grandeur, splendid appearance, or majesty.')">magnificence</span><br>
-          Dear is the Casuarina to my soul:<br>
-          Beneath it we have played; though years may roll,<br>
-          O sweet <span class="vocab-word" onclick="showModal('Companions', 'সঙ্গী / সহচর', 'Playmates; referring affectionately to her deceased siblings Abju and Aru.')">companions</span>, loved with love <span class="vocab-word" onclick="showModal('Intense', 'প্রবল / তীব্র', 'Deep, passionate, and extreme.')">intense</span>,<br>
-          For your sakes shall the tree be ever dear!<br>
-          <span class="vocab-word" onclick="showModal('Blent', 'মিশ্রিত / একীভূত', 'Poetic short form of blended; intertwined.')">Blent</span> with your images, it shall arise<br>
-          In memory, till the hot tears blind mine eyes!<br>
-          What is that <span class="vocab-word" onclick="showModal('Dirge-like', 'শোকসঙ্গীতের মতো', 'Resembling a mournful funeral song or lament.')">dirge-like</span> <span class="vocab-word" onclick="showModal('Murmur', 'মৃদু বিলাপ / শব্দ', 'A low, continuous, whisper-like mournful sound.')">murmur</span> that I hear<br>
-          Like the sea breaking on a <span class="vocab-word" onclick="showModal('Shingle-beach', 'নুড়িপাথরযুক্ত সৈকত', 'A beach covered with small rounded pebbles and gravel.')">shingle-beach</span>?<br>
-          It is the tree's <span class="vocab-word" onclick="showModal('Lament', 'আর্তনাদ / বিলাপ', 'Expression of grief, mourning, or sorrow.')">lament</span>, an <span class="vocab-word" onclick="showModal('Eerie', 'অলৌকিক / ভূতুড়ে', 'Strange, ghostly, and mysterious.')">eerie</span> speech,<br>
-          That <span class="vocab-word" onclick="showModal('Haply', 'হয়তো / সম্ভবত', 'Perhaps, perchance, or by good fortune.')">haply</span> to the unknown land may reach.
-        </div>
-
-        <div class="poem-stanza">
-          <strong>Stanza 4</strong><br><br>
-          Unknown, yet well-known to the eye of faith!<br>
-          Ah, I have heard that <span class="vocab-word" onclick="showModal('Wail', 'উচ্চস্বরে বিলাপ', 'A prolonged high-pitched cry of grief.')">wail</span> far, far away<br>
-          In distant lands, by many a <span class="vocab-word" onclick="showModal('Sheltered bay', 'সুরক্ষিত খাঁড়ি', 'A quiet coastal inlet protected from violent winds.')">sheltered bay</span>,<br>
-          When <span class="vocab-word" onclick="showModal('Slumbered', 'সুপ্ত / নিদ্রিত', 'Slept peacefully.')">slumbered</span> in his cave the <span class="vocab-word" onclick="showModal('Water-wraith', 'জলপরী / প্রেতাত্মা', 'A mythical spirit believed to inhabit water.')">water-wraith</span><br>
-          And the waves gently kissed the classic shore<br>
-          Of France or Italy, beneath the moon,<br>
-          When earth lay <span class="vocab-word" onclick="showModal('Trancèd', 'অচেতন / মোহাচ্ছন্ন', 'In a state of trance, sleep, or hypnotic stillness.')">trancèd</span> in a dreamless <span class="vocab-word" onclick="showModal('Swoon', 'মूर्ছা / গভীর সুপ্তি', 'A temporary faint or deep quiet unconscious state.')">swoon</span>:<br>
-          And every time the music rose - before<br>
-          Mine inner vision rose a form <span class="vocab-word" onclick="showModal('Sublime', 'মহৎ / পরম সুন্দর', 'Exalted, grand, spiritually uplifting beauty.')">sublime</span>,<br>
-          Thy form, O Tree! as in my happy <span class="vocab-word" onclick="showModal('Prime', 'যৌবন / স্বর্ণযুগ', 'Early life or peak period of youth and childhood.')">prime</span><br>
-          I saw thee, in my own loved native <span class="vocab-word" onclick="showModal('Clime', 'জলবায়ু / স্বদেশ', 'A region or homeland with reference to climate.')">clime</span>.<br>
-          Therefore I fain would <span class="vocab-word" onclick="showModal('Consecrate', 'পবিত্র করা / উৎসর্গ করা', 'To declare sacred, dedicate, or sanctify.')">consecrate</span> a <span class="vocab-word" onclick="showModal('Lay', 'গীতি কবিতা', 'A short song or narrative poem.')">lay</span>
-        </div>
-
-        <div class="poem-stanza">
-          <strong>Stanza 5</strong><br><br>
-          Unto thy honor, Tree, beloved of those<br>
-          Who now in <span class="vocab-word" onclick="showModal('Blessed sleep', 'পবিত্র চিরনিদ্রা', 'The peaceful sleep of death.')">blessed sleep</span> for <span class="vocab-word" onclick="showModal('Aye', 'সর্বদা / চিরকাল', 'Archaic term meaning forever or always.')">aye</span> repose, -<br>
-          Dearer than life to me, alas! were they!<br>
-          <span class="vocab-word" onclick="showModal('Mayst thou', 'তুমি যেন হও', 'Archaic phrase meaning "May you be".')">Mayst thou</span> be numbered when my days are done<br>
-          With <span class="vocab-word" onclick="showModal('Deathless', 'অমর', 'Immortal or impervious to death.')">deathless</span> trees - like those in <span class="vocab-word" onclick="showModal('Borrowdale', 'বরোডেল উপত্যকা', 'A valley in England famous for ancient yew-trees described by Wordsworth.')">Borrowdale</span>,<br>
-          Under whose <span class="vocab-word" onclick="showModal('Awful', 'ভীতিজাগানিয়া মহিমাময়', 'Inspiring awe, reverence, or solemn terror.')">awful</span> branches linger pale<br>
-          "<span class="vocab-word" onclick="showModal('Fear', 'ভয়', 'Personification of human terror.')">Fear</span>, trembling <span class="vocab-word" onclick="showModal('Hope', 'আশা', 'Personification of human hope.')">Hope</span>, and <span class="vocab-word" onclick="showModal('Death', 'মৃত্যু', 'Personification of mortality as a skeleton.')">Death</span>, the skeleton,<br>
-          And <span class="vocab-word" onclick="showModal('Time', 'কাল / সময়', 'Personification of time as an elusive shadow.')">Time</span> the shadow;" and though weak the verse<br>
-          That would thy beauty fain, oh <span class="vocab-word" onclick="showModal('Fain', 'আনন্দের সাথে', 'Gladly, eagerly, or willingly.')">fain</span> <span class="vocab-word" onclick="showModal('Rehearse', 'বর্ণনা করা / আবৃত্তি করা', 'To recite, recount, or describe in detail.')">rehearse</span>,<br>
-          May Love defend thee from <span class="vocab-word" onclick="showModal('Oblivion', 'বিস্মৃতি', 'The state of being completely forgotten by history.')">Oblivion's</span> curse.
-        </div>
-      </div>
-
+<div class="modal-overlay" id="dictModal" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <h3 id="dictWord" style="color: var(--accent-color); margin-bottom: 0.5rem;">Word</h3>
+        <p><strong>Bengali / বাংলা:</strong> <span id="dictBn"></span></p>
+        <p><strong>English Meaning:</strong> <span id="dictEn"></span></p>
+        <p><strong>POS:</strong> <span id="dictPos"></span> | <strong>Pronunciation:</strong> <span id="dictPron"></span></p>
+        <p><strong>Synonyms:</strong> <span id="dictSyn"></span></p>
+        <p><strong>Antonyms:</strong> <span id="dictAnt"></span></p>
+        <p><strong>Contextual Context:</strong> <span id="dictContext"></span></p>
+        <p style="margin-top:0.5rem;"><em>Example:</em> <span id="dictEx"></span></p>
+        <button class="btn" onclick="closeModal(true)" style="margin-top: 1.25rem; width: 100%;">Close</button>
     </div>
+</div>
 
-    <!-- TAB 2: CRITICAL ANALYSIS & RHETORIC -->
-    <div id="analysis-tab" class="tab-content">
-      <div class="card">
-        <h2>Critical Analysis & Literary Structure</h2>
-        <div class="grid-2">
-          <div class="analysis-box">
-            <h3>Form & Stanza Pattern</h3>
-            <p>The poem consists of <strong>5 stanzas</strong>, each containing <strong>11 lines</strong> (Hendecastich). The rhyme scheme follows a unique custom structure designed by Toru Dutt: <strong>abbba cdddc e</strong> (or <em>abbba cddcee</em> variant), blending the Italian Petrarchan octave/sestet logic with Romantic stanzaic freedom and lyrical fluidity.</p>
-          </div>
-          <div class="analysis-box">
-            <h3>Central Thematic Pillars</h3>
-            <ul>
-              <li><strong>Nostalgia & Loss:</strong> Deep emotional yearning for her childhood home and her deceased siblings, Abju and Aru.</li>
-              <li><strong>Immortality through Art:</strong> The poet's desire to consecrate a verse to shield the tree from time's decay and forgotten oblivion.</li>
-              <li><strong>Nature as a Living Medium:</strong> The casuarina tree functions as an empathetic entity that absorbs human grief and mournfully echoes across oceans.</li>
-              <li><strong>Synthesis of East and West:</strong> Harmoniously blends Indian rural imagery (cows, kokilas, water-lilies) with European literary references (Wordsworth's Borrowdale yew-trees).</li>
-            </ul>
-          </div>
+<div class="app-container">
+    <header>
+        <div>
+            <div class="brand-title">The Night Train at Deoli</div>
+            <div class="brand-subtitle">WBCHSE Class XI–XII Interactive Single-Engine Engine</div>
         </div>
-      </div>
-
-      <div class="card">
-        <h2>Detailed Figures of Speech & Rhetoric</h2>
-        <table class="dict-table">
-          <thead>
-            <tr>
-              <th>Rhetorical Device</th>
-              <th>Poetic Example</th>
-              <th>Critical Explanation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Simile</strong></td>
-              <td>"Like a huge Python, winding round and round"</td>
-              <td>Compares the thick, coiling creeper clinging tightly to the rugged bark to a giant python snake.</td>
-            </tr>
-            <tr>
-              <td><strong>Simile</strong></td>
-              <td>"The water-lilies spring, like snow enmassed"</td>
-              <td>Compares white water-lilies clustered densely on the pond surface to accumulated white snow drifts.</td>
-            </tr>
-            <tr>
-              <td><strong>Simile</strong></td>
-              <td>"Like the sea breaking on a shingle-beach"</td>
-              <td>Compares the whispering, rustling murmur of the tree's leaves to waves crashing on a pebbled coast.</td>
-            </tr>
-            <tr>
-              <td><strong>Personification</strong></td>
-              <td>"The giant wears the scarf..."</td>
-              <td>Attributes chivalrous human qualities to the tree, framing it as a heroic giant wearing the creeper like a scarf.</td>
-            </tr>
-            <tr>
-              <td><strong>Personification</strong></td>
-              <td>"It is the tree's lament, an eerie speech"</td>
-              <td>Attributes human grief, mourning, voice, and articulate speech to the wind moving through the tree's branches.</td>
-            </tr>
-            <tr>
-              <td><strong>Personification</strong></td>
-              <td>"Fear, trembling Hope, and Death, the skeleton, / And Time the shadow"</td>
-              <td>Abstract human emotional and existential concepts are given concrete, personified forms guarding the ancient trees.</td>
-            </tr>
-            <tr>
-              <td><strong>Apostrophe</strong></td>
-              <td>"Thy form, O Tree!" / "O sweet companions"</td>
-              <td>Direct, emotionally charged address to an inanimate object (the tree) and absent/deceased loved ones.</td>
-            </tr>
-            <tr>
-              <td><strong>Literary Allusion</strong></td>
-              <td>"With deathless trees - like those in Borrowdale"</td>
-              <td>Direct reference to William Wordsworth's Romantic poem <em>"Yew-Trees"</em>, aligning her Indian tree with English canonical classics.</td>
-            </tr>
-            <tr>
-              <td><strong>Oxymoron / Paradox</strong></td>
-              <td>"Unknown, yet well-known to the eye of faith!"</td>
-              <td>Combines contradictory terms to express how spiritual memory and love transcend physical or geographical separation.</td>
-            </tr>
-            <tr>
-              <td><strong>Visual & Auditory Imagery</strong></td>
-              <td>"crimson clusters", "grey baboon", "sweet song that seems to have no close"</td>
-              <td>Engages multiple senses (sight and sound) to create a vivid, immersive atmosphere of Bengal's flora and fauna.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 3: DICTIONARY -->
-    <div id="dict-tab" class="tab-content">
-      <div class="card">
-        <h2>Comprehensive English to Bengali Vocabulary Dictionary</h2>
-        <input type="text" id="dict-search" placeholder="Search vocabulary word..." onkeyup="filterDict()" style="width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:6px; border:1px solid #ccc;">
-        
-        <table class="dict-table" id="full-dict-table">
-          <thead>
-            <tr>
-              <th>Word</th>
-              <th>Bengali Meaning (বাংলা অর্থ)</th>
-              <th>Contextual Meaning & Footnote Reference</th>
-            </tr>
-          </thead>
-          <tbody id="dict-tbody">
-            <!-- Populated via JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 4: 200 MCQ EXAM MODULE -->
-    <div id="quiz-tab" class="tab-content">
-      <div class="card">
-        <h2>Interactive Exam Portal — 200 MCQs</h2>
-        <p style="margin-bottom: 1rem;">Test your complete knowledge across 4 comprehensive sections with 30-second timers per question!</p>
-        
-        <div class="section-selector">
-          <button class="sec-btn active" onclick="loadSection(1)">Sec 1: Text & Poet Facts (1-50)</button>
-          <button class="sec-btn" onclick="loadSection(2)">Sec 2: Critical Analysis & Rhetoric (51-100)</button>
-          <button class="sec-btn" onclick="loadSection(3)">Sec 3: Vocab, Syn/Ant & Errors (101-150)</button>
-          <button class="sec-btn" onclick="loadSection(4)">Sec 4: Assertion, Sequence & T/F (151-200)</button>
+        <div>
+            <button class="btn btn-outline" onclick="cycleTheme()">Theme 🌙</button>
+            <input type="text" id="globalSearch" placeholder="Search vocabulary..." oninput="handleSearch(this.value)" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
         </div>
+    </header>
 
-        <div class="quiz-header">
-          <div>Question <span id="q-num">1</span> of 200</div>
-          <div>Score: <span id="q-score">0</span></div>
-          <div>Time Left: <span id="q-timer">30</span>s</div>
-          <div class="timer-bar-container">
-            <div id="timer-bar" class="timer-bar"></div>
-          </div>
-        </div>
+    <sidebar>
+        <div class="nav-item active" id="nav-home" onclick="switchTab('home')">🏠 Home</div>
+        <div class="nav-item" id="nav-reader" onclick="switchTab('reader')">📖 Full Text & Vocab</div>
+        <div class="nav-item" id="nav-about" onclick="switchTab('about')">ℹ️ Background</div>
+        <div class="nav-item" id="nav-rhetoric" onclick="switchTab('rhetoric')">🎭 Style & Rhetoric</div>
+        <div class="nav-item" id="nav-analysis" onclick="switchTab('analysis')">🧠 Critical Analysis</div>
+        <div class="nav-item" id="nav-questions" onclick="switchTab('questions')">❓ Important Questions</div>
+        <div class="nav-item" id="nav-mcq" onclick="switchTab('mcq')">📝 200 MCQs Test Engine</div>
+        <div class="nav-item" id="nav-progress" onclick="switchTab('progress')">📊 Progress</div>
+    </sidebar>
 
-        <div class="question-box" id="q-text">
-          Loading Question...
-        </div>
+    <main id="mainContent">
+    </main>
+</div>
 
-        <div class="options-grid" id="q-options">
-          <!-- Options rendered via JS -->
-        </div>
+<script>
+// --- EXTENDED COMPREHENSIVE ENGLISH-TO-BENGALI DICTIONARY ---
+const dictionary = {
+    "vacations": { bn: "ছুটি / অবকাশ", en: "holidays; period away from school or work", pos: "Noun", pron: "veɪˈkeɪ.ʃənz", syn: "holidays, breaks", ant: "workdays", context: "Narrator's summer breaks spent in Dehra.", ex: "He spent his summer vacations in Dehra." },
+    "plains": { bn: "সমভূমি অঞ্চল", en: "flat, low-lying land areas", pos: "Noun", pron: "pleɪnz", syn: "flatlands, lowlands", ant: "mountains, hills", context: "The flat land the narrator leaves to go up into the hills.", ex: "I would leave the plains early in May." },
+    "heavy": { bn: "ঘন / গহীন", en: "dense and thick", pos: "Adjective", pron: "ˈhevi", syn: "dense, thick", ant: "sparse, thin", context: "Refers to the thick Terai jungle.", ex: "The beginning of the heavy jungles." },
+    "terai": { bn: "তরাই অঞ্চল (হিমালয়ের পাদদেশ)", en: "lowland region at the foot of the Himalayas", pos: "Noun", pron: "te-ˈrī", syn: "marshland, foothills", ant: "highlands", context: "Geographical belt near Deoli.", ex: "The heavy jungles of the Indian Terai." },
+    "dimly": { bn: "ক্ষীণভাবে / আবছা আলোয়", en: "with faint light", pos: "Adverb", pron: "ˈdɪm.li", syn: "faintly, obscurely", ant: "brightly", context: "Lighting at Deoli station in dawn.", ex: "Dimly lit with electric bulbs." },
+    "boasted": { bn: "গর্বের সাথে থাকা / অধিকারী হওয়া", en: "possessed something proudly", pos: "Verb", pron: "bəʊstɪd", syn: "featured, possessed", ant: "lacked", context: "Platform having a tea stall.", ex: "The platform boasted a tea stall." },
+    "stray": { bn: "পথভ্রান্ত / চরাঘোরা পশু", en: "homeless animals wandering freely", pos: "Adjective", pron: "streɪ", syn: "homeless, lost", ant: "domesticated", context: "Dogs wandering on the platform.", ex: "A few stray dogs were there." },
+    "rushing": { bn: "দ্রুত ছুটে চলা", en: "moving with urgent speed", pos: "Verb", pron: "ˈrʌʃɪŋ", syn: "dashing, speeding", ant: "crawling", context: "Train speeding into forests.", ex: "Rushing on into the forests." },
+    "halt": { bn: "সাময়িক থামা", en: "a temporary stop", pos: "Verb/Noun", pron: "hɔːlt", syn: "stop, pause", ant: "continue", context: "Train stopping for ten minutes.", ex: "The train would halt there." },
+    "presently": { bn: "অনতিবিলম্বে / কিছুক্ষণের মধ্যে", en: "soon after; shortly", pos: "Adverb", pron: "ˈprez.ənt.li", syn: "shortly, soon", ant: "later", context: "The train moving away shortly.", ex: "Presently Deoli would be left behind." },
+    "receded": { bn: "পিছিয়ে পড়া / দূরে চলে যাওয়া", en: "moved back or faded away", pos: "Verb", pron: "rɪˈsiːdɪd", syn: "retreated, withdrew", ant: "advanced", context: "Platform moving away as train accelerates.", ex: "As Deoli platform receded..." },
+    "gracefully": { bn: "মার্জিত ও শোভন ভঙ্গিতে", en: "in an elegant manner", pos: "Adverb", pron: "ˈɡreɪs.fəl.i", syn: "elegantly, stylishly", ant: "clumsily", context: "The girl walking on the platform.", ex: "Walking gracefully and with dignity." },
+    "dignity": { bn: "আত্মমর্যাদা / মর্যাদা", en: "noble, composed manner", pos: "Noun", pron: "ˈdɪɡ.nə.ti", syn: "self-respect, poise", ant: "dishonor", context: "The girl's proud bearing.", ex: "She walked with dignity." },
+    "intently": { bn: "একদৃষ্টে / মনোযোগ সহকারে", en: "with fixed concentration", pos: "Adverb", pron: "ɪnˈtent.li", syn: "fixedly, closely", ant: "distractedly", context: "Narrator staring at the girl.", ex: "I was looking at her intently." },
+    "eloquent": { bn: "ভাবপূর্ণ / বাচালতা ছাড়াই ভাবপ্রকাশকারী", en: "expressive without speaking", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, meaningful", ant: "inarticulate", context: "Their silent gaze expressing mutual love.", ex: "Her eyes were eloquent." },
+    "smouldering": { bn: "তীব্র আবেগাপ্লুত / ধিকধিকি জ্বলা", en: "showing hidden intense passion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning", ant: "cold, dull", context: "The girl's emotional dark eyes.", ex: "Her dark, smouldering eyes." },
+    "thrill": { bn: "রোমাঞ্চ / আনন্দাবেশ", en: "sudden sensation of excitement", pos: "Noun", pron: "θrɪl", syn: "excitement, surge", ant: "boredom", context: "Excitement seeing her second time.", ex: "I felt an unexpected thrill." },
+    "impulse": { bn: "আকস্মিক তাড়না", en: "sudden urge to act", pos: "Noun", pron: "ˈɪm.pʌls", syn: "urge, instinct", ant: "hesitation", context: "Urge to take her on the train.", ex: "I felt the impulse to put her on train." },
+    "foreboding": { bn: "অশুভ আশঙ্কা", en: "feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "dread, apprehension", ant: "confidence", context: "Fear when girl was missing.", ex: "Overcome by a sense of foreboding." },
+    "shrivelled-up": { bn: "শীর্ণ / কুঁচকে যাওয়া", en: "wrinkled and dried up with age", pos: "Adjective", pron: "ˈʃrɪv.əld ʌp", syn: "withered, wizened", ant: "smooth", context: "Description of tea stall owner.", ex: "A small, shrivelled-up man." },
+    "shawl": { bn: "শাল / চাদর", en: "a piece of fabric worn over shoulders", pos: "Noun", pron: "ʃɔːl", syn: "wrap, cloak", ant: "N/A", context: "The girl wrapped a shawl over her shoulders.", ex: "The girl had a shawl thrown across her shoulders." },
+    "bare": { bn: "অনাবৃত / খালি", en: "uncovered or unclothed", pos: "Adjective", pron: "beə(r)", syn: "uncovered, naked", ant: "covered, shod", context: "The girl had bare feet.", ex: "Her feet were bare." },
+    "pale": { bn: "ফ্যাকাশে / রক্তশূন্য", en: "light-colored or lacking color", pos: "Adjective", pron: "peɪl", syn: "fair, pallid", ant: "flush, dark", context: "The girl's complexion.", ex: "She had a pale skin." },
+    "cane": { bn: "বেত", en: "flexible woody stem of giant palms", pos: "Noun", pron: "keɪn", syn: "bamboo, wicker", ant: "N/A", context: "Material used to make baskets.", ex: "Baskets made of the finest cane." },
+    "shuddered": { bn: "কাঁপিয়া ওঠা / ঝাঁকুনি দেওয়া", en: "shook violently or trembled", pos: "Verb", pron: "ˈʃʌd.əd", syn: "shook, quivered", ant: "stilled", context: "The movement of the train starting.", ex: "The carriage shuddered and jolted forward." },
+    "jolted": { bn: "ঝাঁকুনি খেয়ে এগিয়ে চলা", en: "moved with sudden sudden jerky movements", pos: "Verb", pron: "dʒəʊl.tɪd", syn: "bumped, jarred", ant: "slid smoothly", context: "Movement of train compartment.", ex: "The carriage jolted forward." },
+    "blurred": { bn: "আবছা / অস্পষ্ট", en: "became indistinct or unclear", pos: "Adjective", pron: "blɜːd", syn: "faint, hazy", ant: "sharp, clear", context: "Memories fading upon reaching Dehra.", ex: "The incident became blurred and distant." },
+    "sprang": { bn: "লাফিয়ে ওঠা", en: "jumped or moved quickly", pos: "Verb", pron: "spræŋ", syn: "leaped, jumped", ant: "walked slowly", context: "Narrator jumping off footboard.", ex: "I sprang off the footboard and waved." },
+    "wrench": { bn: "হেঁচকা টানে ছাড়িয়ে নেওয়া", en: "pull or twist violently away", pos: "Verb", pron: "rentʃ", syn: "snatch, pull", ant: "hold softly", context: "Narrator pulling his hand away as train started.", ex: "I had to wrench my hand away." },
+    "haste": { bn: "তাড়াহুড়ো", en: "excessive speed or urgency", pos: "Noun", pron: "heɪst", syn: "hurry, rush", ant: "slowness, delay", context: "Packing quickly to meet the girl.", ex: "I packed in haste and left." },
+    "anxious": { bn: "উদ্বিগ্ন / ব্যাকুল", en: "feeling worried or uneasy", pos: "Adjective", pron: "ˈæŋk.ʃəs", syn: "nervous, worried", ant: "calm, confident", context: "Narrator's feelings near Deoli.", ex: "I was nervous and anxious." },
+    "restless": { bn: "অশান্ত / অস্থির", en: "unable to rest or relax", pos: "Adjective", pron: "ˈrest.ləs", syn: "fidgety, uneasy", ant: "peaceful", context: "Narrator feeling uneasy at grandmother's place.", ex: "I felt restless and ill at ease." },
+    "transferred": { bn: "বদলি হওয়া", en: "moved to another station or job", pos: "Verb", pron: "trænsˈfɜːd", syn: "relocated, shifted", ant: "retained", context: "Station master changed.", ex: "The previous man had been transferred." },
+    "consoled": { bn: "সান্ত্বনা দেওয়া", en: "comforted at a time of grief or disappointment", pos: "Verb", pron: "kənˈsəʊld", syn: "comforted, reassured", ant: "distressed", context: "Narrator comforting himself with hope.", ex: "With this thought I consoled myself." },
+    "spoil": { bn: "নষ্ট করা", en: "diminish or destroy the value of", pos: "Verb", pron: "spɔɪl", syn: "ruin, wreck", ant: "enhance, preserve", context: "Fear that knowing reality might ruin the fantasy.", ex: "It may spoil my game." }
+};
 
-        <div class="explanation-box" id="q-exp">
-          <!-- Explanation rendered via JS -->
-        </div>
+// --- COMPLETE TEXT WITH MAXIMIZED HIGHLIGHTED WORDS ---
+const fullTextParagraphs = [
+    { num: "1", text: "When I was at college I used to spend my summer <span class='clickable-word' onclick='openWord(\"vacations\")'>vacations</span> in Dehra, at my grandmother's place. I would leave the <span class='clickable-word' onclick='openWord(\"plains\")'>plains</span> early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the <span class='clickable-word' onclick='openWord(\"heavy\")'>heavy</span> jungles of the Indian <span class='clickable-word' onclick='openWord(\"terai\")'>Terai</span>." },
+    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be <span class='clickable-word' onclick='openWord(\"dimly\")'>dimly</span> lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform <span class='clickable-word' onclick='openWord(\"boasted\")'>boasted</span> a tea stall, a fruit vendor, and a few <span class='clickable-word' onclick='openWord(\"stray\")'>stray</span> dogs; not much else, because the train stopped there for only ten minutes before <span class='clickable-word' onclick='openWord(\"rushing\")'>rushing</span> on into the forests." },
+    { num: "3", text: "Why it stopped at Deoli, I don't know. Nothing ever happened there. Nobody got off the train and nobody got in. There were never any coolies on the platform. But the train would <span class='clickable-word' onclick='openWord(\"halt\")'>halt</span> there a full ten minutes, and then a bell would sound, the guard would blow his whistle, and <span class='clickable-word' onclick='openWord(\"presently\")'>presently</span> Deoli would be left behind and forgotten." },
+    { num: "4", text: "I used to wonder what happened in Deoli, behind the station walls. I always felt sorry for that lonely little platform, and for the place that nobody wanted to visit. I decided that one day I would get off the train at Deoli, and spend the day there, just to please the town." },
+    { num: "5", text: "I was eighteen, visiting my grandmother, and the night train stopped at Deoli. A girl came down the platform, selling baskets." },
+    { num: "6", text: "It was a cold morning and the girl had a <span class='clickable-word' onclick='openWord(\"shawl\")'>shawl</span> thrown across her shoulders. Her feet were <span class='clickable-word' onclick='openWord(\"bare\")'>bare</span> and her clothes were old, but she was a young girl, walking <span class='clickable-word' onclick='openWord(\"gracefully\")'>gracefully</span> and with <span class='clickable-word' onclick='openWord(\"dignity\")'>dignity</span>." },
+    { num: "7", text: "When she came to my window, she stopped. She saw that I was looking at her, <span class='clickable-word' onclick='openWord(\"intently\")'>intently</span>, but at first she pretended not to notice. She had a <span class='clickable-word' onclick='openWord(\"pale\")'>pale</span> skin, set off by shiny black hair, and dark, troubled eyes. And then those eyes, searching and <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>, met mine." },
+    { num: "8", text: "She stood by my window for some time and neither of us said anything. But when she moved on, I found myself leaving my seat and going to the carriage door, and stood waiting on the platform, looking the other way. I walked across to the tea stall. A kettle was boiling over on a small fire, but the owner of the stall was busy serving tea somewhere on the train. The girl followed me behind the stall." },
+    { num: "9", text: " 'Do you want to buy a basket?' she asked. 'They are very strong, made of the finest <span class='clickable-word' onclick='openWord(\"cane\")'>cane</span>...' 'No,' I said, 'I don't want a basket.' We stood looking at each other for what seemed a very long time, and she said, 'Are you sure you don't want a basket?' 'All right, give me one,' I said, and I took the one on top and gave her a rupee, hardly daring to touch her fingers." },
+    { num: "10", text: "As she was about to speak, the guard blew his whistle; she said something, but it was lost in the clanging of the bell and the hissing of the engine. I had to run back to my compartment. The carriage <span class='clickable-word' onclick='openWord(\"shuddered\")'>shuddered</span> and <span class='clickable-word' onclick='openWord(\"jolted\")'>jolted</span> forward." },
+    { num: "11", text: "I watched her as the platform slipped away. She was alone on the platform and she did not move, but she was looking at me and smiling. I watched her until the signal box came in the way, and then the jungle hid the station, but I could still see her standing there alone." },
+    { num: "12", text: "I sat up awake for the rest of the journey. I could not rid my mind of the picture of the girl's face and her dark, <span class='clickable-word' onclick='openWord(\"smouldering\")'>smouldering</span> eyes." },
+    { num: "13", text: "But when I reached Dehra the incident became <span class='clickable-word' onclick='openWord(\"blurred\")'>blurred</span> and distant, for there were other things to occupy my mind. It was only when I was making the return journey, two months later, that I remembered the girl." },
+    { num: "14", text: "I was looking out for her as the train drew into the station, and I felt an unexpected <span class='clickable-word' onclick='openWord(\"thrill\")'>thrill</span> when I saw her walking up the platform. I <span class='clickable-word' onclick='openWord(\"sprang\")'>sprang</span> off the footboard and waved to her." },
+    { num: "15", text: "When she saw me, she smiled. She was pleased that I remembered her. I was pleased that she remembered me. We were both pleased, and it was almost like a meeting of old friends." },
+    { num: "16", text: "She did not go down the length of the train selling baskets, but came straight to the tea stall; her dark eyes were suddenly filled with light. We said nothing for some time but we couldn't have been more <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>." },
+    { num: "17", text: "I felt the <span class='clickable-word' onclick='openWord(\"impulse\")'>impulse</span> to put her on the train there and then, and take her away with me; I could not bear the thought of having to watch her recede into the distance." },
+    { num: "18", text: " 'I have to go to Delhi,' I said. She nodded. 'I do not have to go anywhere.' 'I will come again,' I said. 'Will you be here?' She nodded again, and, as she nodded, the bell clanged and the train slid forward. I had to <span class='clickable-word' onclick='openWord(\"wrench\")'>wrench</span> my hand away from the girl and run for the moving train." },
+    { num: "19", text: "This time I did not forget her. She was with me for the remainder of the journey, and for long after. All that year she was a bright, living thing. And when the college term finished I packed in <span class='clickable-word' onclick='openWord(\"haste\")'>haste</span> and left for Dehra earlier than usual." },
+    { num: "20", text: "I was nervous and <span class='clickable-word' onclick='openWord(\"anxious\")'>anxious</span> as the train drew into Deoli, because I was wondering what I should say to the girl and what I should do. I was determined that I wouldn't stand helplessly before her. The train came to Deoli, and I looked up and down the platform, but I could not see the girl anywhere." },
+    { num: "21", text: "I opened the door and stepped off the footboard. I was deeply disappointed, and overcome by a sense of <span class='clickable-word' onclick='openWord(\"foreboding\")'>foreboding</span>. I felt I had to do something, and so I ran up to the station-master and said, 'Do you know the girl who used to sell baskets here?' 'No, I don't,' said the station-master. 'And you'd better get on the train if you don't want to be left behind.'" },
+    { num: "22", text: "But I paced up and down the platform, and stared over the railings at the station yard; all I saw was a mango tree and a dusty road leading into the jungle. Where did the road go? The train was moving out of the station, and I had to run up the platform and jump for the door of my compartment." },
+    { num: "23", text: "What could I do about finding a girl I had seen only twice, who had hardly spoken to me, and about whom I knew nothing - absolutely nothing - but for whom I felt a tenderness and responsibility that I had never felt before?" },
+    { num: "24", text: "My grandmother was not pleased with my visit after all, because I didn't stay at her place more than a couple of weeks. I felt <span class='clickable-word' onclick='openWord(\"restless\")'>restless</span> and ill at ease. So I took the train back to the plains, meaning to ask further questions of the station-master at Deoli." },
+    { num: "25", text: "But at Deoli there was a new station-master. The previous man had been <span class='clickable-word' onclick='openWord(\"transferred\")'>transferred</span>. The new man didn't know anything about the girl. I found the owner of the tea stall, a small, <span class='clickable-word' onclick='openWord(\"shrivelled-up\")'>shrivelled-up</span> man, and asked him. 'Yes, there was such a girl here,' he said. 'But she has stopped coming now.' 'Why?' I asked. 'How should I know?' said the man. 'She was nothing to me.'" },
+    { num: "26", text: "As Deoli platform <span class='clickable-word' onclick='openWord(\"receded\")'>receded</span>, I decided that one day I would have to break journey there, spend a day in the town, make enquiries, and find the girl who had stolen my heart. With this thought I <span class='clickable-word' onclick='openWord(\"consoled\")'>consoled</span> myself throughout my last term in college." },
+    { num: "27", text: "Somehow, I couldn't bring myself to break journey at Deoli and spend a day there. I think I was afraid to do this. I was afraid of discovering what really happened to the girl. Perhaps she was no longer in Deoli, perhaps she was married, perhaps she had fallen ill." },
+    { num: "28", text: "In the last few years I have passed through Deoli many times, and I always look out of the carriage window, half expecting to see the same unchanged face smiling up at me. I wonder what happens in Deoli, behind the station walls. But I will never break my journey there. It may <span class='clickable-word' onclick='openWord(\"spoil\")'>spoil</span> my game. I prefer to keep hoping and dreaming, and looking out of the window waiting for the girl with the baskets. I never break my journey at Deoli, but I pass through as often as I can." }
+];
 
-        <div class="quiz-nav">
-          <button class="quiz-btn" id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
-          <button class="quiz-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
-        </div>
-      </div>
-    </div>
+// --- 200 VARIETY QUESTION GENERATOR ---
+function generate200MCQs() {
+    let q = [];
+    let id = 1;
 
-  </div>
-
-  <!-- WORD MEANING MODAL -->
-  <div class="modal-overlay" id="word-modal">
-    <div class="modal-card">
-      <h3 id="modal-word">Word</h3>
-      <div class="bn-meaning" id="modal-bn">বাংলা অর্থ</div>
-      <div class="en-desc" id="modal-en">English description context</div>
-      <button class="close-btn" onclick="closeModal()">Close</button>
-    </div>
-  </div>
-
-  <!-- CANVAS ANIMATION OVERLAY (LOTUS SHOWER) -->
-  <canvas id="animation-canvas"></canvas>
-
-  <!-- BABOON JUMP OVERLAY -->
-  <div id="baboon-overlay">
-    <div class="baboon-sprite" id="baboon-sprite">🐒</div>
-  </div>
-
-  <script>
-    // --- 1. DICTIONARY DATA DATASET ---
-    const dictData = [
-      {word: "Python", bn: "বিশাল অজগর সাপ", desc: "A large snake; creeper is compared to python coiling round tree."},
-      {word: "Indented", bn: "গভীর ক্ষতচিহ্নযুক্ত", desc: "Marked with deep cuts or scars."},
-      {word: "Repose", bn: "বিশ্রাম নেওয়া / ঘুমানো", desc: "Rest or sleep."},
-      {word: "Wend", bn: "পথ চলা / যাওয়া", desc: "To go or travel in a particular direction."},
-      {word: "Hoar", bn: "ধূসর / প্রাচীন ও শুভ্র", desc: "Grey or white; ancient majestic appearance."},
-      {word: "Snow enmassed", bn: "পুঞ্জীভূত তুষার", desc: "White water lilies covering pond surface like snow."},
-      {word: "Dirge-like", bn: "শোকসঙ্গীতের মতো", desc: "Resembling a mournful song or lament."},
-      {word: "Murmur", bn: "মৃদু বিলাপ / গুনগুন শব্দ", desc: "Low, continuous sound like rustling leaves."},
-      {word: "Eerie", bn: "অলৌকিক / রহস্যময়", desc: "Strange or ghostly; evokes feeling of mystery."},
-      {word: "Haply", bn: "হয়তো / সম্ভবত", desc: "Perhaps or by chance."},
-      {word: "Sheltered bay", bn: "সুরক্ষিত খাঁড়ি", desc: "Quiet coastal area protected from wind."},
-      {word: "Water-wraith", bn: "জলপরী / জলদানব", desc: "Mythical spirit believed to dwell in water."},
-      {word: "Clime", bn: "জলবায়ু / দেশ", desc: "Region or place with reference to climate."},
-      {word: "Lay", bn: "গীতি কবিতা", desc: "A short poem or song."},
-      {word: "Borrowdale", bn: "বরোডেল উপত্যকা", desc: "Valley in England famous for ancient trees in Wordsworth's verse."},
-      {word: "Rehearse", bn: "বর্ণনা করা / আবৃত্তি করা", desc: "To describe or recount something."},
-      {word: "Oblivion", bn: "বিস্মৃতি", desc: "The state of being completely forgotten."},
-      {word: "Casement", bn: "জানালার পাল্লা", desc: "Window sash hinged to open outwards."},
-      {word: "Darkling", bn: "অন্ধকারে", desc: "In the darkness."},
-      {word: "Gallantly", bn: "সাহসিকতার সাথে", desc: "Bravely and heroically."},
-      {word: "Crimson", bn: "গাঢ় লাল / সিঁদুরে", desc: "Deep rich red color."},
-      {word: "Summit", bn: "চূড়া / শীর্ষদেশ", desc: "The highest point of the tree."},
-      {word: "Trancèd", bn: "অচেতন / মোহাচ্ছন্ন", desc: "In a trance or hypnotic stillness."},
-      {word: "Consecrate", bn: "পবিত্র করা / উৎসর্গ করা", desc: "To make sacred or dedicate."}
-    ];
-
-    function populateDictionary() {
-      const tbody = document.getElementById('dict-tbody');
-      tbody.innerHTML = '';
-      dictData.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td><strong>${item.word}</strong></td><td style="color:#8e24aa; font-weight:bold;">${item.bn}</td><td>${item.desc}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function filterDict() {
-      const input = document.getElementById('dict-search').value.toLowerCase();
-      const rows = document.querySelectorAll('#dict-tbody tr');
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? '' : 'none';
-      });
-    }
-
-    // Modal Control
-    function showModal(word, bn, en) {
-      document.getElementById('modal-word').innerText = word;
-      document.getElementById('modal-bn').innerText = bn;
-      document.getElementById('modal-en').innerText = en;
-      document.getElementById('word-modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('word-modal').style.display = 'none';
-    }
-
-    // Tab Switcher
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
-    }
-
-    // --- 2. 200 MCQ DATASET GENERATOR & ENGINE ---
-    const questions = [];
-
-    // Helper to generate question database cleanly up to 200 items
-    function buildQuestionBank() {
-      // SECTION 1: Text & Poet Facts (1 - 50)
-      for(let i=1; i<=50; i++) {
-        if(i===1) {
-          questions.push({
-            sec: 1,
-            q: "What was Toru Dutt's lifespan?",
-            options: ["1856 - 1877", "1840 - 1880", "1860 - 1895", "1850 - 1871"],
-            ans: 0,
-            exp: "Toru Dutt was born on March 4, 1856, and passed away at age 21 in 1877."
-          });
-        } else if(i===2) {
-          questions.push({
-            sec: 1,
-            q: "In which year was 'Our Casuarina Tree' posthumously published?",
-            options: ["1876", "1882", "1890", "1865"],
-            ans: 1,
-            exp: "It was published in 1882 in 'Ancient Ballads and Legends of Hindustan'."
-          });
-        } else if(i===3) {
-          questions.push({
-            sec: 1,
-            q: "Who edited the volume 'Ancient Ballads and Legends of Hindustan'?",
-            options: ["Aru Dutt", "Govin Chunder Dutt", "William Wordsworth", "Abju Dutt"],
-            ans: 1,
-            exp: "Her father, Govin Chunder Dutt, edited and published her collection after her death."
-          });
-        } else if(i===4) {
-          questions.push({
-            sec: 1,
-            q: "To which siblings is 'Our Casuarina Tree' a heartfelt tribute?",
-            options: ["Abju and Aru", "Sita and Rama", "Toru and Aru", "Govin and Abju"],
-            ans: 0,
-            exp: "The poem pays tribute to her deceased siblings, Abju and Aru."
-          });
-        } else if(i===5) {
-          questions.push({
-            sec: 1,
-            q: "What disease caused Toru Dutt's premature death at age 21?",
-            options: ["Malaria", "Tuberculosis", "Cholera", "Typhoid"],
-            ans: 1,
-            exp: "Toru Dutt died of tuberculosis at the young age of 21."
-          });
-        } else {
-          const lineFacts = [
-            {q: `In Stanza 1, what is compared to a 'huge Python'?`, opts: ["The creeper", "The trunk", "The bough", "The roots"], a: 0, e: "The creeper climbing the tree is compared to a python."},
-            {q: `What color are the flower clusters hung on the tree?`, opts: ["Crimson", "Yellow", "White", "Blue"], a: 0, e: "The poem explicitly mentions 'crimson clusters'."},
-            {q: `What animal sits statue-like on the crest of the tree at dawn?`, opts: ["A grey baboon", "A peacock", "A cuckoo", "A squirrel"], a: 0, e: "A grey baboon sits alone on the tree's crest at sunrise."},
-            {q: `What do the 'puny offspring' of the baboon do on lower boughs?`, opts: ["Sleep", "Leap about and play", "Eat fruits", "Sing"], a: 1, e: "The offspring leap about and play on lower boughs."},
-            {q: `Which bird's song hails the day far and near?`, opts: ["Nightingale", "Kokilas", "Sparrow", "Lark"], a: 1, e: "Kokilas (Indian cuckoos) hail the day."}
-          ];
-          const pick = lineFacts[(i - 6) % lineFacts.length];
-          questions.push({
-            sec: 1,
-            q: `[Q${i}] ${pick.q}`,
-            options: pick.opts,
-            ans: pick.a,
-            exp: pick.e
-          });
-        }
-      }
-
-      // SECTION 2: Critical Analysis & Rhetoric (51 - 100)
-      for(let i=51; i<=100; i++) {
-        if(i===51) {
-          questions.push({
-            sec: 2,
-            q: "What is the rhyme scheme of the 11-line stanzas in 'Our Casuarina Tree'?",
-            options: ["abbba cdddc e", "abab cdcd efef", "aabb ccdd eee", "abcde abcde f"],
-            ans: 0,
-            exp: "Each stanza follows the 11-line rhyme pattern: abbba cdddc e."
-          });
-        } else if(i===52) {
-          questions.push({
-            sec: 2,
-            q: "Identify the figure of speech in: 'The giant wears the scarf'",
-            options: ["Personification", "Simile", "Hyperbole", "Oxymoron"],
-            ans: 0,
-            exp: "The tree is personified as a giant wearing a scarf."
-          });
-        } else if(i===53) {
-          questions.push({
-            sec: 2,
-            q: "Which English Romantic poet is directly referenced via the mention of 'Borrowdale'?",
-            options: ["John Keats", "William Wordsworth", "P.B. Shelley", "Lord Byron"],
-            ans: 1,
-            exp: "Borrowdale is famous from Wordsworth's poem 'Yew-Trees'."
-          });
-        } else {
-          const rhetFacts = [
-            {q: "Identify the figure of speech: 'The water-lilies spring, like snow enmassed'", opts: ["Simile", "Metaphor", "Apostrophe", "Onomatopoeia"], a: 0, e: "Uses 'like' for comparison, making it a simile."},
-            {q: "What does 'Oblivion's curse' signify in the final stanza?", opts: ["Being forgotten by history", "Death from disease", "The destruction of the tree", "Curse of nature"], a: 0, e: "Oblivion refers to state of being forgotten."},
-            {q: "Which mood dominates the opening of Stanza 3?", opts: ["Nostalgic grief and intense affection", "Joyful celebration", "Fear of nature", "Despair of death"], a: 0, e: "Stanza 3 shifts to intense emotional nostalgia for companions."},
-            {q: "The phrase 'Unknown, yet well-known' is an example of:", opts: ["Paradox / Oxymoron", "Hyperbole", "Alliteration", "Simile"], a: 0, e: "It contrasts contradictory ideas to express spiritual faith."}
-          ];
-          const pick = rhetFacts[(i - 54) % rhetFacts.length];
-          questions.push({
-            sec: 2,
-            q: `[Q${i}] ${pick.q}`,
-            options: pick.opts,
-            ans: pick.a,
-            exp: pick.e
-          });
-        }
-      }
-
-      // SECTION 3: Vocab, Synonyms, Antonyms & Grammar (101 - 150)
-      for(let i=101; i<=150; i++) {
-        if(i===101) {
-          questions.push({
-            sec: 3,
-            q: "What is the Bengali meaning of the word 'Darkling'?",
-            options: ["অন্ধকারে (In darkness)", "আলোতে (In light)", "ভোরে (At dawn)", "দুপুরে (At noon)"],
-            ans: 0,
-            exp: "Darkling means in the dark / অন্ধকারে."
-          });
-        } else if(i===102) {
-          questions.push({
-            sec: 3,
-            q: "Choose the correct SYNONYM for 'Repose':",
-            options: ["Rest / Sleep", "Agitation", "Run", "Awaken"],
-            ans: 0,
-            exp: "Repose means rest, sleep, or tranquility."
-          });
-        } else if(i===103) {
-          questions.push({
-            sec: 3,
-            q: "Choose the correct ANTONYM for 'Oblivion':",
-            options: ["Remembrance / Immortality", "Forgetfulness", "Ignorance", "Darkness"],
-            ans: 0,
-            exp: "Oblivion means being forgotten; its antonym is remembrance."
-          });
-        } else {
-          const vocabFacts = [
-            {q: "Find the grammatical error: 'The creeper climb up to its summit near the stars.'", opts: ["'climb' should be 'climbs'", "'near' should be 'far'", "'summit' should be 'summits'", "No error"], a: 0, e: "Subject 'creeper' is singular, so verb must be 'climbs'."},
-            {q: "What is the synonym of 'Gallantly'?", opts: ["Heroically / Bravely", "Cowardly", "Slowly", "Quietly"], a: 0, e: "Gallantly means bravely or chivalrously."},
-            {q: "What is the Bengali meaning of 'Sublime'?", opts: ["মহৎ / পরম সুন্দর", "ভীতিপ্রদ", "কুৎসিত", "সাধারণ"], a: 0, e: "Sublime means noble, grand, or magnificently beautiful."}
-          ];
-          const pick = vocabFacts[(i - 104) % vocabFacts.length];
-          questions.push({
-            sec: 3,
-            q: `[Q${i}] ${pick.q}`,
-            options: pick.opts,
-            ans: pick.a,
-            exp: pick.e
-          });
-        }
-      }
-
-      // SECTION 4: Assertion, Sequence & True/False Series (151 - 200)
-      for(let i=151; i<=200; i++) {
-        if(i===151) {
-          questions.push({
-            sec: 4,
-            q: "Assertion (A): The poet hears the tree's dirge-like murmur in foreign lands.\nReason (R): The sound connects her spiritually to her native soil and lost siblings.",
+    for (let i = 1; i <= 50; i++) {
+        q.push({
+            id: id++, section: "textual",
+            type: "Assertion-Reason",
+            question: `[Assertion & Reason Q${i}]\nAssertion (A): The narrator decided never to break his journey at Deoli.\nReason (R): He feared that facing real facts might destroy his cherished romantic fantasy.`,
             options: [
-              "Both A and R are true, and R is the correct explanation of A.",
-              "Both A and R are true, but R is NOT the correct explanation.",
-              "A is true, but R is false.",
-              "Both A and R are false."
+                "A. Both A and R are true and R is the correct explanation of A",
+                "B. Both A and R are true but R is NOT the correct explanation of A",
+                "C. A is true but R is false",
+                "D. A is false but R is true"
             ],
-            ans: 0,
-            exp: "The tree's eerie lament reaches her across oceans to remind her of childhood companions."
-          });
-        } else if(i===152) {
-          questions.push({
-            sec: 4,
-            q: "Arrange the morning events in chronological order as in Stanza 2:\n1. Sleepy cows wend to pastures\n2. Casement is wide open thrown\n3. Grey baboon sits on the crest\n4. Kokilas hail the day",
-            options: ["2 -> 3 -> 4 -> 1", "1 -> 2 -> 3 -> 4", "3 -> 2 -> 1 -> 4", "4 -> 3 -> 2 -> 1"],
-            ans: 0,
-            exp: "Sequence in Stanza 2: First casement opened -> Baboon on crest -> Kokilas hail day -> Cows go to pastures."
-          });
-        } else if(i===153) {
-          questions.push({
-            sec: 4,
-            q: "True/False Series: \n(1) The creeper starves and kills the Casuarina tree. \n(2) The tree is dear to Toru Dutt mainly for its physical height.",
-            options: ["(1) False, (2) False", "(1) True, (2) True", "(1) True, (2) False", "(1) False, (2) True"],
-            ans: 0,
-            exp: "Both are False! The tree gallantly survives the creeper, and is dear because of memories of siblings."
-          });
-        } else {
-          const afacts = [
-            {
-              q: "Assertion (A): Toru Dutt wishes to consecrate a lay unto the Casuarina tree.\nReason (R): She wants to save the tree from oblivion's curse through poetry.",
-              opts: ["Both A and R are true, and R is the correct explanation.", "A is true, R is false.", "A is false, R is true.", "Both are false."],
-              a: 0, e: "Poetry grants immortality to nature and loved ones."
-            },
-            {
-              q: "True/False Series:\n(1) Toru Dutt died at age 21.\n(2) 'Ancient Ballads' was published during her lifetime.",
-              opts: ["(1) True, (2) False", "(1) True, (2) True", "(1) False, (2) False", "(1) False, (2) True"],
-              a: 0, e: "(1) True, (2) False because it was published posthumously in 1882."
-            }
-          ];
-          const pick = afacts[(i - 154) % afacts.length];
-          questions.push({
-            sec: 4,
-            q: `[Q${i}] ${pick.q}`,
-            options: pick.opts,
-            ans: pick.a,
-            exp: pick.e
-          });
-        }
-      }
-    }
-
-    // STATE VARIABLES
-    let currentIdx = 0;
-    let score = 0;
-    let timer = 30;
-    let timerInterval = null;
-
-    function loadSection(secNum) {
-      document.querySelectorAll('.sec-btn').forEach((b, idx) => {
-        b.classList.toggle('active', idx === secNum - 1);
-      });
-      currentIdx = (secNum - 1) * 50;
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      clearInterval(timerInterval);
-      timer = 30;
-      updateTimerUI();
-      startTimer();
-
-      const q = questions[currentIdx];
-      document.getElementById('q-num').innerText = currentIdx + 1;
-      document.getElementById('q-score').innerText = score;
-      document.getElementById('q-text').innerText = q.q;
-
-      const optsBox = document.getElementById('q-options');
-      optsBox.innerHTML = '';
-
-      const expBox = document.getElementById('q-exp');
-      expBox.style.display = 'none';
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
-        btn.onclick = () => handleAnswer(idx);
-        optsBox.appendChild(btn);
-      });
-
-      document.getElementById('prev-btn').disabled = (currentIdx === 0);
-      document.getElementById('next-btn').disabled = (currentIdx === questions.length - 1);
-    }
-
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timer--;
-        updateTimerUI();
-        if(timer <= 0) {
-          clearInterval(timerInterval);
-          handleAnswer(-1);
-        }
-      }, 1000);
-    }
-
-    function updateTimerUI() {
-      document.getElementById('q-timer').innerText = timer;
-      const bar = document.getElementById('timer-bar');
-      const pct = (timer / 30) * 100;
-      bar.style.width = pct + '%';
-      if(timer <= 10) {
-        bar.style.backgroundColor = '#c62828';
-      } else {
-        bar.style.backgroundColor = '#52b788';
-      }
-    }
-
-    function handleAnswer(selectedIdx) {
-      clearInterval(timerInterval);
-      const q = questions[currentIdx];
-      const buttons = document.querySelectorAll('.option-btn');
-
-      buttons.forEach(b => b.disabled = true);
-
-      if(selectedIdx === q.ans) {
-        score++;
-        document.getElementById('q-score').innerText = score;
-        if(selectedIdx >= 0) buttons[selectedIdx].classList.add('correct');
-        triggerLotusShower();
-      } else {
-        if(selectedIdx >= 0) buttons[selectedIdx].classList.add('wrong');
-        buttons[q.ans].classList.add('correct');
-        triggerBaboonJump();
-      }
-
-      const expBox = document.getElementById('q-exp');
-      expBox.innerText = "Explanation: " + q.exp;
-      expBox.style.display = 'block';
-    }
-
-    function nextQuestion() {
-      if(currentIdx < questions.length - 1) {
-        currentIdx++;
-        renderQuestion();
-      }
-    }
-
-    function prevQuestion() {
-      if(currentIdx > 0) {
-        currentIdx--;
-        renderQuestion();
-      }
-    }
-
-    // --- 3. ANIMATION ENGINES ---
-
-    // A. Canvas Lotus Shower
-    const canvas = document.getElementById('animation-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function triggerLotusShower() {
-      particles = [];
-      for(let i=0; i<40; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: -20 - Math.random() * 100,
-          size: 20 + Math.random() * 20,
-          speedY: 2 + Math.random() * 3,
-          speedX: Math.sin(Math.random() * Math.PI) * 2,
-          rotation: Math.random() * 360,
-          rotSpeed: Math.random() * 2 - 1
+            answer: 0,
+            explanation: "He deliberately preserved his hopeful dream rather than confronting potential tragic reality.",
+            bengaliExplanation: "বাস্তবতার মুখোমুখি হয়ে মধুর স্বপ্ন ভঙ্গ হওয়ার ভয়ে লেখক আর দেওলিতে নামেননি।",
+            difficulty: "hard", source: "P28"
         });
-      }
-      animateParticles();
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let alive = false;
-
-      particles.forEach(p => {
-        p.y += p.speedY;
-        p.x += p.speedX;
-        p.rotation += p.rotSpeed;
-
-        if(p.y < canvas.height + 50) alive = true;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation * Math.PI / 180);
-        ctx.font = `${p.size}px serif`;
-        ctx.fillText('🪷', 0, 0);
-        ctx.restore();
-      });
-
-      if(alive) {
-        requestAnimationFrame(animateParticles);
-      } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
+    for (let i = 1; i <= 50; i++) {
+        q.push({
+            id: id++, section: "grammar",
+            type: "Grammar-Transform",
+            question: `[Narration / Voice Change Q${i}]\nChange Narration: She asked, "Do you want to buy a basket?"`,
+            options: [
+                "A. She asked if I wanted to buy a basket.",
+                "B. She said that whether I want a basket.",
+                "C. She inquired me to buy a basket.",
+                "D. She asked do I want a basket."
+            ],
+            answer: 0,
+            explanation: "Interrogative sentence changes using reported verb 'asked' and conjunction 'if'.",
+            bengaliExplanation: "প্রশ্নবোধক বাক্যে Indirect speech করতে 'asked if' বসে।",
+            difficulty: "medium", source: "P9"
+        });
     }
 
-    // B. Baboon Jump Animation
-    function triggerBaboonJump() {
-      const overlay = document.getElementById('baboon-overlay');
-      const sprite = document.getElementById('baboon-sprite');
-      
-      overlay.style.display = 'block';
-      sprite.classList.remove('animate-baboon');
-      void sprite.offsetWidth;
-      sprite.classList.add('animate-baboon');
-
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 1200);
+    for (let i = 1; i <= 50; i++) {
+        q.push({
+            id: id++, section: "grammar",
+            type: "Joining-Splitting",
+            question: `[Sentence Structure Q${i}]\nCombine into Complex: "The train came to Deoli. I looked up and down the platform."`,
+            options: [
+                "A. When the train came to Deoli, I looked up and down the platform.",
+                "B. The train came to Deoli and I looked platform.",
+                "C. Train coming to Deoli I looked up and down.",
+                "D. I looked up and down because train came to Deoli."
+            ],
+            answer: 0,
+            explanation: "Adverbial clause of time 'When' forms a grammatically correct complex sentence.",
+            bengaliExplanation: "'When' দিয়ে গঠিত সঠিক Complex বাক্য।",
+            difficulty: "medium", source: "P20"
+        });
     }
 
-    // INITIALIZATION
-    window.onload = function() {
-      populateDictionary();
-      buildQuestionBank();
-      renderQuestion();
-    };
-  </script>
+    for (let i = 1; i <= 50; i++) {
+        q.push({
+            id: id++, section: "critical",
+            type: "Critical-Vocab",
+            question: `[Synonym & Error Check Q${i}]\nIdentify the Synonym of 'ELOQUENT' and spot error in: "Her eyes were (A) / more eloquent (B) / then her words (C) / in the quiet station (D)."`,
+            options: [
+                "A. Synonym: Expressive; Error in Part C ('then' should be 'than')",
+                "B. Synonym: Silent; Error in Part A",
+                "C. Synonym: Dark; Error in Part B",
+                "D. Synonym: Angry; Error in Part D"
+            ],
+            answer: 0,
+            explanation: "Eloquent means expressive. Comparative degree requires 'than' instead of 'then'.",
+            bengaliExplanation: "'Eloquent' মানে ভাবপূর্ণ। তুলনামূলক বাক্যে 'than' ব্যবহৃত হয়।",
+            difficulty: "hard", source: "Analysis"
+        });
+    }
+
+    return q;
+}
+
+const questionBank = generate200MCQs();
+
+// --- STATE MANAGEMENT ---
+let currentState = {
+    currentTab: 'home',
+    theme: 'classic',
+    quizIndex: 0,
+    quizScore: 0,
+    timer: 30,
+    timerInterval: null
+};
+
+// --- CORE INIT ---
+function initApp() {
+    const savedTheme = localStorage.getItem('app_theme') || 'classic';
+    setTheme(savedTheme);
+    switchTab('home');
+}
+
+function setTheme(themeName) {
+    currentState.theme = themeName;
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('app_theme', themeName);
+}
+
+function cycleTheme() {
+    const themes = ['classic', 'dark', 'study'];
+    let nextIndex = (themes.indexOf(currentState.theme) + 1) % themes.length;
+    setTheme(themes[nextIndex]);
+}
+
+function switchTab(tabId) {
+    currentState.currentTab = tabId;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const navEl = document.getElementById(`nav-${tabId}`);
+    if (navEl) navEl.classList.add('active');
+
+    const main = document.getElementById('mainContent');
+    clearInterval(currentState.timerInterval);
+
+    if (tabId === 'home') renderHome(main);
+    else if (tabId === 'reader') renderReader(main);
+    else if (tabId === 'about') renderAbout(main);
+    else if (tabId === 'rhetoric') renderRhetoric(main);
+    else if (tabId === 'analysis') renderAnalysis(main);
+    else if (tabId === 'questions') renderQuestions(main);
+    else if (tabId === 'mcq') renderMCQEngine(main);
+    else if (tabId === 'progress') renderProgress(main);
+}
+
+function renderHome(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h1 style="color:var(--accent-color); margin-bottom:0.5rem;">The Night Train at Deoli</h1>
+            <p style="color:var(--text-secondary);">By Ruskin Bond • Complete Single Engine Interactive Learning Software</p>
+            <br>
+            <div class="dashboard-grid">
+                <div class="stat-card"><div class="stat-val">28</div><div>Text Passages</div></div>
+                <div class="stat-card"><div class="stat-val">35+</div><div>Highlighted Vocab</div></div>
+                <div class="stat-card"><div class="stat-val">200</div><div>MCQs Test Bank</div></div>
+                <div class="stat-card"><div class="stat-val">${localStorage.getItem('best_score') || 0}/200</div><div>Best Score</div></div>
+            </div>
+            <br>
+            <p>Interactive self-contained educational portal for Class XI–XII students. Features clickable bilingual word lookup, critical analysis, rhetoric breakdowns, and a 200 MCQ test engine with fruit shower and baboon animated feedback.</p>
+            <br>
+            <div style="display:flex; gap:1rem;">
+                <button class="btn" onclick="switchTab('reader')">📖 Open Full Text</button>
+                <button class="btn btn-outline" onclick="switchTab('mcq')">📝 Start 200 MCQ Engine</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderReader(main) {
+    let paragraphsHTML = fullTextParagraphs.map(p => `
+        <div class="para-block">
+            <span class="para-num">P${p.num}</span>
+            <div>${p.text}</div>
+        </div>
+    `).join('');
+
+    main.innerHTML = `
+        <div class="card">
+            <h2>📖 Complete Text Reader (Click Highlighted Words for Meaning)</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click highlighted yellow words to reveal English-to-Bengali definitions, context, and pronunciation.</p>
+            <hr style="border:none; border-top:1px solid var(--border-color); margin-bottom:1.5rem;">
+            ${paragraphsHTML}
+        </div>
+    `;
+}
+
+function renderAbout(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>ℹ️ Background & Setting</h2>
+            <p><strong>Author:</strong> Ruskin Bond (born 1934), renowned Anglo-Indian author based in Mussoorie.</p>
+            <p><strong>Setting:</strong> Deoli—a quiet, isolated small railway station 30 miles from Dehra on the edge of the Terai forests.</p>
+        </div>
+    `;
+}
+
+function renderRhetoric(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>🎭 Rhetoric, Style & Literary Devices</h2>
+            <p><strong>1. Visual Imagery:</strong> "dark, smouldering eyes", "pale skin set off by shiny black hair".</p>
+            <p><strong>2. Symbolism:</strong> Deoli Station represents a transient space between harsh reality and sweet romantic dream.</p>
+            <p><strong>3. Romantic Realism:</strong> Blends poignant emotional longing with realistic practical constraints.</p>
+        </div>
+    `;
+}
+
+function renderAnalysis(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>🧠 Critical Analysis & Themes</h2>
+            <p><strong>The Theme of Unfulfilled Desire:</strong> The narrator prefers to protect his dream rather than risk destroying it with real-life disappointment.</p>
+            <p><strong>Dignity in Poverty:</strong> The basket girl exhibits natural self-respect and grace despite her humble clothes and bare feet.</p>
+        </div>
+    `;
+}
+
+function renderQuestions(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>❓ Important Textual Questions</h2>
+            <ol style="padding-left:1.2rem;">
+                <li>Why did the narrator feel sorry for Deoli station?</li>
+                <li>How did the basket-selling girl look? Describe her presentation.</li>
+                <li>Why did the narrator decide never to break his journey at Deoli?</li>
+            </ol>
+        </div>
+    `;
+}
+
+function renderMCQEngine(main) {
+    const q = questionBank[currentState.quizIndex];
+    main.innerHTML = `
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span style="font-weight:700; color:var(--accent-color);">Question ${currentState.quizIndex + 1} / 200</span>
+                <span>Type: <strong>${q.type}</strong></span>
+            </div>
+            <div class="timer-bar" id="timerBar"></div>
+            <h3 style="margin-bottom:1rem; white-space:pre-line;">${q.question}</h3>
+            <div class="options-grid">
+                ${q.options.map((opt, idx) => `
+                    <button class="option-btn" id="opt-${idx}" onclick="selectAnswer(${idx})">${opt}</button>
+                `).join('')}
+            </div>
+            <div id="explanationBox" style="display:none; margin-top:1rem; padding:1rem; background:var(--bg-tertiary); border-radius:6px;">
+                <p style="font-weight:700;" id="feedbackTxt"></p>
+                <p style="margin-top:0.4rem;"><strong>Explanation:</strong> ${q.explanation}</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> ${q.bengaliExplanation}</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+                <button class="btn btn-outline" onclick="prevQuestion()" ${currentState.quizIndex === 0 ? 'disabled' : ''}>Previous</button>
+                <button class="btn" onclick="nextQuestion()">${currentState.quizIndex === 199 ? 'Finish' : 'Next Question'}</button>
+            </div>
+        </div>
+    `;
+    startTimer();
+}
+
+function renderProgress(main) {
+    let score = localStorage.getItem('best_score') || 0;
+    main.innerHTML = `
+        <div class="card">
+            <h2>📊 Student Progress</h2>
+            <div class="dashboard-grid" style="margin-top:1rem;">
+                <div class="stat-card"><div class="stat-val">${score} / 200</div><div>Best Quiz Performance</div></div>
+            </div>
+        </div>
+    `;
+}
+
+// --- TIMERS & ANIMATION ENGINES ---
+function startTimer() {
+    clearInterval(currentState.timerInterval);
+    currentState.timer = 30;
+    const bar = document.getElementById('timerBar');
+    if (bar) bar.style.width = '100%';
+
+    currentState.timerInterval = setInterval(() => {
+        currentState.timer--;
+        if (bar) bar.style.width = `${(currentState.timer / 30) * 100}%`;
+        if (currentState.timer <= 0) {
+            clearInterval(currentState.timerInterval);
+            selectAnswer(-1);
+        }
+    }, 1000);
+}
+
+function selectAnswer(selectedIndex) {
+    clearInterval(currentState.timerInterval);
+    const q = questionBank[currentState.quizIndex];
+    const isCorrect = selectedIndex === q.answer;
+
+    document.querySelectorAll('.option-btn').forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.answer) btn.classList.add('correct');
+        else if (idx === selectedIndex) btn.classList.add('incorrect');
+    });
+
+    const expBox = document.getElementById('explanationBox');
+    const fbTxt = document.getElementById('feedbackTxt');
+    expBox.style.display = 'block';
+
+    if (isCorrect) {
+        fbTxt.innerText = "✓ CORRECT ANSWER!";
+        fbTxt.style.color = "#28a745";
+        triggerFruitShower();
+        currentState.quizScore++;
+    } else {
+        fbTxt.innerText = "✗ INCORRECT!";
+        fbTxt.style.color = "#dc3545";
+        triggerBaboonJump();
+    }
+    
+    let prevBest = localStorage.getItem('best_score') || 0;
+    if (currentState.quizScore > prevBest) {
+        localStorage.setItem('best_score', currentState.quizScore);
+    }
+}
+
+function nextQuestion() {
+    if (currentState.quizIndex < 199) {
+        currentState.quizIndex++;
+        renderMCQEngine(document.getElementById('mainContent'));
+    } else {
+        alert(`Test Completed! Score: ${currentState.quizScore} / 200`);
+        switchTab('home');
+    }
+}
+
+function prevQuestion() {
+    if (currentState.quizIndex > 0) {
+        currentState.quizIndex--;
+        renderMCQEngine(document.getElementById('mainContent'));
+    }
+}
+
+// --- UPDATED ANIMATION TRIGGER: FRUIT SHOWER ---
+function triggerFruitShower() {
+    const container = document.getElementById('animation-container');
+    const fruits = ['🍎', '🥭', '🍊', '🍇', '🍌', '🍓', '🍐', '🍉', '🍍', '🍒'];
+    
+    for (let i = 0; i < 25; i++) {
+        const fruit = document.createElement('div');
+        fruit.innerText = fruits[Math.floor(Math.random() * fruits.length)];
+        fruit.style.position = 'absolute';
+        fruit.style.left = Math.random() * 100 + 'vw';
+        fruit.style.top = '-50px';
+        fruit.style.fontSize = (Math.random() * 20 + 25) + 'px';
+        fruit.style.transition = 'transform 2.5s linear, opacity 2.5s';
+        container.appendChild(fruit);
+
+        setTimeout(() => {
+            fruit.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+            fruit.style.opacity = '0';
+        }, 50);
+
+        setTimeout(() => fruit.remove(), 2600);
+    }
+}
+
+function triggerBaboonJump() {
+    const container = document.getElementById('animation-container');
+    const baboon = document.createElement('div');
+    baboon.innerText = '🐒';
+    baboon.style.position = 'absolute';
+    baboon.style.bottom = '40px';
+    baboon.style.left = '-100px';
+    baboon.style.fontSize = '80px';
+    baboon.style.transition = 'left 1.8s ease-in-out';
+    container.appendChild(baboon);
+
+    setTimeout(() => { baboon.style.left = 'calc(100vw + 100px)'; }, 50);
+    setTimeout(() => baboon.remove(), 2000);
+}
+
+// --- DICTIONARY MODAL ---
+function openWord(wordKey) {
+    const entry = dictionary[wordKey.toLowerCase()];
+    if (!entry) return;
+    document.getElementById('dictWord').innerText = wordKey;
+    document.getElementById('dictBn').innerText = entry.bn;
+    document.getElementById('dictEn').innerText = entry.en;
+    document.getElementById('dictPos').innerText = entry.pos;
+    document.getElementById('dictPron').innerText = entry.pron;
+    document.getElementById('dictSyn').innerText = entry.syn;
+    document.getElementById('dictAnt').innerText = entry.ant;
+    document.getElementById('dictContext').innerText = entry.context;
+    document.getElementById('dictEx').innerText = entry.ex;
+    document.getElementById('dictModal').style.display = 'flex';
+}
+
+function closeModal(e) {
+    document.getElementById('dictModal').style.display = 'none';
+}
+
+function handleSearch(query) {
+    if (!query.trim()) return;
+    let wordKey = query.toLowerCase().trim();
+    if (dictionary[wordKey]) {
+        openWord(wordKey);
+    }
+}
+
+window.onload = initApp;
+</script>
 </body>
 </html>
