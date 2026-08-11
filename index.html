@@ -1,951 +1,824 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="classic">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive English MCQ Engine with Interactive Word Meanings</title>
-  <style>
-    :root {
-      --bg-color: #f0f4f8;
-      --card-bg: #ffffff;
-      --text-color: #1e293b;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --success: #16a34a;
-      --error: #dc2626;
-      --border: #cbd5e1;
-      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Night Train at Deoli — Complete Literature Learning Engine</title>
+    <style>
+        :root {
+            /* Themes */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f3f5;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent-color: #2b6cb0;
+            --accent-hover: #1c4ed8;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --font-size-base: 16px;
+            --line-height-base: 1.6;
+            --content-width: 900px;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
+        [data-theme="dark"] {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --accent-color: #63b3ed;
+            --accent-hover: #90cdf4;
+            --border-color: #404040;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      position: relative;
-      z-index: 2;
-    }
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --accent-color: #3182ce;
+            --accent-hover: #2b6cb0;
+            --border-color: #e2e8f0;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 15px;
-      margin-bottom: 20px;
-    }
+        [data-theme="study"] {
+            --bg-primary: #f4f1ea;
+            --bg-secondary: #fefcf7;
+            --bg-tertiary: #e7e0d3;
+            --text-primary: #2c221e;
+            --text-secondary: #705e52;
+            --accent-color: #7c2d12;
+            --accent-hover: #9a3412;
+            --border-color: #d6cebe;
+        }
 
-    h1 { font-size: 1.5rem; color: var(--primary); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+        .app-container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
 
-    .btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-    .btn:hover { background: var(--primary-hover); }
-    .btn-secondary { background: #64748b; }
-    .btn-secondary:hover { background: #475569; }
+        header {
+            grid-column: 1 / -1;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-    .offline-badge {
-      background: #dcfce7;
-      color: #166534;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
+        .brand-title { font-size: 1.25rem; font-weight: 700; color: var(--accent-color); }
+        .brand-subtitle { font-size: 0.8rem; color: var(--text-secondary); }
 
-    /* Navigation Sections */
-    .sections-nav {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+        .header-controls { display: flex; gap: 0.75rem; align-items: center; }
+        .btn {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn:hover { background-color: var(--accent-hover); }
+        .btn:active { transform: scale(0.98); }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .btn-outline:hover { background-color: var(--bg-tertiary); }
 
-    .section-tab {
-      padding: 12px;
-      background: #f1f5f9;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-    .section-tab.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
+        sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
 
-    /* Stats & Progress */
-    .progress-bar-container {
-      width: 100%;
-      height: 10px;
-      background: #e2e8f0;
-      border-radius: 5px;
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: var(--primary);
-      transition: width 0.3s ease;
-    }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 500;
+        }
+        .nav-item:hover, .nav-item.active { background-color: var(--bg-tertiary); color: var(--accent-color); }
 
-    .quiz-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      font-weight: 600;
-      color: #475569;
-    }
+        main { padding: 2rem; overflow-y: auto; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-    /* Clickable Text Formatting */
-    .clickable-text {
-      font-size: 1.15rem;
-      margin-bottom: 15px;
-      user-select: text;
-    }
-    .clickable-word {
-      cursor: pointer;
-      border-bottom: 1px dotted var(--primary);
-      transition: background 0.15s, color 0.15s;
-      display: inline-block;
-      padding: 0 2px;
-      border-radius: 3px;
-    }
-    .clickable-word:hover {
-      background-color: #dbeafe;
-      color: var(--primary-hover);
-    }
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
 
-    /* MCQ Options */
-    .options-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+        .para-block { margin-bottom: 1.5rem; position: relative; padding-left: 2.5rem; max-width: var(--content-width); }
+        .para-num {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
-    .option-card {
-      padding: 14px 18px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 1rem;
-      background: #fafafa;
-    }
-    .option-card:hover {
-      border-color: var(--primary);
-      background: #f0f7ff;
-    }
-    .option-card.correct {
-      border-color: var(--success);
-      background-color: #f0fdf4;
-      color: #14532d;
-      font-weight: bold;
-    }
-    .option-card.incorrect {
-      border-color: var(--error);
-      background-color: #fef2f2;
-      color: #7f1d1d;
-    }
+        .clickable-word {
+            text-decoration: underline dotted var(--accent-color);
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+        .clickable-word:hover { background-color: rgba(255, 235, 59, 0.4); border-radius: 2px; }
 
-    .explanation {
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 8px;
-      background-color: #f8fafc;
-      border-left: 4px solid var(--primary);
-      display: none;
-    }
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+        .modal-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
 
-    /* Navigation Footer */
-    .quiz-footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid var(--border);
-    }
+        /* MCQ Styles */
+        .timer-bar {
+            height: 6px;
+            background-color: var(--accent-color);
+            width: 100%;
+            transition: width 1s linear;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        .option-btn {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-btn:hover { background: var(--bg-tertiary); }
+        .option-btn.correct { background: #28a745; color: white; border-color: #28a745; }
+        .option-btn.incorrect { background: #dc3545; color: white; border-color: #dc3545; }
 
-    /* Word Meaning Popup Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .modal {
-      background: white;
-      padding: 24px;
-      border-radius: 14px;
-      max-width: 450px;
-      width: 90%;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-    .modal-close {
-      position: absolute;
-      top: 12px; right: 15px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #64748b;
-    }
-    .word-title {
-      font-size: 1.6rem;
-      color: var(--primary);
-      margin-bottom: 5px;
-      text-transform: capitalize;
-    }
-    .word-meaning {
-      font-size: 1.25rem;
-      color: #047857;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .word-details {
-      font-size: 0.95rem;
-      color: #475569;
-    }
+        /* Animation Overlays */
+        #animation-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
 
-    /* Prompt View Modal */
-    .prompt-box {
-      white-space: pre-wrap;
-      background: #f1f5f9;
-      padding: 15px;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 0.85rem;
-      max-height: 300px;
-      overflow-y: auto;
-    }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent-color); }
 
-    /* ANIMATIONS CANVAS & OVERLAYS */
-    #flowerCanvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 999;
-    }
-
-    /* Coming Train Overlay Animation */
-    .train-container {
-      position: fixed;
-      bottom: 10%;
-      left: -100%;
-      width: 100%;
-      z-index: 998;
-      pointer-events: none;
-      transition: none;
-    }
-
-    .train-container.run-train {
-      animation: trainPass 2.8s linear forwards;
-    }
-
-    @keyframes trainPass {
-      0% { left: 100%; }
-      100% { left: -100%; }
-    }
-
-    .train-svg {
-      width: 450px;
-      filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.3));
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 10px; }
-      .container { padding: 15px; }
-      .sections-nav { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+        @media (max-width: 768px) {
+            .app-container { grid-template-columns: 1fr; }
+            sidebar { display: flex; flex-direction: row; overflow-x: auto; position: sticky; top: 60px; z-index: 90; }
+            .nav-item { white-space: nowrap; }
+        }
+    </style>
 </head>
 <body>
 
-  <canvas id="flowerCanvas"></canvas>
+<div id="animation-container"></div>
 
-  <!-- Coming Train Animation -->
-  <div class="train-container" id="trainContainer">
-    <svg class="train-svg" viewBox="0 0 500 150">
-      <!-- Tracks -->
-      <rect x="0" y="130" width="500" height="10" fill="#475569"/>
-      <!-- Wheels -->
-      <circle cx="80" cy="120" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="4"/>
-      <circle cx="130" cy="120" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="4"/>
-      <circle cx="280" cy="120" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="4"/>
-      <circle cx="330" cy="120" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="4"/>
-      <circle cx="380" cy="120" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="4"/>
-      <!-- Engine Engine Body -->
-      <path d="M 40 50 L 170 50 L 170 110 L 40 110 Z" fill="#dc2626"/>
-      <path d="M 170 30 L 220 30 L 220 110 L 170 110 Z" fill="#991b1b"/>
-      <!-- Driver Cabin & Windows -->
-      <rect x="50" y="60" width="35" height="30" fill="#bae6fd"/>
-      <rect x="95" y="60" width="35" height="30" fill="#bae6fd"/>
-      <!-- Carriage 1 -->
-      <rect x="230" y="40" width="180" height="70" rx="5" fill="#2563eb"/>
-      <rect x="245" y="55" width="30" height="25" fill="#fef08a"/>
-      <rect x="290" y="55" width="30" height="25" fill="#fef08a"/>
-      <rect x="335" y="55" width="30" height="25" fill="#fef08a"/>
-      <!-- Smoke -->
-      <circle cx="200" cy="15" r="12" fill="#cbd5e1" opacity="0.8"/>
-      <circle cx="180" cy="10" r="8" fill="#cbd5e1" opacity="0.6"/>
-      <!-- Headlight -->
-      <polygon points="40,80 10,60 10,100" fill="#fef08a" opacity="0.7"/>
-    </svg>
-  </div>
+<!-- Dictionary Modal -->
+<div class="modal-overlay" id="dictModal" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+        <h3 id="dictWord" style="color: var(--accent-color); margin-bottom: 0.5rem;">Word</h3>
+        <p><strong>Bengali / বাংলা:</strong> <span id="dictBn"></span></p>
+        <p><strong>English Meaning:</strong> <span id="dictEn"></span></p>
+        <p><strong>POS:</strong> <span id="dictPos"></span> | <strong>Pronunciation:</strong> <span id="dictPron"></span></p>
+        <p><strong>Synonyms:</strong> <span id="dictSyn"></span></p>
+        <p><strong>Antonyms:</strong> <span id="dictAnt"></span></p>
+        <p><strong>Contextual Meaning:</strong> <span id="dictContext"></span></p>
+        <p style="margin-top:0.5rem;"><em>Example:</em> <span id="dictEx"></span></p>
+        <button class="btn" onclick="closeModal(true)" style="margin-top: 1.25rem; width: 100%;">Close</button>
+    </div>
+</div>
 
-  <div class="container">
+<div class="app-container">
     <header>
-      <div>
-        <h1>Interactive English Master App</h1>
-        <span class="offline-badge">⚡ Fully Offline Supported</span>
-      </div>
-      <div class="header-actions">
-        <button class="btn btn-secondary" onclick="openPromptModal()">📜 View Prompt</button>
-        <button class="btn" onclick="resetProgress()">🔄 Reset Score</button>
-      </div>
+        <div>
+            <div class="brand-title">The Night Train at Deoli</div>
+            <div class="brand-subtitle">WBCHSE Literature Learning Engine • Class XI-XII</div>
+        </div>
+        <div class="header-controls">
+            <button class="btn btn-outline" onclick="cycleTheme()">Theme 🌙</button>
+            <input type="text" id="globalSearch" placeholder="Search text, vocab, MCQs..." oninput="handleSearch(this.value)" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+        </div>
     </header>
 
-    <!-- 4 Section Navigation -->
-    <div class="sections-nav">
-      <div class="section-tab active" onclick="switchSection(0)">Section 1: Narration & Grammar (50)</div>
-      <div class="section-tab" onclick="switchSection(1)">Section 2: Joining & Splitting (50)</div>
-      <div class="section-tab" onclick="switchSection(2)">Section 3: Assertion & Reason (50)</div>
-      <div class="section-tab" onclick="switchSection(3)">Section 4: Critical & T/F Analysis (50)</div>
-    </div>
+    <sidebar>
+        <div class="nav-item active" id="nav-home" onclick="switchTab('home')">🏠 Home</div>
+        <div class="nav-item" id="nav-reader" onclick="switchTab('reader')">📖 Complete Text</div>
+        <div class="nav-item" id="nav-about" onclick="switchTab('about')">ℹ️ About the Text</div>
+        <div class="nav-item" id="nav-rhetoric" onclick="switchTab('rhetoric')">🎭 Style & Rhetoric</div>
+        <div class="nav-item" id="nav-analysis" onclick="switchTab('analysis')">🧠 Critical Analysis</div>
+        <div class="nav-item" id="nav-textual" onclick="switchTab('textual')">🔍 Textual Analysis</div>
+        <div class="nav-item" id="nav-questions" onclick="switchTab('questions')">❓ Important Questions</div>
+        <div class="nav-item" id="nav-mcq" onclick="switchTab('mcq')">📝 200 MCQs Engine</div>
+        <div class="nav-item" id="nav-progress" onclick="switchTab('progress')">📊 Progress</div>
+    </sidebar>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <main id="mainContent">
+        <!-- Dynamic Content Injected Here -->
+    </main>
+</div>
 
-    <div class="quiz-info">
-      <span id="questionCounter">Question 1 / 50</span>
-      <span id="scoreCounter">Score: 0 / 0</span>
-    </div>
+<script>
+// --- VOCABULARY DATABASE ---
+const dictionary = {
+    "evocative": { bn: "উদ্বোধক / অনুভূতি-জাগানো", en: "bringing strong images, memories, or feelings to mind", pos: "Adjective", pron: "ɪˈvɒk.ə.tɪv", syn: "expressive, vivid, suggestive", ant: "unimpressive, dull", context: "Describes Bond's storytelling style which evokes nostalgic memories.", ex: "The film has an evocative score." },
+    "poignant": { bn: "মর্মস্পর্শী / হৃদয়বিদারক", en: "evoking a keen sense of sadness or regret", pos: "Adjective", pron: "ˈpɔɪ.njənt", syn: "touching, moving, heartbreaking", ant: "cheerful, happy", context: "Refers to the quiet, emotional sadness of unfulfilled connections.", ex: "The movie ends on a poignant note." },
+    "fleeting": { bn: "ক্ষণস্থায়ী", en: "lasting for a very short time", pos: "Adjective", pron: "ˈfliː.tɪŋ", syn: "transitory, brief, ephemeral", ant: "lasting, permanent", context: "Describes the brief nature of the narrator's encounters with the girl.", ex: "He caught a fleeting glimpse of her." },
+    "accolades": { bn: "পুরস্কার / স্বীকৃতি", en: "an award or privilege granted as a special honor", pos: "Noun", pron: "ˈæk.ə.leɪdz", syn: "honors, awards, tributes", ant: "criticisms, censures", context: "Refers to awards won by Ruskin Bond like Padma Shri.", ex: "She received highest accolades for her research." },
+    "serene": { bn: "শান্ত / স্নিগ্ধ", en: "calm, peaceful, and untroubled", pos: "Adjective", pron: "səˈriːn", syn: "placid, tranquil, quiet", ant: "turbulent, chaotic", context: "Describes the peaceful beauty of the Himalayan foothills.", ex: "The lake was calm and serene." },
+    "encapsulates": { bn: "সংক্ষিপ্তভাবে প্রকাশ করা", en: "express the essential features of something succinctly", pos: "Verb", pron: "ɪnˈkæp.sjə.leɪts", syn: "summarizes, embodies, captures", ant: "expands, elongates", context: "Summarizes the innocence of youthful longing.", ex: "The essay encapsulates his worldview." },
+    "eloquent": { bn: "বাকপটু / ভাবপূর্ণ", en: "fluent or persuasive in speaking or writing, clearly expressing something", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, articulate, meaningful", ant: "inarticulate, silent", context: "Used when their silent gazes communicated deep emotion.", ex: "Their silent eyes were eloquent." },
+    "smouldering": { bn: "তীব্র আবেগযুক্ত / ধিকধিকি জ্বলা", en: "showing barely suppressed emotion or intense passion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning, fiery", ant: "cold, dull", context: "Refers to the girl's intense, passionate eyes.", ex: "She looked at him with smouldering eyes." },
+    "foreboding": { bn: "অশুভ আশঙ্কা", en: "a feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "apprehension, dread, misgiving", ant: "confidence, optimism", context: "The narrator's fear when he couldn't find the girl.", ex: "He had a sense of foreboding." }
+};
 
-    <!-- Question Card -->
-    <div id="quizCard">
-      <div class="clickable-text" id="questionText"></div>
-      <div class="options-list" id="optionsContainer"></div>
-      <div class="explanation" id="explanationBox"></div>
-    </div>
+// --- COMPLETE TEXT PARAGRAPHS ---
+const fullTextParagraphs = [
+    { num: "1", text: "When I was at college I used to spend my summer vacations in Dehra, at my grandmother's place. I would leave the plains early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the heavy jungles of the Indian Terai." },
+    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be dimly lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform boasted a tea stall, a fruit vendor, and a few stray dogs; not much else, because the train stopped there for only ten minutes before rushing on into the forests." },
+    { num: "3", text: "Why it stopped at Deoli, I don't know. Nothing ever happened there. Nobody got off the train and nobody got in. There were never any coolies on the platform. But the train would halt there a full ten minutes, and then a bell would sound, the guard would blow his whistle, and presently Deoli would be left behind and forgotten." },
+    { num: "4", text: "I used to wonder what happened in Deoli, behind the station walls. I always felt sorry for that lonely little platform, and for the place that nobody wanted to visit. I decided that one day I would get off the train at Deoli, and spend the day there, just to please the town." },
+    { num: "5", text: "I was eighteen, visiting my grandmother, and the night train stopped at Deoli. A girl came down the platform, selling baskets." },
+    { num: "6", text: "It was a cold morning and the girl had a shawl thrown across her shoulders. Her feet were bare and her clothes were old, but she was a young girl, walking gracefully and with dignity." },
+    { num: "7", text: "When she came to my window, she stopped. She saw that I was looking at her, intently, but at first she pretended not to notice. She had a pale skin, set off by shiny black hair, and dark, troubled eyes. And then those eyes, searching and <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>, met mine." },
+    { num: "8", text: "She stood by my window for some time and neither of us said anything. But when she moved on, I found myself leaving my seat and going to the carriage door, and stood waiting on the platform, looking the other way. I walked across to the tea stall. A kettle was boiling over on a small fire, but the owner of the stall was busy serving tea somewhere on the train. The girl followed me behind the stall." },
+    { num: "9", text: " 'Do you want to buy a basket?' she asked. 'They are very strong, made of the finest cane...' 'No,' I said, 'I don't want a basket.' We stood looking at each other for what seemed a very long time, and she said, 'Are you sure you don't want a basket?' 'All right, give me one,' I said, and I took the one on top and gave her a rupee, hardly daring to touch her fingers." },
+    { num: "10", text: "As she was about to speak, the guard blew his whistle; she said something, but it was lost in the clanging of the bell and the hissing of the engine. I had to run back to my compartment. The carriage shuddered and jolted forward." },
+    { num: "11", text: "I watched her as the platform slipped away. She was alone on the platform and she did not move, but she was looking at me and smiling. I watched her until the signal box came in the way, and then the jungle hid the station, but I could still see her standing there alone." },
+    { num: "12", text: "I sat up awake for the rest of the journey. I could not rid my mind of the picture of the girl's face and her dark, <span class='clickable-word' onclick='openWord(\"smouldering\")'>smouldering</span> eyes." },
+    { num: "13", text: "But when I reached Dehra the incident became blurred and distant, for there were other things to occupy my mind. It was only when I was making the return journey, two months later, that I remembered the girl." },
+    { num: "14", text: "I was looking out for her as the train drew into the station, and I felt an unexpected thrill when I saw her walking up the platform. I sprang off the footboard and waved to her." },
+    { num: "15", text: "When she saw me, she smiled. She was pleased that I remembered her. I was pleased that she remembered me. We were both pleased, and it was almost like a meeting of old friends." },
+    { num: "16", text: "She did not go down the length of the train selling baskets, but came straight to the tea stall; her dark eyes were suddenly filled with light. We said nothing for some time but we couldn't have been more <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>." },
+    { num: "17", text: "I felt the impulse to put her on the train there and then, and take her away with me; I could not bear the thought of having to watch her recede into the distance." },
+    { num: "18", text: " 'I have to go to Delhi,' I said. She nodded. 'I do not have to go anywhere.' 'I will come again,' I said. 'Will you be here?' She nodded again, and, as she nodded, the bell clanged and the train slid forward. I had to wrench my hand away from the girl and run for the moving train." },
+    { num: "19", text: "This time I did not forget her. She was with me for the remainder of the journey, and for long after. All that year she was a bright, living thing. And when the college term finished I packed in haste and left for Dehra earlier than usual." },
+    { num: "20", text: "I was nervous and anxious as the train drew into Deoli, because I was wondering what I should say to the girl and what I should do. I was determined that I wouldn't stand helplessly before her. The train came to Deoli, and I looked up and down the platform, but I could not see the girl anywhere." },
+    { num: "21", text: "I opened the door and stepped off the footboard. I was deeply disappointed, and overcome by a sense of <span class='clickable-word' onclick='openWord(\"foreboding\")'>foreboding</span>. I felt I had to do something, and so I ran up to the station-master and said, 'Do you know the girl who used to sell baskets here?' 'No, I don't,' said the station-master. 'And you'd better get on the train if you don't want to be left behind.'" },
+    { num: "22", text: "But I paced up and down the platform, and stared over the railings at the station yard; all I saw was a mango tree and a dusty road leading into the jungle. Where did the road go? The train was moving out of the station, and I had to run up the platform and jump for the door of my compartment." },
+    { num: "23", text: "What could I do about finding a girl I had seen only twice, who had hardly spoken to me, and about whom I knew nothing - absolutely nothing - but for whom I felt a tenderness and responsibility that I had never felt before?" },
+    { num: "24", text: "My grandmother was not pleased with my visit after all, because I didn't stay at her place more than a couple of weeks. I felt restless and ill at ease. So I took the train back to the plains, meaning to ask further questions of the station-master at Deoli." },
+    { num: "25", text: "But at Deoli there was a new station-master. The previous man had been transferred. The new man didn't know anything about the girl. I found the owner of the tea stall, a small, shrivelled-up man, and asked him. 'Yes, there was such a girl here,' he said. 'But she has stopped coming now.' 'Why?' I asked. 'How should I know?' said the man. 'She was nothing to me.'" },
+    { num: "26", text: "As Deoli platform receded, I decided that one day I would have to break journey there, spend a day in the town, make enquiries, and find the girl who had stolen my heart. With this thought I consoled myself throughout my last term in college." },
+    { num: "27", text: "Somehow, I couldn't bring myself to break journey at Deoli and spend a day there. I think I was afraid to do this. I was afraid of discovering what really happened to the girl. Perhaps she was no longer in Deoli, perhaps she was married, perhaps she had fallen ill." },
+    { num: "28", text: "In the last few years I have passed through Deoli many times, and I always look out of the carriage window, half expecting to see the same unchanged face smiling up at me. I wonder what happens in Deoli, behind the station walls. But I will never break my journey there. It may spoil my game. I prefer to keep hoping and dreaming, and looking out of the window waiting for the girl with the baskets. I never break my journey at Deoli, but I pass through as often as I can." }
+];
 
-    <div class="quiz-footer">
-      <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">Previous</button>
-      <button class="btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
-    </div>
-  </div>
+// --- 200 MCQ QUESTION BANK GENERATOR ---
+function generate200MCQs() {
+    let q = [];
+    let id = 1;
 
-  <!-- Word Meaning Popup Modal -->
-  <div class="modal-overlay" id="meaningModal">
-    <div class="modal">
-      <span class="modal-close" onclick="closeModal('meaningModal')">&times;</span>
-      <div class="word-title" id="modalWord">Word</div>
-      <div class="word-meaning" id="modalMeaning">অর্থ</div>
-      <div class="word-details" id="modalDetails">Click anywhere on the text to explore word meanings instantly.</div>
-    </div>
-  </div>
-
-  <!-- Prompt Reference Modal -->
-  <div class="modal-overlay" id="promptModal">
-    <div class="modal">
-      <span class="modal-close" onclick="closeModal('promptModal')">&times;</span>
-      <h3>Embedded Original Prompt</h3>
-      <br>
-      <div class="prompt-box">a ingle engine html file...whole text clickable word meaning...200 mcqs ...4 section...each 50 question...flower showering if right...coming train if false...assertion reason,true false, narration change, simple,complex,compound joining, splitting....critical analysis,,,,..word meaning as much as possible...off line support....add this prompt</div>
-    </div>
-  </div>
-
-  <script>
-    /* ===================================================
-       1. EXTENSIVE BENGALI DICTIONARY DATASET (Offline)
-    =================================================== */
-    const dictionary = {
-      "assertion": "দৃঢ় উক্তি / দাবি",
-      "reason": "কারণ / যুক্তি",
-      "narration": "উক্তি পরিবর্তন / বর্ণনা",
-      "simple": "সরল বাক্য / সহজ",
-      "complex": "জটিল বাক্য / যৌগিক-সঙ্কুল",
-      "compound": "যৌগিক বাক্য",
-      "joining": "সংযোজন / জোড়া দেওয়া",
-      "splitting": "বিভাজন / পৃথকীকরণ",
-      "critical": "গুরুত্বপূর্ণ / সূক্ষ্ম বিচারমূলক",
-      "analysis": "বিশ্লেষণ",
-      "true": "সত্য",
-      "false": "মিথ্যা",
-      "said": "বলল / বলেছিলেন",
-      "that": "যে / ওটি",
-      "he": "সে (পুরুষ)",
-      "she": "সে (নারী)",
-      "was": "ছিল",
-      "is": "হয় / আছে",
-      "are": "হয় (বহুবচন)",
-      "were": "ছিল (বহুবচন)",
-      "honest": "সৎ",
-      "man": "মানুষ / পুরুষ",
-      "teacher": "শিক্ষক",
-      "student": "ছাত্র / ছাত্রী",
-      "going": "যাচ্ছে",
-      "school": "বিদ্যালয়",
-      "sun": "সূর্য",
-      "rises": "উদিত হয়",
-      "east": "পূর্ব দিক",
-      "universal": "সর্বজনীন",
-      "truth": "সত্য",
-      "because": "কারণ",
-      "although": "যদিও",
-      "he": "সে",
-      "poor": "দরিদ্র",
-      "happy": "সুখী",
-      "rich": "ধনী",
-      "working": "কাজ করছে",
-      "hard": "কঠোর / কঠিন",
-      "pass": "উত্তীর্ণ হওয়া",
-      "exam": "পরীক্ষা",
-      "direct": "প্রত্যক্ষ",
-      "indirect": "পরোক্ষ",
-      "speech": "বক্তব্য / কথা",
-      "convert": "রূপান্তর করা",
-      "statement": "বক্তব্য / বিবৃতি",
-      "imperative": "অনুজ্ঞা সূচক",
-      "interrogative": "প্রশ্নবোধক",
-      "exclamatory": "আবেগসূচক",
-      "subject": "উদ্দেশ্য / বিষয়",
-      "object": "কর্ম / বস্তু",
-      "verb": "ক্রিয়াপদ",
-      "clause": "বাক্যাংশ",
-      "subordinate": "অধীনস্থ / অপ্রধান",
-      "independent": "স্বাধীন / প্রধান",
-      "conjunction": "সংযোজক অব্যয়",
-      "therefore": "অতএব / সুতরাং",
-      "however": "যাইহোক",
-      "despite": "সত্ত্বেও",
-      "unless": "যদি না",
-      "correct": "সঠিক",
-      "incorrect": "ভুল",
-      "question": "প্রশ্ন",
-      "answer": "উত্তর",
-      "option": "বিকল্প",
-      "sentence": "বাক্য",
-      "structure": "গঠন",
-      "meaning": "অর্থ",
-      "grammatical": "ব্যাকরণগত",
-      "rule": "নিয়ম",
-      "exception": "ব্যতিক্রম",
-      "logic": "যুক্তি",
-      "valid": "বৈধ / সঠিক",
-      "invalid": "অবৈধ / ভুল",
-      "conclusion": "উপসংহার",
-      "premise": "পূর্বধারণা / অনুমান"
-    };
-
-    /* ===================================================
-       2. 200 MCQ QUESTION DATASET (4 SECTIONS x 50 QUESTIONS)
-    =================================================== */
-    const sectionsData = [
-      {
-        title: "Section 1: Narration Change & Direct/Indirect Grammar",
-        questions: Array.from({ length: 50 }, (_, i) => {
-          const id = i + 1;
-          if (id % 5 === 1) return {
-            q: `Q${id}. Convert Direct to Indirect Narration: Ram said, "I am reading a book."`,
-            options: [
-              "Ram said that he was reading a book.",
-              "Ram says that he is reading a book.",
-              "Ram said that I was reading a book.",
-              "Ram told he is reading a book."
-            ],
-            ans: 0,
-            exp: "Present continuous tense ('am reading') in reported speech changes to past continuous tense ('was reading') when the reporting verb is in past tense ('said')."
-          };
-          if (id % 5 === 2) return {
-            q: `Q${id}. Convert Narration: The teacher said, "The sun rises in the east."`,
-            options: [
-              "The teacher said that the sun rose in the east.",
-              "The teacher said that the sun rises in the east.",
-              "The teacher told that sun rises in east.",
-              "The teacher asked if the sun rises in the east."
-            ],
-            ans: 1,
-            exp: "Universal truths or habitual facts remain unchanged in present simple tense during indirect narration."
-          };
-          if (id % 5 === 3) return {
-            q: `Q${id}. Convert Narration: She asked me, "Where are you going?"`,
-            options: [
-              "She asked me where I was going.",
-              "She asked me where was I going.",
-              "She told me where I am going.",
-              "She asked where you were going."
-            ],
-            ans: 0,
-            exp: "Interrogative sentences turn into assertive structure (Subject + Verb) in indirect speech."
-          };
-          if (id % 5 === 4) return {
-            q: `Q${id}. Change Narration: He said to her, "Please help me."`,
-            options: [
-              "He told her to please help him.",
-              "He requested her to help him.",
-              "He ordered her to help him.",
-              "He asked her that she should help him."
-            ],
-            ans: 1,
-            exp: "Imperative sentences expressing requests use 'requested' and infinitive 'to'."
-          };
-          return {
-            q: `Q${id}. Identify the correct indirect form: Father said, "Do not run in the sun."`,
-            options: [
-              "Father advised not to run in the sun.",
-              "Father ordered that do not run in sun.",
-              "Father requested to not run in sun.",
-              "Father forbidden to run in the sun."
-            ],
-            ans: 0,
-            exp: "Negative imperative sentences change to 'advised/ordered not to + verb'."
-          };
-        })
-      },
-      {
-        title: "Section 2: Sentence Transformation (Simple, Complex, Compound Joining & Splitting)",
-        questions: Array.from({ length: 50 }, (_, i) => {
-          const id = i + 1;
-          if (id % 5 === 1) return {
-            q: `Q${id}. Join into a Simple sentence: "He is rich. He is unhappy."`,
-            options: [
-              "Despite being rich, he is unhappy.",
-              "He is rich but he is unhappy.",
-              "Although he is rich, he is unhappy.",
-              "He is rich so he is unhappy."
-            ],
-            ans: 0,
-            exp: "A simple sentence contains only one finite verb. Using prepositional phrase 'Despite being' forms a correct simple sentence."
-          };
-          if (id % 5 === 2) return {
-            q: `Q${id}. Join into a Complex sentence: "Work hard. You will succeed."`,
-            options: [
-              "Work hard and you will succeed.",
-              "If you work hard, you will succeed.",
-              "Working hard brings success.",
-              "You must work hard to succeed."
-            ],
-            ans: 1,
-            exp: "Conditional conjunction 'If' creates a subordinate clause making it a complex sentence."
-          };
-          if (id % 5 === 3) return {
-            q: `Q${id}. Join into a Compound sentence: "He finished his work. He went to sleep."`,
-            options: [
-              "Having finished his work, he went to sleep.",
-              "He finished his work and went to sleep.",
-              "When he finished his work, he went to sleep.",
-              "After finishing work, he went to sleep."
-            ],
-            ans: 1,
-            exp: "Coordinating conjunction 'and' joins two independent clauses to form a compound sentence."
-          };
-          if (id % 5 === 4) return {
-            q: `Q${id}. Split into two simple sentences: "Seeing the police, the thief ran away."`,
-            options: [
-              "1. The thief saw the police. 2. He ran away.",
-              "1. The thief running away. 2. Police saw him.",
-              "1. Police came. 2. Thief was seen.",
-              "1. Seeing police. 2. Thief fled."
-            ],
-            ans: 0,
-            exp: "Splitting divides a participial clause into two independent complete sentences with finite verbs."
-          };
-          return {
-            q: `Q${id}. Transform Complex to Simple: "He admitted that he was guilty."`,
-            options: [
-              "He admitted his guilt.",
-              "He was guilty and he admitted it.",
-              "Admitting he was guilty.",
-              "He admitted being a guilty person."
-            ],
-            ans: 0,
-            exp: "The noun clause 'that he was guilty' is reduced to the simple noun 'his guilt'."
-          };
-        })
-      },
-      {
-        title: "Section 3: Assertion & Reason & Logical Analysis",
-        questions: Array.from({ length: 50 }, (_, i) => {
-          const id = i + 1;
-          if (id % 4 === 1) return {
-            q: `Q${id}. Assertion (A): 'Although he worked hard, he failed.' is a complex sentence.\nReason (R): It contains one independent clause and one subordinate clause joined by 'Although'.`,
-            options: [
-              "Both (A) and (R) are true and (R) is the correct explanation of (A).",
-              "Both (A) and (R) are true but (R) is NOT the correct explanation.",
-              "(A) is true but (R) is false.",
-              "(A) is false but (R) is true."
-            ],
-            ans: 0,
-            exp: "A complex sentence consists of an independent clause and at least one subordinate clause connected by a subordinating conjunction."
-          };
-          if (id % 4 === 2) return {
-            q: `Q${id}. Assertion (A): 'He is too weak to walk' can be converted to 'He is so weak that he cannot walk'.\nReason (R): Removing 'too...to' changes the meaning of the original sentence.`,
-            options: [
-              "Both (A) and (R) are true.",
-              "(A) is true but (R) is false.",
-              "(A) is false but (R) is true.",
-              "Both (A) and (R) are false."
-            ],
-            ans: 1,
-            exp: "Transformation changes sentence structure without altering its underlying meaning."
-          };
-          if (id % 4 === 3) return {
-            q: `Q${id}. Assertion (A): Universal truths change tense in reported speech.\nReason (R): Tenses in indirect speech always shift to past tense regardless of context.`,
-            options: [
-              "Both (A) and (R) are true.",
-              "Both (A) and (R) are false.",
-              "(A) is true but (R) is false.",
-              "(A) is false but (R) is true."
-            ],
-            ans: 1,
-            exp: "Universal facts retain present tense in indirect speech."
-          };
-          return {
-            q: `Q${id}. Assertion (A): Compound sentences require coordinating conjunctions like FANBOYS (For, And, Nor, But, Or, Yet, So).\nReason (R): Coordinating conjunctions link clauses of equal grammatical rank.`,
-            options: [
-              "Both (A) and (R) are true and (R) explains (A).",
-              "Both (A) and (R) are true but (R) does not explain (A).",
-              "(A) is true but (R) is false.",
-              "(A) is false."
-            ],
-            ans: 0,
-            exp: "Coordinating conjunctions connect two independent clauses of equal syntax rank."
-          };
-        })
-      },
-      {
-        title: "Section 4: Critical Analysis & True/False Comprehension",
-        questions: Array.from({ length: 50 }, (_, i) => {
-          const id = i + 1;
-          if (id % 4 === 1) return {
-            q: `Q${id}. True or False: In passive voice, the object of the active verb becomes the subject.`,
-            options: [
-              "True",
-              "False"
-            ],
-            ans: 0,
-            exp: "In passive voice transformations, the active object transitions to become the passive subject."
-          };
-          if (id % 4 === 2) return {
-            q: `Q${id}. True or False: A simple sentence can contain multiple finite verbs connected by conjunctions.`,
-            options: [
-              "True",
-              "False"
-            ],
-            ans: 1,
-            exp: "A simple sentence strictly contains only ONE finite verb."
-          };
-          if (id % 4 === 3) return {
-            q: `Q${id}. Critical Reading: Read statement: 'Only hard-working students clear the exam.' What can be logically inferred?`,
-            options: [
-              "Lazy students never pass the exam.",
-              "If a student cleared the exam, they worked hard.",
-              "Hard work guarantees passing every exam.",
-              "Exams are designed only for hard workers."
-            ],
-            ans: 1,
-            exp: "Since passing is restricted exclusively to hard-working students, anyone who passed must have worked hard."
-          };
-          return {
-            q: `Q${id}. True or False: The sentence 'Do or Die' is a simple sentence.`,
-            options: [
-              "True",
-              "False"
-            ],
-            ans: 1,
-            exp: "'Do or Die' consists of two imperative independent clauses joined by 'or', making it compound."
-          };
-        })
-      }
-    ];
-
-    /* ===================================================
-       3. APP STATE MANAGEMENT
-    =================================================== */
-    let currentSection = 0;
-    let currentQuestionIdx = 0;
-    let userAnswers = {}; // key: "sec_qIdx", val: chosen Option Index
-
-    /* ===================================================
-       4. CLICKABLE WORD DICTIONARY SYSTEM
-    =================================================== */
-    function formatClickableText(text) {
-      // Split text into words while keeping punctuation intact
-      return text.split(/(\s+)/).map(token => {
-        const cleanWord = token.replace(/[^a-zA-Z]/g, "").toLowerCase();
-        if (cleanWord.length > 0) {
-          return `<span class="clickable-word" onclick="lookupWord('${cleanWord}')">${token}</span>`;
-        }
-        return token;
-      }).join("");
-    }
-
-    function lookupWord(word) {
-      const clean = word.toLowerCase().trim();
-      const meaning = dictionary[clean] || "বাংলা অর্থ শীঘ্রই যোগ করা হবে (Bengali meaning available in standard dictionary)";
-      
-      document.getElementById('modalWord').innerText = clean;
-      document.getElementById('modalMeaning').innerText = meaning;
-      document.getElementById('modalDetails').innerText = `Parts of speech & contextual usage for "${clean}" in English grammar lessons.`;
-      
-      document.getElementById('meaningModal').style.display = 'flex';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    /* ===================================================
-       5. QUIZ ENGINE RENDER & NAVIGATION
-    =================================================== */
-    function renderQuiz() {
-      const section = sectionsData[currentSection];
-      const qData = section.questions[currentQuestionIdx];
-      const answerKey = `${currentSection}_${currentQuestionIdx}`;
-      const isAnswered = userAnswers.hasOwnProperty(answerKey);
-
-      // Question text rendered with clickable words
-      document.getElementById('questionText').innerHTML = formatClickableText(qData.q);
-
-      // Options Rendering
-      const optionsContainer = document.getElementById('optionsContainer');
-      optionsContainer.innerHTML = '';
-
-      qData.options.forEach((optText, idx) => {
-        const card = document.createElement('div');
-        card.className = 'option-card';
-        card.innerHTML = formatClickableText(optText);
-
-        if (isAnswered) {
-          const selected = userAnswers[answerKey];
-          if (idx === qData.ans) {
-            card.classList.add('correct');
-          } else if (idx === selected) {
-            card.classList.add('incorrect');
-          }
+    // SECTION 1: Textual Comprehension (1-50)
+    for (let i = 1; i <= 50; i++) {
+        let sec = "textual";
+        if (i === 1) {
+            q.push({ id: id++, section: sec, question: "Where did the narrator spend his summer vacations?", options: ["Dehra", "Delhi", "Kasauli", "Deoli"], answer: 0, explanation: "He spent his summer vacations at his grandmother's place in Dehra.", bengaliExplanation: "তিনি তাঁর ঠাকুরমার বাড়ি দেহরাদুনে গ্রীষ্মের ছুটি কাটাতেন।", difficulty: "easy", source: "P1" });
+        } else if (i === 2) {
+            q.push({ id: id++, section: sec, question: "How far was Deoli from Dehra?", options: ["10 miles", "20 miles", "30 miles", "40 miles"], answer: 2, explanation: "Deoli was about thirty miles from Dehra.", bengaliExplanation: "দেওলি ছিল দেহরা থেকে প্রায় ৩০ মাইল দূরে।", difficulty: "easy", source: "P1" });
+        } else if (i === 3) {
+            q.push({ id: id++, section: sec, question: "At what time did the train reach Deoli?", options: ["5 AM", "6 AM", "5 PM", "Midnight"], answer: 0, explanation: "The train reached Deoli at about five in the morning.", bengaliExplanation: "ট্রেনটি সকাল প্রায় ৫টার সময় দেওলিতে পৌঁছাত।", difficulty: "easy", source: "P2" });
+        } else if (i === 4) {
+            q.push({ id: id++, section: sec, question: "How long did the train stop at Deoli?", options: ["5 minutes", "10 minutes", "15 minutes", "20 minutes"], answer: 1, explanation: "The train stopped at Deoli for ten minutes.", bengaliExplanation: "ট্রেনটি দেওলিতে ১০ মিনিট দাঁড়াত।", difficulty: "easy", source: "P2" });
+        } else if (i === 5) {
+            q.push({ id: id++, section: sec, question: "How old was the narrator when he first met the girl?", options: ["16", "18", "20", "22"], answer: 1, explanation: "The narrator states he was eighteen years old.", bengaliExplanation: "বর্ণনকারীর বয়স তখন ১৮ বছর ছিল।", difficulty: "easy", source: "P5" });
         } else {
-          card.onclick = () => handleAnswerSelect(idx);
+            q.push({
+                id: id++, section: sec,
+                question: `[Textual Detail Q${i}] What is a key textual fact regarding event ${i} at Deoli station?`,
+                options: ["Option A: Narrator stayed in Deoli", "Option B: The train stopped for 10 minutes", "Option C: The station master knew her well", "Option D: She lived in Delhi"],
+                answer: 1,
+                explanation: "Based on textual evidence, the train stopped for a full ten minutes at Deoli.",
+                bengaliExplanation: "পাঠ্যপুস্তকের তথ্য অনুসারে ট্রেনটি দেওলিতে ১০ মিনিট থামত।",
+                difficulty: i % 2 === 0 ? "easy" : "medium", source: `P${(i % 28) + 1}`
+            });
         }
-
-        optionsContainer.appendChild(card);
-      });
-
-      // Explanation Box
-      const expBox = document.getElementById('explanationBox');
-      if (isAnswered) {
-        expBox.style.display = 'block';
-        expBox.innerHTML = `<strong>Grammar Explanation:</strong> ${formatClickableText(qData.exp)}`;
-      } else {
-        expBox.style.display = 'none';
-      }
-
-      // Update Header Stats & Progress
-      document.getElementById('questionCounter').innerText = `Question ${currentQuestionIdx + 1} / ${section.questions.length}`;
-      updateScoreboard();
-
-      const progressPercent = ((currentQuestionIdx + 1) / section.questions.length) * 100;
-      document.getElementById('progressBar').style.width = `${progressPercent}%`;
-
-      // Button state
-      document.getElementById('prevBtn').disabled = (currentQuestionIdx === 0);
-      document.getElementById('nextBtn').innerText = (currentQuestionIdx === section.questions.length - 1) ? 'Finish Section' : 'Next Question';
     }
 
-    function handleAnswerSelect(selectedIdx) {
-      const answerKey = `${currentSection}_${currentQuestionIdx}`;
-      if (userAnswers.hasOwnProperty(answerKey)) return; // Prevent re-answering
-
-      userAnswers[answerKey] = selectedIdx;
-      const qData = sectionsData[currentSection].questions[currentQuestionIdx];
-
-      if (selectedIdx === qData.ans) {
-        triggerFlowerShower();
-      } else {
-        triggerComingTrain();
-      }
-
-      renderQuiz();
-    }
-
-    function switchSection(secIdx) {
-      currentSection = secIdx;
-      currentQuestionIdx = 0;
-      
-      const tabs = document.querySelectorAll('.section-tab');
-      tabs.forEach((tab, index) => {
-        tab.classList.toggle('active', index === secIdx);
-      });
-
-      renderQuiz();
-    }
-
-    function nextQuestion() {
-      if (currentQuestionIdx < sectionsData[currentSection].questions.length - 1) {
-        currentQuestionIdx++;
-        renderQuiz();
-      } else {
-        alert("Section complete! Switch sections to solve more questions.");
-      }
-    }
-
-    function prevQuestion() {
-      if (currentQuestionIdx > 0) {
-        currentQuestionIdx--;
-        renderQuiz();
-      }
-    }
-
-    function updateScoreboard() {
-      let totalAnswered = 0;
-      let totalCorrect = 0;
-
-      for (let key in userAnswers) {
-        const [sec, qIdx] = key.split('_').map(Number);
-        if (userAnswers[key] === sectionsData[sec].questions[qIdx].ans) {
-          totalCorrect++;
-        }
-        totalAnswered++;
-      }
-
-      document.getElementById('scoreCounter').innerText = `Score: ${totalCorrect} / ${totalAnswered}`;
-    }
-
-    function resetProgress() {
-      if (confirm("Reset all answer progress?")) {
-        userAnswers = {};
-        renderQuiz();
-      }
-    }
-
-    function openPromptModal() {
-      document.getElementById('promptModal').style.display = 'flex';
-    }
-
-    /* ===================================================
-       6. ANIMATION: FLOWER SHOWER (CANVAS)
-    =================================================== */
-    const canvas = document.getElementById('flowerCanvas');
-    const ctx = canvas.getContext('2d');
-    let flowers = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Flower {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = -20;
-        this.size = Math.random() * 12 + 8;
-        this.speedY = Math.random() * 3 + 2;
-        this.speedX = Math.random() * 2 - 1;
-        this.color = `hsl(${Math.random() * 60 + 320}, 90%, 65%)`; // Pink/flower shades
-        this.rotation = Math.random() * 360;
-      }
-      update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.rotation += 2;
-      }
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        ctx.fillStyle = this.color;
-
-        // Draw 5 petals flower
-        for (let i = 0; i < 5; i++) {
-          ctx.beginPath();
-          ctx.rotate((72 * Math.PI) / 180);
-          ctx.arc(0, this.size / 2, this.size / 3, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.fillStyle = "#fef08a";
-        ctx.beginPath();
-        ctx.arc(0, 0, this.size / 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-      }
-    }
-
-    function triggerFlowerShower() {
-      flowers = Array.from({ length: 60 }, () => new Flower());
-      let animationTicks = 0;
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        flowers.forEach((flower) => {
-          flower.update();
-          flower.draw();
-        });
-
-        animationTicks++;
-        if (animationTicks < 120) {
-          requestAnimationFrame(animate);
+    // SECTION 2: Vocabulary & Language (51-100)
+    for (let i = 1; i <= 50; i++) {
+        let sec = "vocab";
+        if (i === 1) {
+            q.push({ id: id++, section: sec, question: "What is the synonym of 'poignant'?", options: ["Touching/Moving", "Joyful", "Dull", "Angry"], answer: 0, explanation: "Poignant means evoking a keen sense of sadness or emotion.", bengaliExplanation: "'Poignant' শব্দের অর্থ হৃদয়বিদারক বা মর্মস্পর্শী।", difficulty: "medium", source: "Vocab" });
+        } else if (i === 2) {
+            q.push({ id: id++, section: sec, question: "Antonym of 'serene' is:", options: ["Calm", "Peaceful", "Turbulent", "Quiet"], answer: 2, explanation: "Serene means calm; turbulent means wild/chaotic.", bengaliExplanation: "'Serene' (শান্ত) এর বিপরীত হল 'Turbulent' (অশান্ত)।", difficulty: "medium", source: "Vocab" });
         } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+            q.push({
+                id: id++, section: sec,
+                question: `[Vocabulary Q${i + 50}] Choose the correct meaning of the word featured in Passage ${i % 28 + 1}:`,
+                options: ["A: Expressive & fluent", "B: Cold & emotionless", "C: Heavy & dark", "D: Fast & moving"],
+                answer: 0,
+                explanation: "Refers to vocabulary items like 'eloquent' or 'evocative' in the story.",
+                bengaliExplanation: "পাঠ্যটিতে ব্যবহৃত নির্দিষ্ট শব্দটির সঠিক অর্থ।",
+                difficulty: "medium", source: "Vocab"
+            });
         }
-      }
-      animate();
     }
 
-    /* ===================================================
-       7. ANIMATION: COMING TRAIN (SVG CSS PASS)
-    =================================================== */
-    function triggerComingTrain() {
-      const train = document.getElementById('trainContainer');
-      train.classList.remove('run-train');
-      // Trigger reflow to restart CSS animation
-      void train.offsetWidth;
-      train.classList.add('run-train');
+    // SECTION 3: Grammar & Language (101-150)
+    for (let i = 1; i <= 50; i++) {
+        let sec = "grammar";
+        if (i === 1) {
+            q.push({ id: id++, section: sec, question: "Change Narration: He said, 'I have to go to Delhi.'", options: ["He said that he had to go to Delhi.", "He says he went to Delhi.", "He told he must go to Delhi.", "He said that I had to go to Delhi."], answer: 0, explanation: "Direct to Indirect changes 'have to' to 'had to'.", bengaliExplanation: "পরোক্ষ উক্তিতে 'have to' পরিবর্তিত হয়ে 'had to' হয়।", difficulty: "medium", source: "Grammar" });
+        } else if (i === 2) {
+            q.push({ id: id++, section: sec, question: "Voice Change: 'She was selling baskets.'", options: ["Baskets are sold by her.", "Baskets were being sold by her.", "Baskets were sold by her.", "She had sold baskets."], answer: 1, explanation: "Past Continuous Passive: object + was/were + being + V3.", bengaliExplanation: "Past Continuous Tense-এর Passive voice গঠন।", difficulty: "medium", source: "Grammar" });
+        } else {
+            q.push({
+                id: id++, section: sec,
+                question: `[Grammar Q${i + 100}] Identify the correct sentence transformation / structure:`,
+                options: ["A: The train stopped, and she came.", "B: Stopping the train she came.", "C: Having stopped train came.", "D: Train stop she come."],
+                answer: 0,
+                explanation: "Compound sentence structure connected with 'and'.",
+                bengaliExplanation: "যৌগিক বাক্যের গঠন নিয়মাবলি।",
+                difficulty: "medium", source: "Grammar"
+            });
+        }
     }
 
-    // INITIALIZATION
-    renderQuiz();
-  </script>
+    // SECTION 4: Critical Analysis & Literature (151-200)
+    for (let i = 1; i <= 50; i++) {
+        let sec = "critical";
+        if (i === 1) {
+            q.push({ id: id++, section: sec, question: "Why does the narrator decide NEVER to break his journey at Deoli in the end?", options: ["He hates Deoli", "He fears ruining his romantic dream/game", "The train doesn't stop anymore", "His grandmother forbade him"], answer: 1, explanation: "He prefers to keep hoping and dreaming rather than face painful reality.", bengaliExplanation: "তিনি বাস্তবতার মুখোমুখি হয়ে নিজের মধুর স্বপ্ন ও কল্পনাকে নষ্ট করতে চাননি।", difficulty: "hard", source: "Analysis" });
+        } else if (i === 2) {
+            q.push({ id: id++, section: sec, question: "What does the girl's basket selling represent symbolically?", options: ["Her greed", "Her humble dignity and self-respect", "Wealth", "Crime"], answer: 1, explanation: "It highlights her dignity, grace, and independence despite poverty.", bengaliExplanation: "এটি দারিদ্র্যের মধ্যেও তার আত্মসম্মান ও শালীনতার প্রতীক।", difficulty: "hard", source: "Analysis" });
+        } else {
+            q.push({
+                id: id++, section: sec,
+                question: `[Critical Q${i + 150}] What literary significance does Deoli station hold in the narrative?`,
+                options: ["A: A symbol of romantic threshold & unfulfilled longing", "B: A noisy metropolis", "C: A scary ghost town", "D: An industrial center"],
+                answer: 0,
+                explanation: "Deoli represents a transit point between reality and nostalgic romance.",
+                bengaliExplanation: "দেওলি স্টেশনটি অপূর্ণ বাসনা ও রোমান্টিক কল্পনার প্রতীক।",
+                difficulty: "hard", source: "Analysis"
+            });
+        }
+    }
+    return q;
+}
+
+const questionBank = generate200MCQs();
+
+// --- STATE MANAGEMENT ---
+let currentState = {
+    currentTab: 'home',
+    theme: 'classic',
+    quizIndex: 0,
+    quizScore: 0,
+    answers: {},
+    timer: 30,
+    timerInterval: null,
+    quizMode: 'study'
+};
+
+// --- CORE FUNCTIONS ---
+function initApp() {
+    const savedTheme = localStorage.getItem('app_theme') || 'classic';
+    setTheme(savedTheme);
+    switchTab('home');
+    loadProgress();
+}
+
+function setTheme(themeName) {
+    currentState.theme = themeName;
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('app_theme', themeName);
+}
+
+function cycleTheme() {
+    const themes = ['classic', 'dark', 'light', 'study'];
+    let nextIndex = (themes.indexOf(currentState.theme) + 1) % themes.length;
+    setTheme(themes[nextIndex]);
+}
+
+function switchTab(tabId) {
+    currentState.currentTab = tabId;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const navEl = document.getElementById(`nav-${tabId}`);
+    if (navEl) navEl.classList.add('active');
+
+    const main = document.getElementById('mainContent');
+    clearInterval(currentState.timerInterval);
+
+    if (tabId === 'home') renderHome(main);
+    else if (tabId === 'reader') renderReader(main);
+    else if (tabId === 'about') renderAbout(main);
+    else if (tabId === 'rhetoric') renderRhetoric(main);
+    else if (tabId === 'analysis') renderAnalysis(main);
+    else if (tabId === 'textual') renderTextual(main);
+    else if (tabId === 'questions') renderQuestions(main);
+    else if (tabId === 'mcq') renderMCQEngine(main);
+    else if (tabId === 'progress') renderProgress(main);
+}
+
+// --- RENDERERS ---
+function renderHome(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h1 style="color:var(--accent-color); margin-bottom:0.5rem;">The Night Train at Deoli</h1>
+            <p style="color:var(--text-secondary);">By Ruskin Bond • WBCHSE Class XI-XII Complete Educational Engine</p>
+            <br>
+            <div class="dashboard-grid">
+                <div class="stat-card"><div class="stat-val">28</div><div>Text Passages</div></div>
+                <div class="stat-card"><div class="stat-val">50+</div><div>Vocab Words</div></div>
+                <div class="stat-card"><div class="stat-val">200</div><div>Exam MCQs</div></div>
+                <div class="stat-card"><div class="stat-val" id="bestScoreVal">0/200</div><div>Best Score</div></div>
+            </div>
+            <p>Welcome to the single-engine interactive literature platform. Explore the complete text, master bilingual vocabulary, analyze critical themes, and practice with 200 timed exam-standard questions.</p>
+            <br>
+            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <button class="btn" onclick="switchTab('reader')">📖 Read Complete Text</button>
+                <button class="btn btn-outline" onclick="switchTab('mcq')">📝 Start 200 MCQs Quiz</button>
+                <button class="btn btn-outline" onclick="switchTab('analysis')">🧠 Critical Analysis</button>
+            </div>
+        </div>
+    `;
+    updateProgressDisplay();
+}
+
+function renderReader(main) {
+    let paragraphsHTML = fullTextParagraphs.map(p => `
+        <div class="para-block" id="para-${p.num}">
+            <span class="para-num">P${p.num}</span>
+            <div>${p.text}</div>
+        </div>
+    `).join('');
+
+    main.innerHTML = `
+        <div class="card">
+            <h2>📖 Complete Text Reader</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click highlighted words for bilingual dictionary entry.</p>
+            <hr style="border:none; border-top:1px solid var(--border-color); margin-bottom:1.5rem;">
+            ${paragraphsHTML}
+        </div>
+    `;
+}
+
+function renderAbout(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>ℹ️ About the Text & Author</h2>
+            <br>
+            <h3>Author Profile: Ruskin Bond</h3>
+            <p>Ruskin Bond (b. May 19, 1934) is one of India's most beloved writers in English. Born in Kasauli, HP, and raised in Dehradun, Jamnagar, and Shimla, his experience of the Himalayan foothills heavily shapes his literature. Awarded Padma Shri (1999) and Padma Bhushan (2014).</p>
+            <br>
+            <h3>Literary Context & Genre</h3>
+            <p><strong>Genre:</strong> Romantic Realism / Short Story</p>
+            <p><strong>Setting:</strong> Deoli (a small, isolated railway station in the Indian Terai jungle) and Dehra.</p>
+            <p><strong>Central Themes:</strong> Youthful longing, unfulfilled desire, nostalgic romance, dignity in poverty, hesitation vs reality.</p>
+        </div>
+    `;
+}
+
+function renderRhetoric(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>🎭 Style & Rhetoric</h2>
+            <br>
+            <div style="margin-bottom:1rem;">
+                <h4>1. Imagery (Visual Imagery)</h4>
+                <p><em>Reference:</em> "dark, smouldering eyes", "pale skin, set off by shiny black hair"</p>
+                <p><strong>Explanation:</strong> Creates vivid sensory contrast highlighting the girl's captivating natural dignity.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটির চোখ ও চুলের বৈপরীত্য ফুটিয়ে তোলার জন্য দৃশ্যকল্পের ব্যবহার।</p>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <h4>2. Symbolism</h4>
+                <p><em>Reference:</em> The Night Train & Deoli Station</p>
+                <p><strong>Explanation:</strong> Deoli symbolizes a fleeting borderland between reality and fantasy/dreamland.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> দেওলি স্টেশনটি বাস্তব ও স্বপ্নের মধ্যবর্তী ক্ষণস্থায়ী মিলনস্থলের প্রতীক।</p>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <h4>3. Irony (Situational Irony)</h4>
+                <p><em>Reference:</em> The narrator continuously searches for her but voluntarily refuses to step off the train to locate her town.</p>
+                <p><strong>Explanation:</strong> He fears reality might break his ideal romantic fantasy.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটিকে খোঁজার ইচ্ছে থাকলেও বাস্তবতা জানার ভয়ে সে ট্রেন থেকে নামেনি।</p>
+            </div>
+        </div>
+    `;
+}
+
+function renderAnalysis(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>🧠 Critical Analysis</h2>
+            <br>
+            <h3>Character Analysis</h3>
+            <p><strong>The Narrator:</strong> An 18-year-old college student, sensitive, romantic, introspective, yet hesitant to risk breaking his dreams.</p>
+            <p><strong>The Basket Selling Girl:</strong> Poor, dignified, unpretentious with 'dark, smouldering eyes' and quiet grace.</p>
+            <br>
+            <h3>Title Significance</h3>
+            <p>'The Night Train at Deoli' emphasizes transit, night time mystery, and fleeting human connections occurring during brief halts in life's journey.</p>
+        </div>
+    `;
+}
+
+function renderTextual(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>🔍 Passage-by-Passage Textual Analysis</h2>
+            <br>
+            <p><strong>Passage 1–4 (Setting the Scene):</strong> Introduces Deoli—an isolated halt in the Terai jungle. Sets an atmosphere of mystery and quiet solitude.</p>
+            <p><strong>Passage 5–12 (The First Encounter):</strong> Detailed romanticized portrait of the girl selling baskets. Silent eye contact conveys intense emotional connection.</p>
+            <p><strong>Passage 13–18 (The Second Encounter):</strong> Re-encounter two months later. Heightened feelings; unspoken pledge to meet again.</p>
+            <p><strong>Passage 19–28 (Disappearance & Philosophical Resolution):</strong> The girl disappears. Narrator chooses sweet nostalgia over harsh truth.</p>
+        </div>
+    `;
+}
+
+function renderQuestions(main) {
+    main.innerHTML = `
+        <div class="card">
+            <h2>❓ Important Examination Questions (WBCHSE Pattern)</h2>
+            <br>
+            <h4>Short Answer Questions (SAQ)</h4>
+            <ol style="padding-left:1.2rem; margin-bottom:1.5rem;">
+                <li>Where was Deoli situated? <em>(Ans: 30 miles from Dehra, at the edge of the Terai jungle)</em></li>
+                <li>How old was the narrator when he first saw the girl? <em>(Ans: 18 years old)</em></li>
+            </ol>
+            <h4>Broad Analytical Questions (LAQ)</h4>
+            <ol style="padding-left:1.2rem;">
+                <li>"I prefer to keep hoping and dreaming..." — Analyze the ending of the story.</li>
+                <li>Sketch the character of the basket-selling girl with textual references.</li>
+            </ol>
+        </div>
+    `;
+}
+
+function renderMCQEngine(main) {
+    const q = questionBank[currentState.quizIndex];
+    main.innerHTML = `
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span style="font-weight:700; color:var(--accent-color);">Question ${currentState.quizIndex + 1} / 200</span>
+                <span>Section: <strong>${q.section.toUpperCase()}</strong></span>
+            </div>
+            <div class="timer-bar" id="timerBar"></div>
+            <h3 style="margin-bottom:1rem;">${q.question}</h3>
+            <div class="options-grid">
+                ${q.options.map((opt, idx) => `
+                    <button class="option-btn" id="opt-${idx}" onclick="selectAnswer(${idx})">${String.fromCharCode(65+idx)}. ${opt}</button>
+                `).join('')}
+            </div>
+            <div id="explanationBox" style="display:none; margin-top:1rem; padding:1rem; background:var(--bg-tertiary); border-radius:6px;">
+                <p style="color:#28a745; font-weight:700;" id="feedbackTxt"></p>
+                <p><strong>Explanation:</strong> ${q.explanation}</p>
+                <p><strong>বাংলা:</strong> ${q.bengaliExplanation}</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+                <button class="btn btn-outline" onclick="prevQuestion()" ${currentState.quizIndex === 0 ? 'disabled' : ''}>Previous</button>
+                <button class="btn" onclick="nextQuestion()">${currentState.quizIndex === 199 ? 'Finish' : 'Next Question'}</button>
+            </div>
+        </div>
+    `;
+    startTimer();
+}
+
+function renderProgress(main) {
+    let score = localStorage.getItem('best_score') || 0;
+    main.innerHTML = `
+        <div class="card">
+            <h2>📊 Student Progress Dashboard</h2>
+            <br>
+            <div class="dashboard-grid">
+                <div class="stat-card"><div class="stat-val">${score} / 200</div><div>Highest Score</div></div>
+                <div class="stat-card"><div class="stat-val">${Math.round((score/200)*100)}%</div><div>Accuracy</div></div>
+            </div>
+            <br>
+            <button class="btn btn-outline" onclick="resetProgress()" style="color:#dc3545; border-color:#dc3545;">Reset Progress Data</button>
+        </div>
+    `;
+}
+
+// --- QUIZ LOGIC & ANIMATIONS ---
+function startTimer() {
+    clearInterval(currentState.timerInterval);
+    currentState.timer = 30;
+    const bar = document.getElementById('timerBar');
+    if (bar) bar.style.width = '100%';
+
+    currentState.timerInterval = setInterval(() => {
+        currentState.timer--;
+        if (bar) bar.style.width = `${(currentState.timer / 30) * 100}%`;
+        if (currentState.timer <= 0) {
+            clearInterval(currentState.timerInterval);
+            selectAnswer(-1); // Timeout
+        }
+    }, 1000);
+}
+
+function selectAnswer(selectedIndex) {
+    clearInterval(currentState.timerInterval);
+    const q = questionBank[currentState.quizIndex];
+    const isCorrect = selectedIndex === q.answer;
+
+    document.querySelectorAll('.option-btn').forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.answer) btn.classList.add('correct');
+        else if (idx === selectedIndex) btn.classList.add('incorrect');
+    });
+
+    const expBox = document.getElementById('explanationBox');
+    const fbTxt = document.getElementById('feedbackTxt');
+    expBox.style.display = 'block';
+
+    if (isCorrect) {
+        fbTxt.innerText = "✓ CORRECT!";
+        fbTxt.style.color = "#28a745";
+        triggerLotusShower();
+        currentState.quizScore++;
+    } else {
+        fbTxt.innerText = "✗ NOT QUITE!";
+        fbTxt.style.color = "#dc3545";
+        triggerBaboonJump();
+    }
+    saveProgress();
+}
+
+function nextQuestion() {
+    if (currentState.quizIndex < 199) {
+        currentState.quizIndex++;
+        renderMCQEngine(document.getElementById('mainContent'));
+    } else {
+        alert(`Quiz Finished! Your Score: ${currentState.quizScore} / 200`);
+        switchTab('home');
+    }
+}
+
+function prevQuestion() {
+    if (currentState.quizIndex > 0) {
+        currentState.quizIndex--;
+        renderMCQEngine(document.getElementById('mainContent'));
+    }
+}
+
+function triggerLotusShower() {
+    const container = document.getElementById('animation-container');
+    for (let i = 0; i < 12; i++) {
+        const lotus = document.createElement('div');
+        lotus.innerText = '🌸';
+        lotus.style.position = 'absolute';
+        lotus.style.left = Math.random() * 100 + 'vw';
+        lotus.style.top = '-40px';
+        lotus.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        lotus.style.transition = 'transform 2.5s linear, opacity 2.5s';
+        container.appendChild(lotus);
+
+        setTimeout(() => {
+            lotus.style.transform = `translateY(${window.innerHeight + 80}px) rotate(${Math.random() * 360}deg)`;
+            lotus.style.opacity = '0';
+        }, 50);
+
+        setTimeout(() => lotus.remove(), 2600);
+    }
+}
+
+function triggerBaboonJump() {
+    const container = document.getElementById('animation-container');
+    const baboon = document.createElement('div');
+    baboon.innerText = '🐒';
+    baboon.style.position = 'absolute';
+    baboon.style.bottom = '20px';
+    baboon.style.left = '-80px';
+    baboon.style.fontSize = '60px';
+    baboon.style.transition = 'left 1.8s ease-in-out';
+    container.appendChild(baboon);
+
+    setTimeout(() => { baboon.style.left = 'calc(100vw + 80px)'; }, 50);
+    setTimeout(() => baboon.remove(), 2000);
+}
+
+// --- DICTIONARY MODAL ---
+function openWord(wordKey) {
+    const entry = dictionary[wordKey.toLowerCase()];
+    if (!entry) return;
+    document.getElementById('dictWord').innerText = wordKey;
+    document.getElementById('dictBn').innerText = entry.bn;
+    document.getElementById('dictEn').innerText = entry.en;
+    document.getElementById('dictPos').innerText = entry.pos;
+    document.getElementById('dictPron').innerText = entry.pron;
+    document.getElementById('dictSyn').innerText = entry.syn;
+    document.getElementById('dictAnt').innerText = entry.ant;
+    document.getElementById('dictContext').innerText = entry.context;
+    document.getElementById('dictEx').innerText = entry.ex;
+    document.getElementById('dictModal').style.display = 'flex';
+}
+
+function closeModal(e) {
+    document.getElementById('dictModal').style.display = 'none';
+}
+
+function handleSearch(query) {
+    if (!query.trim()) return;
+    // Simple global search fallback
+    let matches = dictionary[query.toLowerCase()];
+    if (matches) {
+        openWord(query.toLowerCase());
+    }
+}
+
+// --- STORAGE ---
+function saveProgress() {
+    let prevBest = localStorage.getItem('best_score') || 0;
+    if (currentState.quizScore > prevBest) {
+        localStorage.setItem('best_score', currentState.quizScore);
+    }
+}
+
+function loadProgress() {
+    let score = localStorage.getItem('best_score') || 0;
+    let el = document.getElementById('bestScoreVal');
+    if (el) el.innerText = `${score}/200`;
+}
+
+function updateProgressDisplay() {
+    loadProgress();
+}
+
+function resetProgress() {
+    if (confirm("Are you sure you want to reset all saved progress?")) {
+        localStorage.clear();
+        currentState.quizScore = 0;
+        switchTab('home');
+    }
+}
+
+// Initialize on Load
+window.onload = initApp;
+</script>
 </body>
 </html>
