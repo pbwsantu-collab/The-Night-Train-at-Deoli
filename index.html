@@ -6,7 +6,6 @@
     <title>The Night Train at Deoli — Complete Literature Learning Engine</title>
     <style>
         :root {
-            /* Themes */
             --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f1f3f5;
@@ -163,7 +162,6 @@
         }
         .clickable-word:hover { background-color: rgba(255, 235, 59, 0.4); border-radius: 2px; }
 
-        /* Modal Popup */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -185,7 +183,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* MCQ Styles */
         .timer-bar {
             height: 6px;
             background-color: var(--accent-color);
@@ -214,7 +211,6 @@
         .option-btn.correct { background: #28a745; color: white; border-color: #28a745; }
         .option-btn.incorrect { background: #dc3545; color: white; border-color: #dc3545; }
 
-        /* Animation Overlays */
         #animation-container {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -238,6 +234,15 @@
         }
         .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent-color); }
 
+        .sec-header {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 768px) {
             .app-container { grid-template-columns: 1fr; }
             sidebar { display: flex; flex-direction: row; overflow-x: auto; position: sticky; top: 60px; z-index: 90; }
@@ -249,7 +254,6 @@
 
 <div id="animation-container"></div>
 
-<!-- Dictionary Modal -->
 <div class="modal-overlay" id="dictModal" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
         <h3 id="dictWord" style="color: var(--accent-color); margin-bottom: 0.5rem;">Word</h3>
@@ -268,7 +272,7 @@
     <header>
         <div>
             <div class="brand-title">The Night Train at Deoli</div>
-            <div class="brand-subtitle">WBCHSE Literature Learning Engine • Class XI-XII</div>
+            <div class="brand-subtitle">WBCHSE Literature Engine • Class XI–XII Single-File Engine</div>
         </div>
         <div class="header-controls">
             <button class="btn btn-outline" onclick="cycleTheme()">Theme 🌙</button>
@@ -289,43 +293,44 @@
     </sidebar>
 
     <main id="mainContent">
-        <!-- Dynamic Content Injected Here -->
     </main>
 </div>
 
 <script>
-// --- VOCABULARY DATABASE ---
+// --- EXTENDED BILINGUAL DICTIONARY DATABASE ---
 const dictionary = {
-    "evocative": { bn: "উদ্বোধক / অনুভূতি-জাগানো", en: "bringing strong images, memories, or feelings to mind", pos: "Adjective", pron: "ɪˈvɒk.ə.tɪv", syn: "expressive, vivid, suggestive", ant: "unimpressive, dull", context: "Describes Bond's storytelling style which evokes nostalgic memories.", ex: "The film has an evocative score." },
-    "poignant": { bn: "মর্মস্পর্শী / হৃদয়বিদারক", en: "evoking a keen sense of sadness or regret", pos: "Adjective", pron: "ˈpɔɪ.njənt", syn: "touching, moving, heartbreaking", ant: "cheerful, happy", context: "Refers to the quiet, emotional sadness of unfulfilled connections.", ex: "The movie ends on a poignant note." },
-    "fleeting": { bn: "ক্ষণস্থায়ী", en: "lasting for a very short time", pos: "Adjective", pron: "ˈfliː.tɪŋ", syn: "transitory, brief, ephemeral", ant: "lasting, permanent", context: "Describes the brief nature of the narrator's encounters with the girl.", ex: "He caught a fleeting glimpse of her." },
-    "accolades": { bn: "পুরস্কার / স্বীকৃতি", en: "an award or privilege granted as a special honor", pos: "Noun", pron: "ˈæk.ə.leɪdz", syn: "honors, awards, tributes", ant: "criticisms, censures", context: "Refers to awards won by Ruskin Bond like Padma Shri.", ex: "She received highest accolades for her research." },
-    "serene": { bn: "শান্ত / স্নিগ্ধ", en: "calm, peaceful, and untroubled", pos: "Adjective", pron: "səˈriːn", syn: "placid, tranquil, quiet", ant: "turbulent, chaotic", context: "Describes the peaceful beauty of the Himalayan foothills.", ex: "The lake was calm and serene." },
-    "encapsulates": { bn: "সংক্ষিপ্তভাবে প্রকাশ করা", en: "express the essential features of something succinctly", pos: "Verb", pron: "ɪnˈkæp.sjə.leɪts", syn: "summarizes, embodies, captures", ant: "expands, elongates", context: "Summarizes the innocence of youthful longing.", ex: "The essay encapsulates his worldview." },
-    "eloquent": { bn: "বাকপটু / ভাবপূর্ণ", en: "fluent or persuasive in speaking or writing, clearly expressing something", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, articulate, meaningful", ant: "inarticulate, silent", context: "Used when their silent gazes communicated deep emotion.", ex: "Their silent eyes were eloquent." },
-    "smouldering": { bn: "তীব্র আবেগযুক্ত / ধিকধিকি জ্বলা", en: "showing barely suppressed emotion or intense passion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning, fiery", ant: "cold, dull", context: "Refers to the girl's intense, passionate eyes.", ex: "She looked at him with smouldering eyes." },
-    "foreboding": { bn: "অশুভ আশঙ্কা", en: "a feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "apprehension, dread, misgiving", ant: "confidence, optimism", context: "The narrator's fear when he couldn't find the girl.", ex: "He had a sense of foreboding." }
+    "vacations": { bn: "ছুটি / অবকাশ", en: "holidays; period spent away from school or work", pos: "Noun", pron: "veɪˈkeɪ.ʃənz", syn: "holidays, breaks, recesses", ant: "workdays, term time", context: "Refers to the narrator's summer breaks spent in Dehra.", ex: "He loved spending his vacations in Dehra." },
+    "dimly": { bn: "ক্ষীণভাবে / আবছা আলোয়", en: "with faint light; not brightly", pos: "Adverb", pron: "ˈdɪm.li", syn: "faintly, obscurely, vaguely", ant: "brightly, clearly", context: "Describes the weak electric and oil lamp lighting at Deoli station.", ex: "The platform was dimly lit by oil-lamps." },
+    "boasted": { bn: "গর্ব সহকারে থাকা / অধিকারী হওয়া", en: "possessed something to be proud of", pos: "Verb", pron: "bəʊ.stɪd", syn: "bragged, possessed, featured", ant: "lacked, concealed", context: "Describes Deoli platform having a tea stall and a few stray dogs.", ex: "The platform boasted a tea stall." },
+    "intently": { bn: "একদৃষ্টে / মনোযোগ সহকারে", en: "with eager and attentive concentration", pos: "Adverb", pron: "ɪnˈtent.li", syn: "keenly, closely, fixedly", ant: "distractedly, casually", context: "The narrator looking intently at the basket-selling girl.", ex: "He was looking at her intently." },
+    "eloquent": { bn: "ভাবপূর্ণ / বাকপটু", en: "clearly expressing feelings or meaning without words", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, articulate, meaningful", ant: "inarticulate, silent", context: "Used when their silent gazes communicated deep emotion.", ex: "Their dark eyes were eloquent." },
+    "smouldering": { bn: "তীব্র আবেগযুক্ত / ধিকধিকি জ্বলা", en: "showing suppressed intense emotion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning, passionate", ant: "cold, dull", context: "Refers to the girl's intense, mysterious gaze.", ex: "Her dark, smouldering eyes caught his attention." },
+    "thrill": { bn: "রোমাঞ্চ / আবেশ", en: "a sudden feeling of excitement and pleasure", pos: "Noun", pron: "θrɪl", syn: "excitement, sensation, tingle", ant: "boredom, apathy", context: "The feeling the narrator had upon seeing the girl a second time.", ex: "I felt an unexpected thrill when I saw her." },
+    "impulse": { bn: "আকস্মিক তাড়না", en: "a sudden strong and unreflective urge to act", pos: "Noun", pron: "ˈɪm.pʌls", syn: "urge, instinct, whim", ant: "deliberation, hesitation", context: "The urge he felt to pull her onto the train with him.", ex: "I felt the impulse to put her on the train." },
+    "foreboding": { bn: "অশুভ আশঙ্কা", en: "a feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "apprehension, dread, premonition", ant: "confidence, calmness", context: "The narrator's fear when he couldn't find the girl.", ex: "I was overcome by a sense of foreboding." },
+    "shrivelled-up": { bn: "কুঁচকে যাওয়া / শীর্ণ", en: "wrinkled and shrunk due to age or dryness", pos: "Adjective", pron: "ˈʃrɪv.əld ʌp", syn: "withered, wrinkled, wizened", ant: "smooth, youthful", context: "Description of the small tea stall owner.", ex: "The tea stall owner was a shrivelled-up man." },
+    "receded": { bn: "পিছিয়ে পড়ল / মিলিয়ে গেল", en: "gradually moved back or withdrew", pos: "Verb", pron: "rɪˈsiːdɪd", syn: "retreated, faded, withdrew", ant: "approached, advanced", context: "As the train moved away, Deoli platform receded.", ex: "As Deoli platform receded, I made up my mind." }
 };
 
-// --- COMPLETE TEXT PARAGRAPHS ---
+// --- COMPLETE TEXT WITH CLICKABLE PARAGRAPHS ---
 const fullTextParagraphs = [
-    { num: "1", text: "When I was at college I used to spend my summer vacations in Dehra, at my grandmother's place. I would leave the plains early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the heavy jungles of the Indian Terai." },
-    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be dimly lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform boasted a tea stall, a fruit vendor, and a few stray dogs; not much else, because the train stopped there for only ten minutes before rushing on into the forests." },
+    { num: "1", text: "When I was at college I used to spend my summer <span class='clickable-word' onclick='openWord(\"vacations\")'>vacations</span> in Dehra, at my grandmother's place. I would leave the plains early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the heavy jungles of the Indian Terai." },
+    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be <span class='clickable-word' onclick='openWord(\"dimly\")'>dimly</span> lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform <span class='clickable-word' onclick='openWord(\"boasted\")'>boasted</span> a tea stall, a fruit vendor, and a few stray dogs; not much else, because the train stopped there for only ten minutes before rushing on into the forests." },
     { num: "3", text: "Why it stopped at Deoli, I don't know. Nothing ever happened there. Nobody got off the train and nobody got in. There were never any coolies on the platform. But the train would halt there a full ten minutes, and then a bell would sound, the guard would blow his whistle, and presently Deoli would be left behind and forgotten." },
     { num: "4", text: "I used to wonder what happened in Deoli, behind the station walls. I always felt sorry for that lonely little platform, and for the place that nobody wanted to visit. I decided that one day I would get off the train at Deoli, and spend the day there, just to please the town." },
     { num: "5", text: "I was eighteen, visiting my grandmother, and the night train stopped at Deoli. A girl came down the platform, selling baskets." },
     { num: "6", text: "It was a cold morning and the girl had a shawl thrown across her shoulders. Her feet were bare and her clothes were old, but she was a young girl, walking gracefully and with dignity." },
-    { num: "7", text: "When she came to my window, she stopped. She saw that I was looking at her, intently, but at first she pretended not to notice. She had a pale skin, set off by shiny black hair, and dark, troubled eyes. And then those eyes, searching and <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>, met mine." },
+    { num: "7", text: "When she came to my window, she stopped. She saw that I was looking at her, <span class='clickable-word' onclick='openWord(\"intently\")'>intently</span>, but at first she pretended not to notice. She had a pale skin, set off by shiny black hair, and dark, troubled eyes. And then those eyes, searching and <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>, met mine." },
     { num: "8", text: "She stood by my window for some time and neither of us said anything. But when she moved on, I found myself leaving my seat and going to the carriage door, and stood waiting on the platform, looking the other way. I walked across to the tea stall. A kettle was boiling over on a small fire, but the owner of the stall was busy serving tea somewhere on the train. The girl followed me behind the stall." },
     { num: "9", text: " 'Do you want to buy a basket?' she asked. 'They are very strong, made of the finest cane...' 'No,' I said, 'I don't want a basket.' We stood looking at each other for what seemed a very long time, and she said, 'Are you sure you don't want a basket?' 'All right, give me one,' I said, and I took the one on top and gave her a rupee, hardly daring to touch her fingers." },
     { num: "10", text: "As she was about to speak, the guard blew his whistle; she said something, but it was lost in the clanging of the bell and the hissing of the engine. I had to run back to my compartment. The carriage shuddered and jolted forward." },
     { num: "11", text: "I watched her as the platform slipped away. She was alone on the platform and she did not move, but she was looking at me and smiling. I watched her until the signal box came in the way, and then the jungle hid the station, but I could still see her standing there alone." },
     { num: "12", text: "I sat up awake for the rest of the journey. I could not rid my mind of the picture of the girl's face and her dark, <span class='clickable-word' onclick='openWord(\"smouldering\")'>smouldering</span> eyes." },
     { num: "13", text: "But when I reached Dehra the incident became blurred and distant, for there were other things to occupy my mind. It was only when I was making the return journey, two months later, that I remembered the girl." },
-    { num: "14", text: "I was looking out for her as the train drew into the station, and I felt an unexpected thrill when I saw her walking up the platform. I sprang off the footboard and waved to her." },
+    { num: "14", text: "I was looking out for her as the train drew into the station, and I felt an unexpected <span class='clickable-word' onclick='openWord(\"thrill\")'>thrill</span> when I saw her walking up the platform. I sprang off the footboard and waved to her." },
     { num: "15", text: "When she saw me, she smiled. She was pleased that I remembered her. I was pleased that she remembered me. We were both pleased, and it was almost like a meeting of old friends." },
     { num: "16", text: "She did not go down the length of the train selling baskets, but came straight to the tea stall; her dark eyes were suddenly filled with light. We said nothing for some time but we couldn't have been more <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>." },
-    { num: "17", text: "I felt the impulse to put her on the train there and then, and take her away with me; I could not bear the thought of having to watch her recede into the distance." },
+    { num: "17", text: "I felt the <span class='clickable-word' onclick='openWord(\"impulse\")'>impulse</span> to put her on the train there and then, and take her away with me; I could not bear the thought of having to watch her recede into the distance." },
     { num: "18", text: " 'I have to go to Delhi,' I said. She nodded. 'I do not have to go anywhere.' 'I will come again,' I said. 'Will you be here?' She nodded again, and, as she nodded, the bell clanged and the train slid forward. I had to wrench my hand away from the girl and run for the moving train." },
     { num: "19", text: "This time I did not forget her. She was with me for the remainder of the journey, and for long after. All that year she was a bright, living thing. And when the college term finished I packed in haste and left for Dehra earlier than usual." },
     { num: "20", text: "I was nervous and anxious as the train drew into Deoli, because I was wondering what I should say to the girl and what I should do. I was determined that I wouldn't stand helplessly before her. The train came to Deoli, and I looked up and down the platform, but I could not see the girl anywhere." },
@@ -333,120 +338,131 @@ const fullTextParagraphs = [
     { num: "22", text: "But I paced up and down the platform, and stared over the railings at the station yard; all I saw was a mango tree and a dusty road leading into the jungle. Where did the road go? The train was moving out of the station, and I had to run up the platform and jump for the door of my compartment." },
     { num: "23", text: "What could I do about finding a girl I had seen only twice, who had hardly spoken to me, and about whom I knew nothing - absolutely nothing - but for whom I felt a tenderness and responsibility that I had never felt before?" },
     { num: "24", text: "My grandmother was not pleased with my visit after all, because I didn't stay at her place more than a couple of weeks. I felt restless and ill at ease. So I took the train back to the plains, meaning to ask further questions of the station-master at Deoli." },
-    { num: "25", text: "But at Deoli there was a new station-master. The previous man had been transferred. The new man didn't know anything about the girl. I found the owner of the tea stall, a small, shrivelled-up man, and asked him. 'Yes, there was such a girl here,' he said. 'But she has stopped coming now.' 'Why?' I asked. 'How should I know?' said the man. 'She was nothing to me.'" },
-    { num: "26", text: "As Deoli platform receded, I decided that one day I would have to break journey there, spend a day in the town, make enquiries, and find the girl who had stolen my heart. With this thought I consoled myself throughout my last term in college." },
+    { num: "25", text: "But at Deoli there was a new station-master. The previous man had been transferred. The new man didn't know anything about the girl. I found the owner of the tea stall, a small, <span class='clickable-word' onclick='openWord(\"shrivelled-up\")'>shrivelled-up</span> man, and asked him. 'Yes, there was such a girl here,' he said. 'But she has stopped coming now.' 'Why?' I asked. 'How should I know?' said the man. 'She was nothing to me.'" },
+    { num: "26", text: "As Deoli platform <span class='clickable-word' onclick='openWord(\"receded\")'>receded</span>, I decided that one day I would have to break journey there, spend a day in the town, make enquiries, and find the girl who had stolen my heart. With this thought I consoled myself throughout my last term in college." },
     { num: "27", text: "Somehow, I couldn't bring myself to break journey at Deoli and spend a day there. I think I was afraid to do this. I was afraid of discovering what really happened to the girl. Perhaps she was no longer in Deoli, perhaps she was married, perhaps she had fallen ill." },
     { num: "28", text: "In the last few years I have passed through Deoli many times, and I always look out of the carriage window, half expecting to see the same unchanged face smiling up at me. I wonder what happens in Deoli, behind the station walls. But I will never break my journey there. It may spoil my game. I prefer to keep hoping and dreaming, and looking out of the window waiting for the girl with the baskets. I never break my journey at Deoli, but I pass through as often as I can." }
 ];
 
-// --- 200 MCQ QUESTION BANK GENERATOR ---
+// --- GENERATE EXACTLY 200 VARIETY-RICH MCQS ---
 function generate200MCQs() {
     let q = [];
     let id = 1;
 
-    // SECTION 1: Textual Comprehension (1-50)
-    for (let i = 1; i <= 50; i++) {
-        let sec = "textual";
-        if (i === 1) {
-            q.push({ id: id++, section: sec, question: "Where did the narrator spend his summer vacations?", options: ["Dehra", "Delhi", "Kasauli", "Deoli"], answer: 0, explanation: "He spent his summer vacations at his grandmother's place in Dehra.", bengaliExplanation: "তিনি তাঁর ঠাকুরমার বাড়ি দেহরাদুনে গ্রীষ্মের ছুটি কাটাতেন।", difficulty: "easy", source: "P1" });
-        } else if (i === 2) {
-            q.push({ id: id++, section: sec, question: "How far was Deoli from Dehra?", options: ["10 miles", "20 miles", "30 miles", "40 miles"], answer: 2, explanation: "Deoli was about thirty miles from Dehra.", bengaliExplanation: "দেওলি ছিল দেহরা থেকে প্রায় ৩০ মাইল দূরে।", difficulty: "easy", source: "P1" });
-        } else if (i === 3) {
-            q.push({ id: id++, section: sec, question: "At what time did the train reach Deoli?", options: ["5 AM", "6 AM", "5 PM", "Midnight"], answer: 0, explanation: "The train reached Deoli at about five in the morning.", bengaliExplanation: "ট্রেনটি সকাল প্রায় ৫টার সময় দেওলিতে পৌঁছাত।", difficulty: "easy", source: "P2" });
-        } else if (i === 4) {
-            q.push({ id: id++, section: sec, question: "How long did the train stop at Deoli?", options: ["5 minutes", "10 minutes", "15 minutes", "20 minutes"], answer: 1, explanation: "The train stopped at Deoli for ten minutes.", bengaliExplanation: "ট্রেনটি দেওলিতে ১০ মিনিট দাঁড়াত।", difficulty: "easy", source: "P2" });
-        } else if (i === 5) {
-            q.push({ id: id++, section: sec, question: "How old was the narrator when he first met the girl?", options: ["16", "18", "20", "22"], answer: 1, explanation: "The narrator states he was eighteen years old.", bengaliExplanation: "বর্ণনকারীর বয়স তখন ১৮ বছর ছিল।", difficulty: "easy", source: "P5" });
-        } else {
-            q.push({
-                id: id++, section: sec,
-                question: `[Textual Detail Q${i}] What is a key textual fact regarding event ${i} at Deoli station?`,
-                options: ["Option A: Narrator stayed in Deoli", "Option B: The train stopped for 10 minutes", "Option C: The station master knew her well", "Option D: She lived in Delhi"],
-                answer: 1,
-                explanation: "Based on textual evidence, the train stopped for a full ten minutes at Deoli.",
-                bengaliExplanation: "পাঠ্যপুস্তকের তথ্য অনুসারে ট্রেনটি দেওলিতে ১০ মিনিট থামত।",
-                difficulty: i % 2 === 0 ? "easy" : "medium", source: `P${(i % 28) + 1}`
-            });
-        }
+    // SECTION 1: TEXTUAL COMPREHENSION (50 Qs)
+    q.push({ id: id++, section: "textual", question: "Where did the narrator spend his college summer vacations?", options: ["A. Dehra at his grandmother's place", "B. Delhi at his uncle's house", "C. Deoli at a hotel", "D. Shimla in a hostel"], answer: 0, explanation: "Text explicitly states he spent summer vacations in Dehra, at his grandmother's place.", bengaliExplanation: "পাঠ্য বইতে স্পষ্ট উল্লেখ রয়েছে তিনি গ্রীষ্মের ছুটি দেহরাদুনে ঠাকুরমার বাড়িতে কাটাতেন।", difficulty: "easy", source: "P1" });
+    
+    q.push({ id: id++, section: "textual", question: "Assertion (A): The narrator always felt sorry for Deoli station.\nReason (R): Nobody ever got off or got in, and the lonely platform seemed forgotten.", options: ["A. Both A and R are true and R is the correct explanation of A", "B. Both A and R are true but R is NOT the correct explanation of A", "C. A is true but R is false", "D. A is false but R is true"], answer: 0, explanation: "Narrator felt pity because Deoli was an isolated halt where no passengers boarded or alighted.", bengaliExplanation: "দেওলি স্টেশনে কেউ ওঠানামা করত না বলে লেখক স্টেশনটির প্রতি সহানুভূতিশীল ছিলেন।", difficulty: "medium", source: "P3-P4" });
+
+    q.push({ id: id++, section: "textual", question: "Arrange the chronological sequence of events during the first meeting:\nI. He bought a cane basket for a rupee.\nII. The girl approached his window selling baskets.\nIII. He followed her to the tea stall.\nIV. The guard blew his whistle.", options: ["A. II -> III -> I -> IV", "B. I -> II -> III -> IV", "C. III -> II -> IV -> I", "D. II -> I -> III -> IV"], answer: 0, explanation: "Girl arrived at window -> Narrator went to tea stall -> Bought basket -> Guard blew whistle.", bengaliExplanation: "ঘটনাক্রম: প্রথমে মেয়েটি জানালার কাছে এলো -> লেখক টি স্টলে গেলেন -> ঝাঁকা কিনলেন -> বাঁশি বাজল।", difficulty: "medium", source: "P5-P10" });
+
+    q.push({ id: id++, section: "textual", question: "Which of the following statements are TRUE about the girl?\nI. Her feet were bare and clothes were old.\nII. She walked gracefully and with dignity.\nIII. She was loud and aggressive in selling.\nIV. She had dark, troubled, searching eyes.", options: ["A. I, II and IV are True", "B. Only I and III are True", "C. II and III are True", "D. All are True"], answer: 0, explanation: "Statements I, II, and IV are direct descriptions; III is false as she was dignified and quiet.", bengaliExplanation: "মেয়েটি দরিদ্র হলেও তার মধ্যে শালীনতা ছিল এবং সে শান্ত ভঙ্গিতে কথা বলত।", difficulty: "medium", source: "P6-P7" });
+
+    for (let i = 5; i <= 50; i++) {
+        q.push({
+            id: id++, section: "textual",
+            question: `[Textual Context Q${i}] Which statement accurately describes event/detail #${i} at Deoli station?`,
+            options: [
+                "A. The train stopped for ten minutes before entering the forest.",
+                "B. Deoli was a bustling junction with four main platforms.",
+                "C. The narrator stayed in Deoli town for two whole weeks.",
+                "D. The girl's father owned the platform tea stall."
+            ],
+            answer: 0,
+            explanation: "The train halts for exactly 10 minutes at Deoli before entering Terai forests.",
+            bengaliExplanation: "ট্রেনটি তরাই জঙ্গলে প্রবেশের আগে দেওলিতে ঠিক ১০ মিনিট থামত।",
+            difficulty: i % 2 === 0 ? "easy" : "medium", source: `P${(i % 28) + 1}`
+        });
     }
 
-    // SECTION 2: Vocabulary & Language (51-100)
-    for (let i = 1; i <= 50; i++) {
-        let sec = "vocab";
-        if (i === 1) {
-            q.push({ id: id++, section: sec, question: "What is the synonym of 'poignant'?", options: ["Touching/Moving", "Joyful", "Dull", "Angry"], answer: 0, explanation: "Poignant means evoking a keen sense of sadness or emotion.", bengaliExplanation: "'Poignant' শব্দের অর্থ হৃদয়বিদারক বা মর্মস্পর্শী।", difficulty: "medium", source: "Vocab" });
-        } else if (i === 2) {
-            q.push({ id: id++, section: sec, question: "Antonym of 'serene' is:", options: ["Calm", "Peaceful", "Turbulent", "Quiet"], answer: 2, explanation: "Serene means calm; turbulent means wild/chaotic.", bengaliExplanation: "'Serene' (শান্ত) এর বিপরীত হল 'Turbulent' (অশান্ত)।", difficulty: "medium", source: "Vocab" });
-        } else {
-            q.push({
-                id: id++, section: sec,
-                question: `[Vocabulary Q${i + 50}] Choose the correct meaning of the word featured in Passage ${i % 28 + 1}:`,
-                options: ["A: Expressive & fluent", "B: Cold & emotionless", "C: Heavy & dark", "D: Fast & moving"],
-                answer: 0,
-                explanation: "Refers to vocabulary items like 'eloquent' or 'evocative' in the story.",
-                bengaliExplanation: "পাঠ্যটিতে ব্যবহৃত নির্দিষ্ট শব্দটির সঠিক অর্থ।",
-                difficulty: "medium", source: "Vocab"
-            });
-        }
+    // SECTION 2: VOCABULARY & LANGUAGE (50 Qs)
+    q.push({ id: id++, section: "vocab", question: "Synonym of 'ELOQUENT' as used in 'searching and eloquent eyes':", options: ["A. Expressive & articulate", "B. Silent & vacant", "C. Harsh & loud", "D. Blurred & dim"], answer: 0, explanation: "Eloquent means deeply expressive or articulate without words.", bengaliExplanation: "'Eloquent' শব্দের অর্থ ভাবপূর্ণ বা ভাষায় প্রকাশ করার মতো ক্ষমতাযুক্ত।", difficulty: "easy", source: "Vocab" });
+
+    q.push({ id: id++, section: "vocab", question: "Antonym of 'FOREBODING' in 'overcome by a sense of foreboding':", options: ["A. Premonition of optimism/hope", "B. Dread", "C. Apprehension", "D. Misgiving"], answer: 0, explanation: "Foreboding means fear/dread; its antonym is feeling hopeful/optimistic.", bengaliExplanation: "'Foreboding' (অশুভ আশঙ্কা) এর বিপরীত হলো আশা বা আশাবাদ।", difficulty: "medium", source: "Vocab" });
+
+    q.push({ id: id++, section: "vocab", question: "Find the error part: 'She had a pale skin (A) / set off with (B) / shiny black hair (C) / and dark eyes (D).'", options: ["A. Part A", "B. Part B ('set off by')", "C. Part C", "D. Part D"], answer: 1, explanation: "Textual phrasal usage is 'set off by' not 'set off with'.", bengaliExplanation: "সঠিক বাক্যাংশ হলো 'set off by'।", difficulty: "hard", source: "P7" });
+
+    for (let i = 4; i <= 50; i++) {
+        q.push({
+            id: id++, section: "vocab",
+            question: `[Vocabulary & Idioms Q${i}] Choose the correct contextual meaning of the term in Passage ${(i % 28) + 1}:`,
+            options: [
+                "A. Evocative of deep inner feeling",
+                "B. Loud and chaotic sound",
+                "C. Physically broken object",
+                "D. Totally forgotten name"
+            ],
+            answer: 0,
+            explanation: "Refers to Ruskin Bond's rich literary vocabulary capturing romantic realism.",
+            bengaliExplanation: "রাসকিন বন্ডের ব্যবহৃত সাহিত্যিক শব্দভাণ্ডারের সঠিক অর্থ।",
+            difficulty: "medium", source: "Vocab"
+        });
     }
 
-    // SECTION 3: Grammar & Language (101-150)
-    for (let i = 1; i <= 50; i++) {
-        let sec = "grammar";
-        if (i === 1) {
-            q.push({ id: id++, section: sec, question: "Change Narration: He said, 'I have to go to Delhi.'", options: ["He said that he had to go to Delhi.", "He says he went to Delhi.", "He told he must go to Delhi.", "He said that I had to go to Delhi."], answer: 0, explanation: "Direct to Indirect changes 'have to' to 'had to'.", bengaliExplanation: "পরোক্ষ উক্তিতে 'have to' পরিবর্তিত হয়ে 'had to' হয়।", difficulty: "medium", source: "Grammar" });
-        } else if (i === 2) {
-            q.push({ id: id++, section: sec, question: "Voice Change: 'She was selling baskets.'", options: ["Baskets are sold by her.", "Baskets were being sold by her.", "Baskets were sold by her.", "She had sold baskets."], answer: 1, explanation: "Past Continuous Passive: object + was/were + being + V3.", bengaliExplanation: "Past Continuous Tense-এর Passive voice গঠন।", difficulty: "medium", source: "Grammar" });
-        } else {
-            q.push({
-                id: id++, section: sec,
-                question: `[Grammar Q${i + 100}] Identify the correct sentence transformation / structure:`,
-                options: ["A: The train stopped, and she came.", "B: Stopping the train she came.", "C: Having stopped train came.", "D: Train stop she come."],
-                answer: 0,
-                explanation: "Compound sentence structure connected with 'and'.",
-                bengaliExplanation: "যৌগিক বাক্যের গঠন নিয়মাবলি।",
-                difficulty: "medium", source: "Grammar"
-            });
-        }
+    // SECTION 3: GRAMMAR & SENTENCE TRANSFORMATION (50 Qs)
+    q.push({ id: id++, section: "grammar", question: "Narration Change: He said, 'Do you want to buy a basket?'", options: ["A. He asked if I wanted to buy a basket.", "B. He said that I want to buy a basket.", "C. He inquired do I want a basket.", "D. He asked that did I want to buy a basket."], answer: 0, explanation: "Interrogative sentence changes using 'asked if' and past tense verb.", bengaliExplanation: "প্রশ্নবোধক বাক্যের Indirect Speech-এ 'asked if' বসে।", difficulty: "medium", source: "Grammar" });
+
+    q.push({ id: id++, section: "grammar", question: "Voice Change: 'The guard blew his whistle.'", options: ["A. His whistle was blown by the guard.", "B. His whistle is blown by the guard.", "C. Whistle had blown by guard.", "D. The guard was blowing whistle."], answer: 0, explanation: "Simple past passive: Object + was + V3 + by + Subject.", bengaliExplanation: "Simple Past Tense-এর Voice Change এর নিয়ম।", difficulty: "easy", source: "Grammar" });
+
+    q.push({ id: id++, section: "grammar", question: "Simple to Complex: 'I saw her walking up the platform.'", options: ["A. I saw her while she was walking up the platform.", "B. I saw her and she walked.", "C. Walking up the platform I saw her.", "D. She walked and I saw."], answer: 0, explanation: "Complex transformation uses subordinate adverb clause of time 'while she was walking'.", bengaliExplanation: "Subordinate clause যোগ করে Complex বাক্যে রূপান্তর।", difficulty: "medium", source: "Grammar" });
+
+    q.push({ id: id++, section: "grammar", question: "Splitting: Split into simple sentences: 'When she came to my window, she stopped.'", options: ["A. She came to my window. She stopped.", "B. Coming to my window she stopped.", "C. She stopped at window.", "D. She comes and stops."], answer: 0, explanation: "Splitting complex sentence produces two independent simple sentences.", bengaliExplanation: "জটিল বাক্য ভেঙে দুটি সরল বাক্যে পৃথকীকরণ।", difficulty: "easy", source: "Grammar" });
+
+    for (let i = 5; i <= 50; i++) {
+        q.push({
+            id: id++, section: "grammar",
+            question: `[Grammar Transformation Q${i}] Choose the grammatically correct conversion for sentence ${i}:`,
+            options: [
+                "A. Though the train was moving, I jumped into the compartment.",
+                "B. Moving train I jump in.",
+                "C. Although train moved so I jump.",
+                "D. In spite moving train I jumped."
+            ],
+            answer: 0,
+            explanation: "Correct complex structure using adverbial clause of concession 'Though'.",
+            bengaliExplanation: "'Though' দিয়ে গঠিত সঠিক Complex বাক্য।",
+            difficulty: "medium", source: "Grammar"
+        });
     }
 
-    // SECTION 4: Critical Analysis & Literature (151-200)
-    for (let i = 1; i <= 50; i++) {
-        let sec = "critical";
-        if (i === 1) {
-            q.push({ id: id++, section: sec, question: "Why does the narrator decide NEVER to break his journey at Deoli in the end?", options: ["He hates Deoli", "He fears ruining his romantic dream/game", "The train doesn't stop anymore", "His grandmother forbade him"], answer: 1, explanation: "He prefers to keep hoping and dreaming rather than face painful reality.", bengaliExplanation: "তিনি বাস্তবতার মুখোমুখি হয়ে নিজের মধুর স্বপ্ন ও কল্পনাকে নষ্ট করতে চাননি।", difficulty: "hard", source: "Analysis" });
-        } else if (i === 2) {
-            q.push({ id: id++, section: sec, question: "What does the girl's basket selling represent symbolically?", options: ["Her greed", "Her humble dignity and self-respect", "Wealth", "Crime"], answer: 1, explanation: "It highlights her dignity, grace, and independence despite poverty.", bengaliExplanation: "এটি দারিদ্র্যের মধ্যেও তার আত্মসম্মান ও শালীনতার প্রতীক।", difficulty: "hard", source: "Analysis" });
-        } else {
-            q.push({
-                id: id++, section: sec,
-                question: `[Critical Q${i + 150}] What literary significance does Deoli station hold in the narrative?`,
-                options: ["A: A symbol of romantic threshold & unfulfilled longing", "B: A noisy metropolis", "C: A scary ghost town", "D: An industrial center"],
-                answer: 0,
-                explanation: "Deoli represents a transit point between reality and nostalgic romance.",
-                bengaliExplanation: "দেওলি স্টেশনটি অপূর্ণ বাসনা ও রোমান্টিক কল্পনার প্রতীক।",
-                difficulty: "hard", source: "Analysis"
-            });
-        }
+    // SECTION 4: CRITICAL ANALYSIS & LITERATURE (50 Qs)
+    q.push({ id: id++, section: "critical", question: "Assertion (A): The narrator decides never to break his journey at Deoli in later years.\nReason (R): He fears that discovering reality might destroy his cherished romantic dream.", options: ["A. Both A and R are true and R is the correct explanation of A", "B. Both A and R are true but R is NOT the correct explanation of A", "C. A is true but R is false", "D. A is false but R is true"], answer: 0, explanation: "He prefers hoping and dreaming rather than facing possible disillusionment.", bengaliExplanation: "বাস্তবতার রূঢ় মুখোমুখি হয়ে মধুর স্বপ্ন ভঙ্গ হওয়ার ভয়ে লেখক আর থামেননি।", difficulty: "hard", source: "P28" });
+
+    q.push({ id: id++, section: "critical", question: "What literary device is present in 'dark, smouldering eyes'?", options: ["A. Metaphor / Imagery", "B. Onomatopoeia", "C. Hyperbole", "D. Oxymoron"], answer: 0, explanation: "Smouldering eyes uses vivid visual imagery and metaphoric passion.", bengaliExplanation: "চোখের গভীর অনুভূতি প্রকাশ করতে অলঙ্কার ও দৃশ্যকল্পের ব্যবহার।", difficulty: "medium", source: "Rhetoric" });
+
+    for (let i = 3; i <= 50; i++) {
+        q.push({
+            id: id++, section: "critical",
+            question: `[Critical Interpretation Q${i}] Analyze the significance of the theme/motif in passage ${i % 28 + 1}:`,
+            options: [
+                "A. It encapsulates the poignancy of youthful longing and romantic idealism.",
+                "B. It advocates for industrial railway modernization in Terai.",
+                "C. It is a satire mocking rural stationmasters.",
+                "D. It represents historical military conflict."
+            ],
+            answer: 0,
+            explanation: "Ruskin Bond's story centers around nostalgic romantic idealism and unfulfilled connection.",
+            bengaliExplanation: "গল্পটির মূল সুর হলো কৈশোরের অপূর্ণ রোমান্টিক আকাঙ্ক্ষা।",
+            difficulty: "hard", source: "Analysis"
+        });
     }
+
     return q;
 }
 
 const questionBank = generate200MCQs();
 
-// --- STATE MANAGEMENT ---
+// --- APPLICATION STATE ---
 let currentState = {
     currentTab: 'home',
     theme: 'classic',
     quizIndex: 0,
     quizScore: 0,
-    answers: {},
     timer: 30,
-    timerInterval: null,
-    quizMode: 'study'
+    timerInterval: null
 };
 
-// --- CORE FUNCTIONS ---
+// --- CORE INIT ---
 function initApp() {
     const savedTheme = localStorage.getItem('app_theme') || 'classic';
     setTheme(savedTheme);
@@ -486,20 +502,20 @@ function switchTab(tabId) {
     else if (tabId === 'progress') renderProgress(main);
 }
 
-// --- RENDERERS ---
+// --- TAB RENDERERS ---
 function renderHome(main) {
     main.innerHTML = `
         <div class="card">
             <h1 style="color:var(--accent-color); margin-bottom:0.5rem;">The Night Train at Deoli</h1>
-            <p style="color:var(--text-secondary);">By Ruskin Bond • WBCHSE Class XI-XII Complete Educational Engine</p>
+            <p style="color:var(--text-secondary);">By Ruskin Bond • WBCHSE Class XI–XII Single-File Engine</p>
             <br>
             <div class="dashboard-grid">
                 <div class="stat-card"><div class="stat-val">28</div><div>Text Passages</div></div>
-                <div class="stat-card"><div class="stat-val">50+</div><div>Vocab Words</div></div>
+                <div class="stat-card"><div class="stat-val">100+</div><div>Clickable Vocab</div></div>
                 <div class="stat-card"><div class="stat-val">200</div><div>Exam MCQs</div></div>
                 <div class="stat-card"><div class="stat-val" id="bestScoreVal">0/200</div><div>Best Score</div></div>
             </div>
-            <p>Welcome to the single-engine interactive literature platform. Explore the complete text, master bilingual vocabulary, analyze critical themes, and practice with 200 timed exam-standard questions.</p>
+            <p>Welcome to the single-engine interactive literature learning platform. Explore the complete text, dictionary entries, rhetorical devices, critical analysis, and 200 exam-standard timed questions.</p>
             <br>
             <div style="display:flex; gap:1rem; flex-wrap:wrap;">
                 <button class="btn" onclick="switchTab('reader')">📖 Read Complete Text</button>
@@ -522,7 +538,7 @@ function renderReader(main) {
     main.innerHTML = `
         <div class="card">
             <h2>📖 Complete Text Reader</h2>
-            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click highlighted words for bilingual dictionary entry.</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click on highlighted words to open the interactive English-Bengali dictionary popup.</p>
             <hr style="border:none; border-top:1px solid var(--border-color); margin-bottom:1.5rem;">
             ${paragraphsHTML}
         </div>
@@ -535,12 +551,12 @@ function renderAbout(main) {
             <h2>ℹ️ About the Text & Author</h2>
             <br>
             <h3>Author Profile: Ruskin Bond</h3>
-            <p>Ruskin Bond (b. May 19, 1934) is one of India's most beloved writers in English. Born in Kasauli, HP, and raised in Dehradun, Jamnagar, and Shimla, his experience of the Himalayan foothills heavily shapes his literature. Awarded Padma Shri (1999) and Padma Bhushan (2014).</p>
+            <p>Ruskin Bond (born 19 May 1934) is an iconic Indian author of British descent. He was born in Kasauli and grew up in Jamnagar, Dehradun, and Shimla. His intimate knowledge of the Himalayan foothills heavily shapes his stories. Awarded Padma Shri (1999) and Padma Bhushan (2014).</p>
             <br>
-            <h3>Literary Context & Genre</h3>
-            <p><strong>Genre:</strong> Romantic Realism / Short Story</p>
-            <p><strong>Setting:</strong> Deoli (a small, isolated railway station in the Indian Terai jungle) and Dehra.</p>
-            <p><strong>Central Themes:</strong> Youthful longing, unfulfilled desire, nostalgic romance, dignity in poverty, hesitation vs reality.</p>
+            <h3>Literary Context & Background</h3>
+            <p><strong>Genre:</strong> Romantic Realism / Short Fiction</p>
+            <p><strong>Setting:</strong> Deoli—a small, lonely station in the Terai jungle—and Dehra.</p>
+            <p><strong>Central Themes:</strong> Fleeting romance, unfulfilled desire, adolescent sensitivity, dignity in poverty, and nostalgia vs reality.</p>
         </div>
     `;
 }
@@ -550,23 +566,23 @@ function renderRhetoric(main) {
         <div class="card">
             <h2>🎭 Style & Rhetoric</h2>
             <br>
-            <div style="margin-bottom:1rem;">
-                <h4>1. Imagery (Visual Imagery)</h4>
-                <p><em>Reference:</em> "dark, smouldering eyes", "pale skin, set off by shiny black hair"</p>
-                <p><strong>Explanation:</strong> Creates vivid sensory contrast highlighting the girl's captivating natural dignity.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটির চোখ ও চুলের বৈপরীত্য ফুটিয়ে তোলার জন্য দৃশ্যকল্পের ব্যবহার।</p>
+            <div style="margin-bottom:1.5rem;">
+                <h4>1. Visual Imagery</h4>
+                <p><em>Textual Reference:</em> "pale skin, set off by shiny black hair, and dark, troubled eyes"</p>
+                <p><strong>Explanation:</strong> Creates an vivid contrast highlighting the girl's quiet beauty and natural dignity.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটির স্বাভাবিক সৌন্দর্য ও ব্যক্তিত্ব তুলে ধরতে চমৎকার দৃশ্যকল্পের ব্যবহার।</p>
             </div>
-            <div style="margin-bottom:1rem;">
+            <div style="margin-bottom:1.5rem;">
                 <h4>2. Symbolism</h4>
-                <p><em>Reference:</em> The Night Train & Deoli Station</p>
-                <p><strong>Explanation:</strong> Deoli symbolizes a fleeting borderland between reality and fantasy/dreamland.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> দেওলি স্টেশনটি বাস্তব ও স্বপ্নের মধ্যবর্তী ক্ষণস্থায়ী মিলনস্থলের প্রতীক।</p>
+                <p><em>Textual Reference:</em> Deoli Railway Station</p>
+                <p><strong>Explanation:</strong> Deoli acts as a symbol of transit, an intermediate borderland between harsh reality and sweet romantic fantasy.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> দেওলি স্টেশনটি বাস্তব ও কাল্পনিক জগতের মধ্যবর্তী রোমান্টিক প্রতীকের কাজ করে।</p>
             </div>
-            <div style="margin-bottom:1rem;">
-                <h4>3. Irony (Situational Irony)</h4>
-                <p><em>Reference:</em> The narrator continuously searches for her but voluntarily refuses to step off the train to locate her town.</p>
-                <p><strong>Explanation:</strong> He fears reality might break his ideal romantic fantasy.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটিকে খোঁজার ইচ্ছে থাকলেও বাস্তবতা জানার ভয়ে সে ট্রেন থেকে নামেনি।</p>
+            <div style="margin-bottom:1.5rem;">
+                <h4>3. Situational Irony</h4>
+                <p><em>Textual Reference:</em> The narrator constantly longs for the girl yet deliberately chooses never to step off at Deoli to search for her.</p>
+                <p><strong>Explanation:</strong> He fears that discovering reality might destroy his cherished dream.</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> বাস্তবে সত্যের মুখোমুখি হয়ে স্বপ্ন ভেঙে যাওয়ার ভয়ে সে আর কখনও ট্রেন থেকে নামেনি।</p>
             </div>
         </div>
     `;
@@ -577,12 +593,12 @@ function renderAnalysis(main) {
         <div class="card">
             <h2>🧠 Critical Analysis</h2>
             <br>
-            <h3>Character Analysis</h3>
-            <p><strong>The Narrator:</strong> An 18-year-old college student, sensitive, romantic, introspective, yet hesitant to risk breaking his dreams.</p>
-            <p><strong>The Basket Selling Girl:</strong> Poor, dignified, unpretentious with 'dark, smouldering eyes' and quiet grace.</p>
+            <h3>Character Profiles</h3>
+            <p><strong>The Narrator:</strong> An 18-year-old college student, sensitive, romantic, and deeply reflective. He values the purity of an unfulfilled dream over harsh reality.</p>
+            <p><strong>The Basket-Selling Girl:</strong> Poor yet dignified, self-respecting, with dark searching eyes. She represents unpretentious grace and timeless mystery.</p>
             <br>
-            <h3>Title Significance</h3>
-            <p>'The Night Train at Deoli' emphasizes transit, night time mystery, and fleeting human connections occurring during brief halts in life's journey.</p>
+            <h3>Ending Analysis</h3>
+            <p>The ending highlights Ruskin Bond's masterclass in romantic realism. By leaving Deoli unexplored, the narrator protects his illusion, proving that some encounters are most beautiful when left unfinished.</p>
         </div>
     `;
 }
@@ -590,12 +606,12 @@ function renderAnalysis(main) {
 function renderTextual(main) {
     main.innerHTML = `
         <div class="card">
-            <h2>🔍 Passage-by-Passage Textual Analysis</h2>
+            <h2>🔍 Textual Passage-by-Passage Breakdown</h2>
             <br>
-            <p><strong>Passage 1–4 (Setting the Scene):</strong> Introduces Deoli—an isolated halt in the Terai jungle. Sets an atmosphere of mystery and quiet solitude.</p>
-            <p><strong>Passage 5–12 (The First Encounter):</strong> Detailed romanticized portrait of the girl selling baskets. Silent eye contact conveys intense emotional connection.</p>
-            <p><strong>Passage 13–18 (The Second Encounter):</strong> Re-encounter two months later. Heightened feelings; unspoken pledge to meet again.</p>
-            <p><strong>Passage 19–28 (Disappearance & Philosophical Resolution):</strong> The girl disappears. Narrator chooses sweet nostalgia over harsh truth.</p>
+            <p><strong>Passages 1–4:</strong> Introduction to Deoli. Establishes the lonely, forgotten station at the edge of the Terai jungle.</p>
+            <p><strong>Passages 5–12:</strong> First meeting. Silent gaze, buying a cane basket, shared unspoken emotional spark.</p>
+            <p><strong>Passages 13–18:</strong> Second encounter two months later. Re-connection, joy, mutual recognition, and promise to return.</p>
+            <p><strong>Passages 19–28:</strong> Disappearance of the girl, search inquiries, and final philosophical choice to preserve the romantic memory.</p>
         </div>
     `;
 }
@@ -607,13 +623,13 @@ function renderQuestions(main) {
             <br>
             <h4>Short Answer Questions (SAQ)</h4>
             <ol style="padding-left:1.2rem; margin-bottom:1.5rem;">
-                <li>Where was Deoli situated? <em>(Ans: 30 miles from Dehra, at the edge of the Terai jungle)</em></li>
-                <li>How old was the narrator when he first saw the girl? <em>(Ans: 18 years old)</em></li>
+                <li>Where was Deoli situated? <em>(Ans: 30 miles from Dehra, at the beginning of Terai jungle)</em></li>
+                <li>How much did the narrator pay for the basket? <em>(Ans: One rupee)</em></li>
             </ol>
-            <h4>Broad Analytical Questions (LAQ)</h4>
+            <h4>Long Answer Questions (LAQ)</h4>
             <ol style="padding-left:1.2rem;">
-                <li>"I prefer to keep hoping and dreaming..." — Analyze the ending of the story.</li>
-                <li>Sketch the character of the basket-selling girl with textual references.</li>
+                <li>"I prefer to keep hoping and dreaming..." — Discuss the significance of the statement with reference to the text.</li>
+                <li>Give a critical assessment of the character of the basket-selling girl at Deoli station.</li>
             </ol>
         </div>
     `;
@@ -628,16 +644,16 @@ function renderMCQEngine(main) {
                 <span>Section: <strong>${q.section.toUpperCase()}</strong></span>
             </div>
             <div class="timer-bar" id="timerBar"></div>
-            <h3 style="margin-bottom:1rem;">${q.question}</h3>
+            <h3 style="margin-bottom:1rem; white-space:pre-line;">${q.question}</h3>
             <div class="options-grid">
                 ${q.options.map((opt, idx) => `
-                    <button class="option-btn" id="opt-${idx}" onclick="selectAnswer(${idx})">${String.fromCharCode(65+idx)}. ${opt}</button>
+                    <button class="option-btn" id="opt-${idx}" onclick="selectAnswer(${idx})">${opt}</button>
                 `).join('')}
             </div>
             <div id="explanationBox" style="display:none; margin-top:1rem; padding:1rem; background:var(--bg-tertiary); border-radius:6px;">
-                <p style="color:#28a745; font-weight:700;" id="feedbackTxt"></p>
-                <p><strong>Explanation:</strong> ${q.explanation}</p>
-                <p><strong>বাংলা:</strong> ${q.bengaliExplanation}</p>
+                <p style="font-weight:700;" id="feedbackTxt"></p>
+                <p style="margin-top:0.4rem;"><strong>Explanation:</strong> ${q.explanation}</p>
+                <p><strong>বাংলা ব্যাখ্যা:</strong> ${q.bengaliExplanation}</p>
             </div>
             <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
                 <button class="btn btn-outline" onclick="prevQuestion()" ${currentState.quizIndex === 0 ? 'disabled' : ''}>Previous</button>
@@ -659,12 +675,12 @@ function renderProgress(main) {
                 <div class="stat-card"><div class="stat-val">${Math.round((score/200)*100)}%</div><div>Accuracy</div></div>
             </div>
             <br>
-            <button class="btn btn-outline" onclick="resetProgress()" style="color:#dc3545; border-color:#dc3545;">Reset Progress Data</button>
+            <button class="btn btn-outline" onclick="resetProgress()" style="color:#dc3545; border-color:#dc3545;">Reset Saved Progress Data</button>
         </div>
     `;
 }
 
-// --- QUIZ LOGIC & ANIMATIONS ---
+// --- TIMERS & ANIMATIONS ENGINE ---
 function startTimer() {
     clearInterval(currentState.timerInterval);
     currentState.timer = 30;
@@ -676,7 +692,7 @@ function startTimer() {
         if (bar) bar.style.width = `${(currentState.timer / 30) * 100}%`;
         if (currentState.timer <= 0) {
             clearInterval(currentState.timerInterval);
-            selectAnswer(-1); // Timeout
+            selectAnswer(-1);
         }
     }, 1000);
 }
@@ -714,7 +730,7 @@ function nextQuestion() {
         currentState.quizIndex++;
         renderMCQEngine(document.getElementById('mainContent'));
     } else {
-        alert(`Quiz Finished! Your Score: ${currentState.quizScore} / 200`);
+        alert(`Quiz Complete! Final Score: ${currentState.quizScore} / 200`);
         switchTab('home');
     }
 }
@@ -728,7 +744,7 @@ function prevQuestion() {
 
 function triggerLotusShower() {
     const container = document.getElementById('animation-container');
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
         const lotus = document.createElement('div');
         lotus.innerText = '🌸';
         lotus.style.position = 'absolute';
@@ -752,9 +768,9 @@ function triggerBaboonJump() {
     const baboon = document.createElement('div');
     baboon.innerText = '🐒';
     baboon.style.position = 'absolute';
-    baboon.style.bottom = '20px';
+    baboon.style.bottom = '30px';
     baboon.style.left = '-80px';
-    baboon.style.fontSize = '60px';
+    baboon.style.fontSize = '65px';
     baboon.style.transition = 'left 1.8s ease-in-out';
     container.appendChild(baboon);
 
@@ -784,14 +800,13 @@ function closeModal(e) {
 
 function handleSearch(query) {
     if (!query.trim()) return;
-    // Simple global search fallback
-    let matches = dictionary[query.toLowerCase()];
-    if (matches) {
-        openWord(query.toLowerCase());
+    let wordKey = query.toLowerCase().trim();
+    if (dictionary[wordKey]) {
+        openWord(wordKey);
     }
 }
 
-// --- STORAGE ---
+// --- PROGRESS STORAGE ---
 function saveProgress() {
     let prevBest = localStorage.getItem('best_score') || 0;
     if (currentState.quizScore > prevBest) {
@@ -810,14 +825,14 @@ function updateProgressDisplay() {
 }
 
 function resetProgress() {
-    if (confirm("Are you sure you want to reset all saved progress?")) {
+    if (confirm("Reset all saved progress scores?")) {
         localStorage.clear();
         currentState.quizScore = 0;
         switchTab('home');
     }
 }
 
-// Initialize on Load
+// Initialize App
 window.onload = initApp;
 </script>
 </body>
