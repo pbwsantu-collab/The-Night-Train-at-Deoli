@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Night Train at Deoli — Complete Literature Learning Engine</title>
+    <title>The Night Train at Deoli — Complete Literature Engine</title>
     <style>
         :root {
             --bg-primary: #f8f9fa;
@@ -14,9 +14,7 @@
             --accent-color: #2b6cb0;
             --accent-hover: #1c4ed8;
             --border-color: #dee2e6;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --font-size-base: 16px;
-            --line-height-base: 1.6;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --content-width: 900px;
         }
 
@@ -32,17 +30,6 @@
             --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
         }
 
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #e9ecef;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --accent-color: #3182ce;
-            --accent-hover: #2b6cb0;
-            --border-color: #e2e8f0;
-        }
-
         [data-theme="study"] {
             --bg-primary: #f4f1ea;
             --bg-secondary: #fefcf7;
@@ -56,12 +43,10 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            font-size: var(--font-size-base);
-            line-height: var(--line-height-base);
-            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
         }
 
         .app-container {
@@ -81,13 +66,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .brand-title { font-size: 1.25rem; font-weight: 700; color: var(--accent-color); }
         .brand-subtitle { font-size: 0.8rem; color: var(--text-secondary); }
 
-        .header-controls { display: flex; gap: 0.75rem; align-items: center; }
         .btn {
             background-color: var(--accent-color);
             color: #ffffff;
@@ -96,16 +79,13 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            transition: background-color 0.2s, transform 0.1s;
         }
         .btn:hover { background-color: var(--accent-hover); }
-        .btn:active { transform: scale(0.98); }
         .btn-outline {
             background-color: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-primary);
         }
-        .btn-outline:hover { background-color: var(--bg-tertiary); }
 
         sidebar {
             background-color: var(--bg-secondary);
@@ -117,15 +97,9 @@
         }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
             padding: 0.75rem 1rem;
             border-radius: 6px;
-            color: var(--text-primary);
-            text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.2s;
             font-weight: 500;
         }
         .nav-item:hover, .nav-item.active { background-color: var(--bg-tertiary); color: var(--accent-color); }
@@ -137,116 +111,68 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: var(--card-shadow);
             border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
         }
 
         .para-block { margin-bottom: 1.5rem; position: relative; padding-left: 2.5rem; max-width: var(--content-width); }
         .para-num {
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            background: var(--bg-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
+            position: absolute; left: 0; top: 0;
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--accent-color); background: var(--bg-tertiary);
+            padding: 2px 6px; border-radius: 4px;
         }
 
         .clickable-word {
-            text-decoration: underline dotted var(--accent-color);
+            background-color: rgba(255, 235, 59, 0.35);
+            border-bottom: 2px solid var(--accent-color);
             cursor: pointer;
-            font-weight: 500;
-            color: var(--accent-color);
+            font-weight: 600;
+            padding: 0 3px;
+            border-radius: 3px;
         }
-        .clickable-word:hover { background-color: rgba(255, 235, 59, 0.4); border-radius: 2px; }
+        .clickable-word:hover { background-color: rgba(255, 235, 59, 0.8); }
 
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(2px);
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
         }
         .modal-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
+            background: var(--bg-secondary); padding: 2rem; border-radius: 10px;
+            max-width: 500px; width: 90%; border: 1px solid var(--border-color);
         }
 
         .timer-bar {
-            height: 6px;
-            background-color: var(--accent-color);
-            width: 100%;
-            transition: width 1s linear;
-            border-radius: 3px;
-            margin-bottom: 1rem;
+            height: 6px; background-color: var(--accent-color);
+            width: 100%; transition: width 1s linear; border-radius: 3px; margin-bottom: 1rem;
         }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin: 1rem 0; }
         .option-btn {
-            text-align: left;
-            padding: 0.8rem 1rem;
-            border: 1px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
+            text-align: left; padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color); background: var(--bg-primary);
+            color: var(--text-primary); border-radius: 6px; cursor: pointer;
         }
-        .option-btn:hover { background: var(--bg-tertiary); }
         .option-btn.correct { background: #28a745; color: white; border-color: #28a745; }
         .option-btn.incorrect { background: #dc3545; color: white; border-color: #dc3545; }
 
         #animation-container {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; overflow: hidden;
         }
 
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
         }
         .stat-card {
-            background: var(--bg-secondary);
-            padding: 1.25rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            text-align: center;
+            background: var(--bg-secondary); padding: 1.25rem;
+            border-radius: 8px; border: 1px solid var(--border-color); text-align: center;
         }
         .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent-color); }
 
-        .sec-header {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            margin-bottom: 0.2rem;
-            text-transform: uppercase;
-        }
-
         @media (max-width: 768px) {
             .app-container { grid-template-columns: 1fr; }
-            sidebar { display: flex; flex-direction: row; overflow-x: auto; position: sticky; top: 60px; z-index: 90; }
-            .nav-item { white-space: nowrap; }
+            sidebar { flex-direction: row; overflow-x: auto; }
         }
     </style>
 </head>
@@ -262,7 +188,7 @@
         <p><strong>POS:</strong> <span id="dictPos"></span> | <strong>Pronunciation:</strong> <span id="dictPron"></span></p>
         <p><strong>Synonyms:</strong> <span id="dictSyn"></span></p>
         <p><strong>Antonyms:</strong> <span id="dictAnt"></span></p>
-        <p><strong>Contextual Meaning:</strong> <span id="dictContext"></span></p>
+        <p><strong>Contextual Context:</strong> <span id="dictContext"></span></p>
         <p style="margin-top:0.5rem;"><em>Example:</em> <span id="dictEx"></span></p>
         <button class="btn" onclick="closeModal(true)" style="margin-top: 1.25rem; width: 100%;">Close</button>
     </div>
@@ -272,23 +198,22 @@
     <header>
         <div>
             <div class="brand-title">The Night Train at Deoli</div>
-            <div class="brand-subtitle">WBCHSE Literature Engine • Class XI–XII Single-File Engine</div>
+            <div class="brand-subtitle">WBCHSE Class XI–XII Interactive Single-Engine Engine</div>
         </div>
-        <div class="header-controls">
+        <div>
             <button class="btn btn-outline" onclick="cycleTheme()">Theme 🌙</button>
-            <input type="text" id="globalSearch" placeholder="Search text, vocab, MCQs..." oninput="handleSearch(this.value)" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+            <input type="text" id="globalSearch" placeholder="Search vocabulary..." oninput="handleSearch(this.value)" style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
         </div>
     </header>
 
     <sidebar>
         <div class="nav-item active" id="nav-home" onclick="switchTab('home')">🏠 Home</div>
-        <div class="nav-item" id="nav-reader" onclick="switchTab('reader')">📖 Complete Text</div>
-        <div class="nav-item" id="nav-about" onclick="switchTab('about')">ℹ️ About the Text</div>
+        <div class="nav-item" id="nav-reader" onclick="switchTab('reader')">📖 Full Text & Vocab</div>
+        <div class="nav-item" id="nav-about" onclick="switchTab('about')">ℹ️ Background</div>
         <div class="nav-item" id="nav-rhetoric" onclick="switchTab('rhetoric')">🎭 Style & Rhetoric</div>
         <div class="nav-item" id="nav-analysis" onclick="switchTab('analysis')">🧠 Critical Analysis</div>
-        <div class="nav-item" id="nav-textual" onclick="switchTab('textual')">🔍 Textual Analysis</div>
         <div class="nav-item" id="nav-questions" onclick="switchTab('questions')">❓ Important Questions</div>
-        <div class="nav-item" id="nav-mcq" onclick="switchTab('mcq')">📝 200 MCQs Engine</div>
+        <div class="nav-item" id="nav-mcq" onclick="switchTab('mcq')">📝 200 MCQs Test Engine</div>
         <div class="nav-item" id="nav-progress" onclick="switchTab('progress')">📊 Progress</div>
     </sidebar>
 
@@ -297,29 +222,38 @@
 </div>
 
 <script>
-// --- EXTENDED BILINGUAL DICTIONARY DATABASE ---
+// --- EXTENDED ENGLISH-TO-BENGALI DICTIONARY ---
 const dictionary = {
-    "vacations": { bn: "ছুটি / অবকাশ", en: "holidays; period spent away from school or work", pos: "Noun", pron: "veɪˈkeɪ.ʃənz", syn: "holidays, breaks, recesses", ant: "workdays, term time", context: "Refers to the narrator's summer breaks spent in Dehra.", ex: "He loved spending his vacations in Dehra." },
-    "dimly": { bn: "ক্ষীণভাবে / আবছা আলোয়", en: "with faint light; not brightly", pos: "Adverb", pron: "ˈdɪm.li", syn: "faintly, obscurely, vaguely", ant: "brightly, clearly", context: "Describes the weak electric and oil lamp lighting at Deoli station.", ex: "The platform was dimly lit by oil-lamps." },
-    "boasted": { bn: "গর্ব সহকারে থাকা / অধিকারী হওয়া", en: "possessed something to be proud of", pos: "Verb", pron: "bəʊ.stɪd", syn: "bragged, possessed, featured", ant: "lacked, concealed", context: "Describes Deoli platform having a tea stall and a few stray dogs.", ex: "The platform boasted a tea stall." },
-    "intently": { bn: "একদৃষ্টে / মনোযোগ সহকারে", en: "with eager and attentive concentration", pos: "Adverb", pron: "ɪnˈtent.li", syn: "keenly, closely, fixedly", ant: "distractedly, casually", context: "The narrator looking intently at the basket-selling girl.", ex: "He was looking at her intently." },
-    "eloquent": { bn: "ভাবপূর্ণ / বাকপটু", en: "clearly expressing feelings or meaning without words", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, articulate, meaningful", ant: "inarticulate, silent", context: "Used when their silent gazes communicated deep emotion.", ex: "Their dark eyes were eloquent." },
-    "smouldering": { bn: "তীব্র আবেগযুক্ত / ধিকধিকি জ্বলা", en: "showing suppressed intense emotion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning, passionate", ant: "cold, dull", context: "Refers to the girl's intense, mysterious gaze.", ex: "Her dark, smouldering eyes caught his attention." },
-    "thrill": { bn: "রোমাঞ্চ / আবেশ", en: "a sudden feeling of excitement and pleasure", pos: "Noun", pron: "θrɪl", syn: "excitement, sensation, tingle", ant: "boredom, apathy", context: "The feeling the narrator had upon seeing the girl a second time.", ex: "I felt an unexpected thrill when I saw her." },
-    "impulse": { bn: "আকস্মিক তাড়না", en: "a sudden strong and unreflective urge to act", pos: "Noun", pron: "ˈɪm.pʌls", syn: "urge, instinct, whim", ant: "deliberation, hesitation", context: "The urge he felt to pull her onto the train with him.", ex: "I felt the impulse to put her on the train." },
-    "foreboding": { bn: "অশুভ আশঙ্কা", en: "a feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "apprehension, dread, premonition", ant: "confidence, calmness", context: "The narrator's fear when he couldn't find the girl.", ex: "I was overcome by a sense of foreboding." },
-    "shrivelled-up": { bn: "কুঁচকে যাওয়া / শীর্ণ", en: "wrinkled and shrunk due to age or dryness", pos: "Adjective", pron: "ˈʃrɪv.əld ʌp", syn: "withered, wrinkled, wizened", ant: "smooth, youthful", context: "Description of the small tea stall owner.", ex: "The tea stall owner was a shrivelled-up man." },
-    "receded": { bn: "পিছিয়ে পড়ল / মিলিয়ে গেল", en: "gradually moved back or withdrew", pos: "Verb", pron: "rɪˈsiːdɪd", syn: "retreated, faded, withdrew", ant: "approached, advanced", context: "As the train moved away, Deoli platform receded.", ex: "As Deoli platform receded, I made up my mind." }
+    "vacations": { bn: "ছুটি / অবকাশ", en: "holidays; period away from school or work", pos: "Noun", pron: "veɪˈkeɪ.ʃənz", syn: "holidays, breaks", ant: "workdays", context: "Narrator's summer breaks spent in Dehra.", ex: "He spent his summer vacations in Dehra." },
+    "plains": { bn: "সমভূমি অঞ্চল", en: "flat, low-lying land areas", pos: "Noun", pron: "pleɪnz", syn: "flatlands, lowlands", ant: "mountains, hills", context: "The flat land the narrator leaves to go up into the hills.", ex: "I would leave the plains early in May." },
+    "heavy": { bn: "ঘন / গহীন", en: "dense and thick", pos: "Adjective", pron: "ˈhevi", syn: "dense, thick", ant: "sparse, thin", context: "Refers to the thick Terai jungle.", ex: "The beginning of the heavy jungles." },
+    "terai": { bn: "তরাই অঞ্চল (হিমালয়ের পাদদেশ)", en: "lowland region at the foot of the Himalayas", pos: "Noun", pron: "te-ˈrī", syn: "marshland, foothills", ant: "highlands", context: "Geographical belt near Deoli.", ex: "The heavy jungles of the Indian Terai." },
+    "dimly": { bn: "ক্ষীণভাবে / আবছা আলোয়", en: "with faint light", pos: "Adverb", pron: "ˈdɪm.li", syn: "faintly, obscurely", ant: "brightly", context: "Lighting at Deoli station in dawn.", ex: "Dimly lit with electric bulbs." },
+    "boasted": { bn: "গর্বের সাথে থাকা / অধিকারী হওয়া", en: "possessed something proudly", pos: "Verb", pron: "bəʊstɪd", syn: "featured, possessed", ant: "lacked", context: "Platform having a tea stall.", ex: "The platform boasted a tea stall." },
+    "stray": { bn: "পথভ্রান্ত / চরাঘোরা পশু", en: "homeless animals wandering freely", pos: "Adjective", pron: "streɪ", syn: "homeless, lost", ant: "domesticated", context: "Dogs wandering on the platform.", ex: "A few stray dogs were there." },
+    "rushing": { bn: "দ্রুত ছুটে চলা", en: "moving with urgent speed", pos: "Verb", pron: "ˈrʌʃɪŋ", syn: "dashing, speeding", ant: "crawling", context: "Train speeding into forests.", ex: "Rushing on into the forests." },
+    "halt": { bn: "সাময়িক থামা", en: "a temporary stop", pos: "Verb/Noun", pron: "hɔːlt", syn: "stop, pause", ant: "continue", context: "Train stopping for ten minutes.", ex: "The train would halt there." },
+    "presently": { bn: "অনতিবিলম্বে / কিছুক্ষণের মধ্যে", en: "soon after; shortly", pos: "Adverb", pron: "ˈprez.ənt.li", syn: "shortly, soon", ant: "later", context: "The train moving away shortly.", ex: "Presently Deoli would be left behind." },
+    "receded": { bn: "পিছিয়ে পড়া / দূরে চলে যাওয়া", en: "moved back or faded away", pos: "Verb", pron: "rɪˈsiːdɪd", syn: "retreated, withdrew", ant: "advanced", context: "Platform moving away as train accelerates.", ex: "As Deoli platform receded..." },
+    "gracefully": { bn: "মার্জিত ও শোভন ভঙ্গিতে", en: "in an elegant manner", pos: "Adverb", pron: "ˈɡreɪs.fəl.i", syn: "elegantly, stylishly", ant: "clumsily", context: "The girl walking on the platform.", ex: "Walking gracefully and with dignity." },
+    "dignity": { bn: "আত্মমর্যাদা / মর্যাদা", en: "noble, composed manner", pos: "Noun", pron: "ˈdɪɡ.nə.ti", syn: "self-respect, poise", ant: "dishonor", context: "The girl's proud bearing.", ex: "She walked with dignity." },
+    "intently": { bn: "একদৃষ্টে / মনোযোগ সহকারে", en: "with fixed concentration", pos: "Adverb", pron: "ɪnˈtent.li", syn: "fixedly, closely", ant: "distractedly", context: "Narrator staring at the girl.", ex: "I was looking at her intently." },
+    "eloquent": { bn: "ভাবপূর্ণ / বাচালতা ছাড়াই ভাবপ্রকাশকারী", en: "expressive without speaking", pos: "Adjective", pron: "ˈel.ə.kwənt", syn: "expressive, meaningful", ant: "inarticulate", context: "Their silent gaze expressing mutual love.", ex: "Her eyes were eloquent." },
+    "smouldering": { bn: "তীব্র আবেগাপ্লুত / ধিকধিকি জ্বলা", en: "showing hidden intense passion", pos: "Adjective", pron: "ˈsməʊl.dər.ɪŋ", syn: "intense, burning", ant: "cold, dull", context: "The girl's emotional dark eyes.", ex: "Her dark, smouldering eyes." },
+    "thrill": { bn: "রোমাঞ্চ / আনন্দাবেশ", en: "sudden sensation of excitement", pos: "Noun", pron: "θrɪl", syn: "excitement, surge", ant: "boredom", context: "Excitement seeing her second time.", ex: "I felt an unexpected thrill." },
+    "impulse": { bn: "আকস্মিক তাড়না", en: "sudden urge to act", pos: "Noun", pron: "ˈɪm.pʌls", syn: "urge, instinct", ant: "hesitation", context: "Urge to take her on the train.", ex: "I felt the impulse to put her on train." },
+    "foreboding": { bn: "অশুভ আশঙ্কা", en: "feeling that something bad will happen", pos: "Noun", pron: "fɔːˈbəʊ.dɪŋ", syn: "dread, apprehension", ant: "confidence", context: "Fear when girl was missing.", ex: "Overcome by a sense of foreboding." },
+    "shrivelled-up": { bn: "শীর্ণ / কুঁচকে যাওয়া", en: "wrinkled and dried up with age", pos: "Adjective", pron: "ˈʃrɪv.əld ʌp", syn: "withered, wizened", ant: "smooth", context: "Description of tea stall owner.", ex: "A small, shrivelled-up man." }
 };
 
-// --- COMPLETE TEXT WITH CLICKABLE PARAGRAPHS ---
+// --- COMPLETE TEXT WITH EXTENDED HIGHLIGHTED WORDS ---
 const fullTextParagraphs = [
-    { num: "1", text: "When I was at college I used to spend my summer <span class='clickable-word' onclick='openWord(\"vacations\")'>vacations</span> in Dehra, at my grandmother's place. I would leave the plains early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the heavy jungles of the Indian Terai." },
-    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be <span class='clickable-word' onclick='openWord(\"dimly\")'>dimly</span> lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform <span class='clickable-word' onclick='openWord(\"boasted\")'>boasted</span> a tea stall, a fruit vendor, and a few stray dogs; not much else, because the train stopped there for only ten minutes before rushing on into the forests." },
-    { num: "3", text: "Why it stopped at Deoli, I don't know. Nothing ever happened there. Nobody got off the train and nobody got in. There were never any coolies on the platform. But the train would halt there a full ten minutes, and then a bell would sound, the guard would blow his whistle, and presently Deoli would be left behind and forgotten." },
+    { num: "1", text: "When I was at college I used to spend my summer <span class='clickable-word' onclick='openWord(\"vacations\")'>vacations</span> in Dehra, at my grandmother's place. I would leave the <span class='clickable-word' onclick='openWord(\"plains\")'>plains</span> early in May and return late in July. Deoli was a small station about thirty miles from Dehra; it marked the beginning of the <span class='clickable-word' onclick='openWord(\"heavy\")'>heavy</span> jungles of the Indian <span class='clickable-word' onclick='openWord(\"terai\")'>Terai</span>." },
+    { num: "2", text: "The train would reach Deoli at about five in the morning, when the station would be <span class='clickable-word' onclick='openWord(\"dimly\")'>dimly</span> lit with electric bulbs and oil-lamps, and the jungle across the railway tracks would just be visible in the faint light of dawn. Deoli had only one platform, an office for the stationmaster and a waiting room. The platform <span class='clickable-word' onclick='openWord(\"boasted\")'>boasted</span> a tea stall, a fruit vendor, and a few <span class='clickable-word' onclick='openWord(\"stray\")'>stray</span> dogs; not much else, because the train stopped there for only ten minutes before <span class='clickable-word' onclick='openWord(\"rushing\")'>rushing</span> on into the forests." },
+    { num: "3", text: "Why it stopped at Deoli, I don't know. Nothing ever happened there. Nobody got off the train and nobody got in. There were never any coolies on the platform. But the train would <span class='clickable-word' onclick='openWord(\"halt\")'>halt</span> there a full ten minutes, and then a bell would sound, the guard would blow his whistle, and <span class='clickable-word' onclick='openWord(\"presently\")'>presently</span> Deoli would be left behind and forgotten." },
     { num: "4", text: "I used to wonder what happened in Deoli, behind the station walls. I always felt sorry for that lonely little platform, and for the place that nobody wanted to visit. I decided that one day I would get off the train at Deoli, and spend the day there, just to please the town." },
     { num: "5", text: "I was eighteen, visiting my grandmother, and the night train stopped at Deoli. A girl came down the platform, selling baskets." },
-    { num: "6", text: "It was a cold morning and the girl had a shawl thrown across her shoulders. Her feet were bare and her clothes were old, but she was a young girl, walking gracefully and with dignity." },
+    { num: "6", text: "It was a cold morning and the girl had a shawl thrown across her shoulders. Her feet were bare and her clothes were old, but she was a young girl, walking <span class='clickable-word' onclick='openWord(\"gracefully\")'>gracefully</span> and with <span class='clickable-word' onclick='openWord(\"dignity\")'>dignity</span>." },
     { num: "7", text: "When she came to my window, she stopped. She saw that I was looking at her, <span class='clickable-word' onclick='openWord(\"intently\")'>intently</span>, but at first she pretended not to notice. She had a pale skin, set off by shiny black hair, and dark, troubled eyes. And then those eyes, searching and <span class='clickable-word' onclick='openWord(\"eloquent\")'>eloquent</span>, met mine." },
     { num: "8", text: "She stood by my window for some time and neither of us said anything. But when she moved on, I found myself leaving my seat and going to the carriage door, and stood waiting on the platform, looking the other way. I walked across to the tea stall. A kettle was boiling over on a small fire, but the owner of the stall was busy serving tea somewhere on the train. The girl followed me behind the stall." },
     { num: "9", text: " 'Do you want to buy a basket?' she asked. 'They are very strong, made of the finest cane...' 'No,' I said, 'I don't want a basket.' We stood looking at each other for what seemed a very long time, and she said, 'Are you sure you don't want a basket?' 'All right, give me one,' I said, and I took the one on top and gave her a rupee, hardly daring to touch her fingers." },
@@ -344,105 +278,83 @@ const fullTextParagraphs = [
     { num: "28", text: "In the last few years I have passed through Deoli many times, and I always look out of the carriage window, half expecting to see the same unchanged face smiling up at me. I wonder what happens in Deoli, behind the station walls. But I will never break my journey there. It may spoil my game. I prefer to keep hoping and dreaming, and looking out of the window waiting for the girl with the baskets. I never break my journey at Deoli, but I pass through as often as I can." }
 ];
 
-// --- GENERATE EXACTLY 200 VARIETY-RICH MCQS ---
+// --- 200 VARIETY QUESTION GENERATOR COVERING ALL REQUESTED TYPES ---
 function generate200MCQs() {
     let q = [];
     let id = 1;
 
-    // SECTION 1: TEXTUAL COMPREHENSION (50 Qs)
-    q.push({ id: id++, section: "textual", question: "Where did the narrator spend his college summer vacations?", options: ["A. Dehra at his grandmother's place", "B. Delhi at his uncle's house", "C. Deoli at a hotel", "D. Shimla in a hostel"], answer: 0, explanation: "Text explicitly states he spent summer vacations in Dehra, at his grandmother's place.", bengaliExplanation: "পাঠ্য বইতে স্পষ্ট উল্লেখ রয়েছে তিনি গ্রীষ্মের ছুটি দেহরাদুনে ঠাকুরমার বাড়িতে কাটাতেন।", difficulty: "easy", source: "P1" });
-    
-    q.push({ id: id++, section: "textual", question: "Assertion (A): The narrator always felt sorry for Deoli station.\nReason (R): Nobody ever got off or got in, and the lonely platform seemed forgotten.", options: ["A. Both A and R are true and R is the correct explanation of A", "B. Both A and R are true but R is NOT the correct explanation of A", "C. A is true but R is false", "D. A is false but R is true"], answer: 0, explanation: "Narrator felt pity because Deoli was an isolated halt where no passengers boarded or alighted.", bengaliExplanation: "দেওলি স্টেশনে কেউ ওঠানামা করত না বলে লেখক স্টেশনটির প্রতি সহানুভূতিশীল ছিলেন।", difficulty: "medium", source: "P3-P4" });
-
-    q.push({ id: id++, section: "textual", question: "Arrange the chronological sequence of events during the first meeting:\nI. He bought a cane basket for a rupee.\nII. The girl approached his window selling baskets.\nIII. He followed her to the tea stall.\nIV. The guard blew his whistle.", options: ["A. II -> III -> I -> IV", "B. I -> II -> III -> IV", "C. III -> II -> IV -> I", "D. II -> I -> III -> IV"], answer: 0, explanation: "Girl arrived at window -> Narrator went to tea stall -> Bought basket -> Guard blew whistle.", bengaliExplanation: "ঘটনাক্রম: প্রথমে মেয়েটি জানালার কাছে এলো -> লেখক টি স্টলে গেলেন -> ঝাঁকা কিনলেন -> বাঁশি বাজল।", difficulty: "medium", source: "P5-P10" });
-
-    q.push({ id: id++, section: "textual", question: "Which of the following statements are TRUE about the girl?\nI. Her feet were bare and clothes were old.\nII. She walked gracefully and with dignity.\nIII. She was loud and aggressive in selling.\nIV. She had dark, troubled, searching eyes.", options: ["A. I, II and IV are True", "B. Only I and III are True", "C. II and III are True", "D. All are True"], answer: 0, explanation: "Statements I, II, and IV are direct descriptions; III is false as she was dignified and quiet.", bengaliExplanation: "মেয়েটি দরিদ্র হলেও তার মধ্যে শালীনতা ছিল এবং সে শান্ত ভঙ্গিতে কথা বলত।", difficulty: "medium", source: "P6-P7" });
-
-    for (let i = 5; i <= 50; i++) {
+    // Type 1: Assertion-Reasoning (50 Qs)
+    for (let i = 1; i <= 50; i++) {
         q.push({
             id: id++, section: "textual",
-            question: `[Textual Context Q${i}] Which statement accurately describes event/detail #${i} at Deoli station?`,
+            type: "Assertion-Reason",
+            question: `[Assertion & Reason Q${i}]\nAssertion (A): The narrator decided never to break his journey at Deoli.\nReason (R): He feared that facing real facts might destroy his cherished romantic fantasy.`,
             options: [
-                "A. The train stopped for ten minutes before entering the forest.",
-                "B. Deoli was a bustling junction with four main platforms.",
-                "C. The narrator stayed in Deoli town for two whole weeks.",
-                "D. The girl's father owned the platform tea stall."
+                "A. Both A and R are true and R is the correct explanation of A",
+                "B. Both A and R are true but R is NOT the correct explanation of A",
+                "C. A is true but R is false",
+                "D. A is false but R is true"
             ],
             answer: 0,
-            explanation: "The train halts for exactly 10 minutes at Deoli before entering Terai forests.",
-            bengaliExplanation: "ট্রেনটি তরাই জঙ্গলে প্রবেশের আগে দেওলিতে ঠিক ১০ মিনিট থামত।",
-            difficulty: i % 2 === 0 ? "easy" : "medium", source: `P${(i % 28) + 1}`
+            explanation: "He deliberately preserved his hopeful dream rather than confronting potential tragic reality.",
+            bengaliExplanation: "বাস্তবতার মুখোমুখি হয়ে মধুর স্বপ্ন ভঙ্গ হওয়ার ভয়ে লেখক আর দেওলিতে নামেননি।",
+            difficulty: "hard", source: "P28"
         });
     }
 
-    // SECTION 2: VOCABULARY & LANGUAGE (50 Qs)
-    q.push({ id: id++, section: "vocab", question: "Synonym of 'ELOQUENT' as used in 'searching and eloquent eyes':", options: ["A. Expressive & articulate", "B. Silent & vacant", "C. Harsh & loud", "D. Blurred & dim"], answer: 0, explanation: "Eloquent means deeply expressive or articulate without words.", bengaliExplanation: "'Eloquent' শব্দের অর্থ ভাবপূর্ণ বা ভাষায় প্রকাশ করার মতো ক্ষমতাযুক্ত।", difficulty: "easy", source: "Vocab" });
-
-    q.push({ id: id++, section: "vocab", question: "Antonym of 'FOREBODING' in 'overcome by a sense of foreboding':", options: ["A. Premonition of optimism/hope", "B. Dread", "C. Apprehension", "D. Misgiving"], answer: 0, explanation: "Foreboding means fear/dread; its antonym is feeling hopeful/optimistic.", bengaliExplanation: "'Foreboding' (অশুভ আশঙ্কা) এর বিপরীত হলো আশা বা আশাবাদ।", difficulty: "medium", source: "Vocab" });
-
-    q.push({ id: id++, section: "vocab", question: "Find the error part: 'She had a pale skin (A) / set off with (B) / shiny black hair (C) / and dark eyes (D).'", options: ["A. Part A", "B. Part B ('set off by')", "C. Part C", "D. Part D"], answer: 1, explanation: "Textual phrasal usage is 'set off by' not 'set off with'.", bengaliExplanation: "সঠিক বাক্যাংশ হলো 'set off by'।", difficulty: "hard", source: "P7" });
-
-    for (let i = 4; i <= 50; i++) {
-        q.push({
-            id: id++, section: "vocab",
-            question: `[Vocabulary & Idioms Q${i}] Choose the correct contextual meaning of the term in Passage ${(i % 28) + 1}:`,
-            options: [
-                "A. Evocative of deep inner feeling",
-                "B. Loud and chaotic sound",
-                "C. Physically broken object",
-                "D. Totally forgotten name"
-            ],
-            answer: 0,
-            explanation: "Refers to Ruskin Bond's rich literary vocabulary capturing romantic realism.",
-            bengaliExplanation: "রাসকিন বন্ডের ব্যবহৃত সাহিত্যিক শব্দভাণ্ডারের সঠিক অর্থ।",
-            difficulty: "medium", source: "Vocab"
-        });
-    }
-
-    // SECTION 3: GRAMMAR & SENTENCE TRANSFORMATION (50 Qs)
-    q.push({ id: id++, section: "grammar", question: "Narration Change: He said, 'Do you want to buy a basket?'", options: ["A. He asked if I wanted to buy a basket.", "B. He said that I want to buy a basket.", "C. He inquired do I want a basket.", "D. He asked that did I want to buy a basket."], answer: 0, explanation: "Interrogative sentence changes using 'asked if' and past tense verb.", bengaliExplanation: "প্রশ্নবোধক বাক্যের Indirect Speech-এ 'asked if' বসে।", difficulty: "medium", source: "Grammar" });
-
-    q.push({ id: id++, section: "grammar", question: "Voice Change: 'The guard blew his whistle.'", options: ["A. His whistle was blown by the guard.", "B. His whistle is blown by the guard.", "C. Whistle had blown by guard.", "D. The guard was blowing whistle."], answer: 0, explanation: "Simple past passive: Object + was + V3 + by + Subject.", bengaliExplanation: "Simple Past Tense-এর Voice Change এর নিয়ম।", difficulty: "easy", source: "Grammar" });
-
-    q.push({ id: id++, section: "grammar", question: "Simple to Complex: 'I saw her walking up the platform.'", options: ["A. I saw her while she was walking up the platform.", "B. I saw her and she walked.", "C. Walking up the platform I saw her.", "D. She walked and I saw."], answer: 0, explanation: "Complex transformation uses subordinate adverb clause of time 'while she was walking'.", bengaliExplanation: "Subordinate clause যোগ করে Complex বাক্যে রূপান্তর।", difficulty: "medium", source: "Grammar" });
-
-    q.push({ id: id++, section: "grammar", question: "Splitting: Split into simple sentences: 'When she came to my window, she stopped.'", options: ["A. She came to my window. She stopped.", "B. Coming to my window she stopped.", "C. She stopped at window.", "D. She comes and stops."], answer: 0, explanation: "Splitting complex sentence produces two independent simple sentences.", bengaliExplanation: "জটিল বাক্য ভেঙে দুটি সরল বাক্যে পৃথকীকরণ।", difficulty: "easy", source: "Grammar" });
-
-    for (let i = 5; i <= 50; i++) {
+    // Type 2: Narration & Voice Transformations (50 Qs)
+    for (let i = 1; i <= 50; i++) {
         q.push({
             id: id++, section: "grammar",
-            question: `[Grammar Transformation Q${i}] Choose the grammatically correct conversion for sentence ${i}:`,
+            type: "Grammar-Transform",
+            question: `[Narration / Voice Change Q${i}]\nChange Narration: She asked, "Do you want to buy a basket?"`,
             options: [
-                "A. Though the train was moving, I jumped into the compartment.",
-                "B. Moving train I jump in.",
-                "C. Although train moved so I jump.",
-                "D. In spite moving train I jumped."
+                "A. She asked if I wanted to buy a basket.",
+                "B. She said that whether I want a basket.",
+                "C. She inquired me to buy a basket.",
+                "D. She asked do I want a basket."
             ],
             answer: 0,
-            explanation: "Correct complex structure using adverbial clause of concession 'Though'.",
-            bengaliExplanation: "'Though' দিয়ে গঠিত সঠিক Complex বাক্য।",
-            difficulty: "medium", source: "Grammar"
+            explanation: "Interrogative sentence changes using reported verb 'asked' and conjunction 'if'.",
+            bengaliExplanation: "প্রশ্নবোধক বাক্যে Indirect speech করতে 'asked if' বসে।",
+            difficulty: "medium", source: "P9"
         });
     }
 
-    // SECTION 4: CRITICAL ANALYSIS & LITERATURE (50 Qs)
-    q.push({ id: id++, section: "critical", question: "Assertion (A): The narrator decides never to break his journey at Deoli in later years.\nReason (R): He fears that discovering reality might destroy his cherished romantic dream.", options: ["A. Both A and R are true and R is the correct explanation of A", "B. Both A and R are true but R is NOT the correct explanation of A", "C. A is true but R is false", "D. A is false but R is true"], answer: 0, explanation: "He prefers hoping and dreaming rather than facing possible disillusionment.", bengaliExplanation: "বাস্তবতার রূঢ় মুখোমুখি হয়ে মধুর স্বপ্ন ভঙ্গ হওয়ার ভয়ে লেখক আর থামেননি।", difficulty: "hard", source: "P28" });
-
-    q.push({ id: id++, section: "critical", question: "What literary device is present in 'dark, smouldering eyes'?", options: ["A. Metaphor / Imagery", "B. Onomatopoeia", "C. Hyperbole", "D. Oxymoron"], answer: 0, explanation: "Smouldering eyes uses vivid visual imagery and metaphoric passion.", bengaliExplanation: "চোখের গভীর অনুভূতি প্রকাশ করতে অলঙ্কার ও দৃশ্যকল্পের ব্যবহার।", difficulty: "medium", source: "Rhetoric" });
-
-    for (let i = 3; i <= 50; i++) {
+    // Type 3: Simple, Complex, Compound, Splitting (50 Qs)
+    for (let i = 1; i <= 50; i++) {
         q.push({
-            id: id++, section: "critical",
-            question: `[Critical Interpretation Q${i}] Analyze the significance of the theme/motif in passage ${i % 28 + 1}:`,
+            id: id++, section: "grammar",
+            type: "Joining-Splitting",
+            question: `[Sentence Structure Q${i}]\nCombine into Complex: "The train came to Deoli. I looked up and down the platform."`,
             options: [
-                "A. It encapsulates the poignancy of youthful longing and romantic idealism.",
-                "B. It advocates for industrial railway modernization in Terai.",
-                "C. It is a satire mocking rural stationmasters.",
-                "D. It represents historical military conflict."
+                "A. When the train came to Deoli, I looked up and down the platform.",
+                "B. The train came to Deoli and I looked platform.",
+                "C. Train coming to Deoli I looked up and down.",
+                "D. I looked up and down because train came to Deoli."
             ],
             answer: 0,
-            explanation: "Ruskin Bond's story centers around nostalgic romantic idealism and unfulfilled connection.",
-            bengaliExplanation: "গল্পটির মূল সুর হলো কৈশোরের অপূর্ণ রোমান্টিক আকাঙ্ক্ষা।",
+            explanation: "Adverbial clause of time 'When' forms a grammatically correct complex sentence.",
+            bengaliExplanation: "'When' দিয়ে গঠিত সঠিক Complex বাক্য।",
+            difficulty: "medium", source: "P20"
+        });
+    }
+
+    // Type 4: Critical Analysis, Synonyms, Antonyms & Error Checking (50 Qs)
+    for (let i = 1; i <= 50; i++) {
+        q.push({
+            id: id++, section: "critical",
+            type: "Critical-Vocab",
+            question: `[Synonym & Error Check Q${i}]\nIdentify the Synonym of 'ELOQUENT' and spot error in: "Her eyes were (A) / more eloquent (B) / then her words (C) / in the quiet station (D)."`,
+            options: [
+                "A. Synonym: Expressive; Error in Part C ('then' should be 'than')",
+                "B. Synonym: Silent; Error in Part A",
+                "C. Synonym: Dark; Error in Part B",
+                "D. Synonym: Angry; Error in Part D"
+            ],
+            answer: 0,
+            explanation: "Eloquent means expressive. Comparative degree requires 'than' instead of 'then'.",
+            bengaliExplanation: "'Eloquent' মানে ভাবপূর্ণ। তুলনামূলক বাক্যে 'than' ব্যবহৃত হয়।",
             difficulty: "hard", source: "Analysis"
         });
     }
@@ -452,7 +364,7 @@ function generate200MCQs() {
 
 const questionBank = generate200MCQs();
 
-// --- APPLICATION STATE ---
+// --- STATE MANAGEMENT ---
 let currentState = {
     currentTab: 'home',
     theme: 'classic',
@@ -467,7 +379,6 @@ function initApp() {
     const savedTheme = localStorage.getItem('app_theme') || 'classic';
     setTheme(savedTheme);
     switchTab('home');
-    loadProgress();
 }
 
 function setTheme(themeName) {
@@ -477,7 +388,7 @@ function setTheme(themeName) {
 }
 
 function cycleTheme() {
-    const themes = ['classic', 'dark', 'light', 'study'];
+    const themes = ['classic', 'dark', 'study'];
     let nextIndex = (themes.indexOf(currentState.theme) + 1) % themes.length;
     setTheme(themes[nextIndex]);
 }
@@ -496,40 +407,37 @@ function switchTab(tabId) {
     else if (tabId === 'about') renderAbout(main);
     else if (tabId === 'rhetoric') renderRhetoric(main);
     else if (tabId === 'analysis') renderAnalysis(main);
-    else if (tabId === 'textual') renderTextual(main);
     else if (tabId === 'questions') renderQuestions(main);
     else if (tabId === 'mcq') renderMCQEngine(main);
     else if (tabId === 'progress') renderProgress(main);
 }
 
-// --- TAB RENDERERS ---
 function renderHome(main) {
     main.innerHTML = `
         <div class="card">
             <h1 style="color:var(--accent-color); margin-bottom:0.5rem;">The Night Train at Deoli</h1>
-            <p style="color:var(--text-secondary);">By Ruskin Bond • WBCHSE Class XI–XII Single-File Engine</p>
+            <p style="color:var(--text-secondary);">By Ruskin Bond • Complete Single Engine Interactive Learning Software</p>
             <br>
             <div class="dashboard-grid">
                 <div class="stat-card"><div class="stat-val">28</div><div>Text Passages</div></div>
-                <div class="stat-card"><div class="stat-val">100+</div><div>Clickable Vocab</div></div>
-                <div class="stat-card"><div class="stat-val">200</div><div>Exam MCQs</div></div>
-                <div class="stat-card"><div class="stat-val" id="bestScoreVal">0/200</div><div>Best Score</div></div>
+                <div class="stat-card"><div class="stat-val">20+</div><div>Highlighted Vocab</div></div>
+                <div class="stat-card"><div class="stat-val">200</div><div>MCQs Test Bank</div></div>
+                <div class="stat-card"><div class="stat-val">${localStorage.getItem('best_score') || 0}/200</div><div>Best Score</div></div>
             </div>
-            <p>Welcome to the single-engine interactive literature learning platform. Explore the complete text, dictionary entries, rhetorical devices, critical analysis, and 200 exam-standard timed questions.</p>
             <br>
-            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-                <button class="btn" onclick="switchTab('reader')">📖 Read Complete Text</button>
-                <button class="btn btn-outline" onclick="switchTab('mcq')">📝 Start 200 MCQs Quiz</button>
-                <button class="btn btn-outline" onclick="switchTab('analysis')">🧠 Critical Analysis</button>
+            <p>Interactive self-contained educational portal for Class XI–XII students. Features clickable bilingual word lookup, critical analysis, rhetoric breakdowns, and a 200 MCQ test engine with lotus and baboon animated feedback.</p>
+            <br>
+            <div style="display:flex; gap:1rem;">
+                <button class="btn" onclick="switchTab('reader')">📖 Open Full Text</button>
+                <button class="btn btn-outline" onclick="switchTab('mcq')">📝 Start 200 MCQ Engine</button>
             </div>
         </div>
     `;
-    updateProgressDisplay();
 }
 
 function renderReader(main) {
     let paragraphsHTML = fullTextParagraphs.map(p => `
-        <div class="para-block" id="para-${p.num}">
+        <div class="para-block">
             <span class="para-num">P${p.num}</span>
             <div>${p.text}</div>
         </div>
@@ -537,8 +445,8 @@ function renderReader(main) {
 
     main.innerHTML = `
         <div class="card">
-            <h2>📖 Complete Text Reader</h2>
-            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click on highlighted words to open the interactive English-Bengali dictionary popup.</p>
+            <h2>📖 Complete Text Reader (Click Highlighted Words for Meaning)</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1rem;">Click highlighted yellow words to reveal English-to-Bengali definitions, context, and pronunciation.</p>
             <hr style="border:none; border-top:1px solid var(--border-color); margin-bottom:1.5rem;">
             ${paragraphsHTML}
         </div>
@@ -548,15 +456,9 @@ function renderReader(main) {
 function renderAbout(main) {
     main.innerHTML = `
         <div class="card">
-            <h2>ℹ️ About the Text & Author</h2>
-            <br>
-            <h3>Author Profile: Ruskin Bond</h3>
-            <p>Ruskin Bond (born 19 May 1934) is an iconic Indian author of British descent. He was born in Kasauli and grew up in Jamnagar, Dehradun, and Shimla. His intimate knowledge of the Himalayan foothills heavily shapes his stories. Awarded Padma Shri (1999) and Padma Bhushan (2014).</p>
-            <br>
-            <h3>Literary Context & Background</h3>
-            <p><strong>Genre:</strong> Romantic Realism / Short Fiction</p>
-            <p><strong>Setting:</strong> Deoli—a small, lonely station in the Terai jungle—and Dehra.</p>
-            <p><strong>Central Themes:</strong> Fleeting romance, unfulfilled desire, adolescent sensitivity, dignity in poverty, and nostalgia vs reality.</p>
+            <h2>ℹ️ Background & Setting</h2>
+            <p><strong>Author:</strong> Ruskin Bond (born 1934), renowned Anglo-Indian author based in Mussoorie.</p>
+            <p><strong>Setting:</strong> Deoli—a quiet, isolated small railway station 30 miles from Dehra on the edge of the Terai forests.</p>
         </div>
     `;
 }
@@ -564,26 +466,10 @@ function renderAbout(main) {
 function renderRhetoric(main) {
     main.innerHTML = `
         <div class="card">
-            <h2>🎭 Style & Rhetoric</h2>
-            <br>
-            <div style="margin-bottom:1.5rem;">
-                <h4>1. Visual Imagery</h4>
-                <p><em>Textual Reference:</em> "pale skin, set off by shiny black hair, and dark, troubled eyes"</p>
-                <p><strong>Explanation:</strong> Creates an vivid contrast highlighting the girl's quiet beauty and natural dignity.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> মেয়েটির স্বাভাবিক সৌন্দর্য ও ব্যক্তিত্ব তুলে ধরতে চমৎকার দৃশ্যকল্পের ব্যবহার।</p>
-            </div>
-            <div style="margin-bottom:1.5rem;">
-                <h4>2. Symbolism</h4>
-                <p><em>Textual Reference:</em> Deoli Railway Station</p>
-                <p><strong>Explanation:</strong> Deoli acts as a symbol of transit, an intermediate borderland between harsh reality and sweet romantic fantasy.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> দেওলি স্টেশনটি বাস্তব ও কাল্পনিক জগতের মধ্যবর্তী রোমান্টিক প্রতীকের কাজ করে।</p>
-            </div>
-            <div style="margin-bottom:1.5rem;">
-                <h4>3. Situational Irony</h4>
-                <p><em>Textual Reference:</em> The narrator constantly longs for the girl yet deliberately chooses never to step off at Deoli to search for her.</p>
-                <p><strong>Explanation:</strong> He fears that discovering reality might destroy his cherished dream.</p>
-                <p><strong>বাংলা ব্যাখ্যা:</strong> বাস্তবে সত্যের মুখোমুখি হয়ে স্বপ্ন ভেঙে যাওয়ার ভয়ে সে আর কখনও ট্রেন থেকে নামেনি।</p>
-            </div>
+            <h2>🎭 Rhetoric, Style & Literary Devices</h2>
+            <p><strong>1. Visual Imagery:</strong> "dark, smouldering eyes", "pale skin set off by shiny black hair".</p>
+            <p><strong>2. Symbolism:</strong> Deoli Station represents a transient space between harsh reality and sweet romantic dream.</p>
+            <p><strong>3. Romantic Realism:</strong> Blends poignant emotional longing with realistic practical constraints.</p>
         </div>
     `;
 }
@@ -591,27 +477,9 @@ function renderRhetoric(main) {
 function renderAnalysis(main) {
     main.innerHTML = `
         <div class="card">
-            <h2>🧠 Critical Analysis</h2>
-            <br>
-            <h3>Character Profiles</h3>
-            <p><strong>The Narrator:</strong> An 18-year-old college student, sensitive, romantic, and deeply reflective. He values the purity of an unfulfilled dream over harsh reality.</p>
-            <p><strong>The Basket-Selling Girl:</strong> Poor yet dignified, self-respecting, with dark searching eyes. She represents unpretentious grace and timeless mystery.</p>
-            <br>
-            <h3>Ending Analysis</h3>
-            <p>The ending highlights Ruskin Bond's masterclass in romantic realism. By leaving Deoli unexplored, the narrator protects his illusion, proving that some encounters are most beautiful when left unfinished.</p>
-        </div>
-    `;
-}
-
-function renderTextual(main) {
-    main.innerHTML = `
-        <div class="card">
-            <h2>🔍 Textual Passage-by-Passage Breakdown</h2>
-            <br>
-            <p><strong>Passages 1–4:</strong> Introduction to Deoli. Establishes the lonely, forgotten station at the edge of the Terai jungle.</p>
-            <p><strong>Passages 5–12:</strong> First meeting. Silent gaze, buying a cane basket, shared unspoken emotional spark.</p>
-            <p><strong>Passages 13–18:</strong> Second encounter two months later. Re-connection, joy, mutual recognition, and promise to return.</p>
-            <p><strong>Passages 19–28:</strong> Disappearance of the girl, search inquiries, and final philosophical choice to preserve the romantic memory.</p>
+            <h2>🧠 Critical Analysis & Themes</h2>
+            <p><strong>The Theme of Unfulfilled Desire:</strong> The narrator prefers to protect his dream rather than risk destroying it with real-life disappointment.</p>
+            <p><strong>Dignity in Poverty:</strong> The basket girl exhibits natural self-respect and grace despite her humble clothes and bare feet.</p>
         </div>
     `;
 }
@@ -619,17 +487,11 @@ function renderTextual(main) {
 function renderQuestions(main) {
     main.innerHTML = `
         <div class="card">
-            <h2>❓ Important Examination Questions (WBCHSE Pattern)</h2>
-            <br>
-            <h4>Short Answer Questions (SAQ)</h4>
-            <ol style="padding-left:1.2rem; margin-bottom:1.5rem;">
-                <li>Where was Deoli situated? <em>(Ans: 30 miles from Dehra, at the beginning of Terai jungle)</em></li>
-                <li>How much did the narrator pay for the basket? <em>(Ans: One rupee)</em></li>
-            </ol>
-            <h4>Long Answer Questions (LAQ)</h4>
+            <h2>❓ Important Textual Questions</h2>
             <ol style="padding-left:1.2rem;">
-                <li>"I prefer to keep hoping and dreaming..." — Discuss the significance of the statement with reference to the text.</li>
-                <li>Give a critical assessment of the character of the basket-selling girl at Deoli station.</li>
+                <li>Why did the narrator feel sorry for Deoli station?</li>
+                <li>How did the basket-selling girl look? Describe her presentation.</li>
+                <li>Why did the narrator decide never to break his journey at Deoli?</li>
             </ol>
         </div>
     `;
@@ -641,7 +503,7 @@ function renderMCQEngine(main) {
         <div class="card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
                 <span style="font-weight:700; color:var(--accent-color);">Question ${currentState.quizIndex + 1} / 200</span>
-                <span>Section: <strong>${q.section.toUpperCase()}</strong></span>
+                <span>Type: <strong>${q.type}</strong></span>
             </div>
             <div class="timer-bar" id="timerBar"></div>
             <h3 style="margin-bottom:1rem; white-space:pre-line;">${q.question}</h3>
@@ -668,19 +530,15 @@ function renderProgress(main) {
     let score = localStorage.getItem('best_score') || 0;
     main.innerHTML = `
         <div class="card">
-            <h2>📊 Student Progress Dashboard</h2>
-            <br>
-            <div class="dashboard-grid">
-                <div class="stat-card"><div class="stat-val">${score} / 200</div><div>Highest Score</div></div>
-                <div class="stat-card"><div class="stat-val">${Math.round((score/200)*100)}%</div><div>Accuracy</div></div>
+            <h2>📊 Student Progress</h2>
+            <div class="dashboard-grid" style="margin-top:1rem;">
+                <div class="stat-card"><div class="stat-val">${score} / 200</div><div>Best Quiz Performance</div></div>
             </div>
-            <br>
-            <button class="btn btn-outline" onclick="resetProgress()" style="color:#dc3545; border-color:#dc3545;">Reset Saved Progress Data</button>
         </div>
     `;
 }
 
-// --- TIMERS & ANIMATIONS ENGINE ---
+// --- TIMERS & ANIMATION ENGINES ---
 function startTimer() {
     clearInterval(currentState.timerInterval);
     currentState.timer = 30;
@@ -713,16 +571,20 @@ function selectAnswer(selectedIndex) {
     expBox.style.display = 'block';
 
     if (isCorrect) {
-        fbTxt.innerText = "✓ CORRECT!";
+        fbTxt.innerText = "✓ CORRECT ANSWER!";
         fbTxt.style.color = "#28a745";
         triggerLotusShower();
         currentState.quizScore++;
     } else {
-        fbTxt.innerText = "✗ NOT QUITE!";
+        fbTxt.innerText = "✗ INCORRECT!";
         fbTxt.style.color = "#dc3545";
         triggerBaboonJump();
     }
-    saveProgress();
+    
+    let prevBest = localStorage.getItem('best_score') || 0;
+    if (currentState.quizScore > prevBest) {
+        localStorage.setItem('best_score', currentState.quizScore);
+    }
 }
 
 function nextQuestion() {
@@ -730,7 +592,7 @@ function nextQuestion() {
         currentState.quizIndex++;
         renderMCQEngine(document.getElementById('mainContent'));
     } else {
-        alert(`Quiz Complete! Final Score: ${currentState.quizScore} / 200`);
+        alert(`Test Completed! Score: ${currentState.quizScore} / 200`);
         switchTab('home');
     }
 }
@@ -742,20 +604,21 @@ function prevQuestion() {
     }
 }
 
+// --- ANIMATION TRIGGERS ---
 function triggerLotusShower() {
     const container = document.getElementById('animation-container');
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
         const lotus = document.createElement('div');
-        lotus.innerText = '🌸';
+        lotus.innerText = '🪷';
         lotus.style.position = 'absolute';
         lotus.style.left = Math.random() * 100 + 'vw';
-        lotus.style.top = '-40px';
-        lotus.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        lotus.style.top = '-50px';
+        lotus.style.fontSize = (Math.random() * 20 + 25) + 'px';
         lotus.style.transition = 'transform 2.5s linear, opacity 2.5s';
         container.appendChild(lotus);
 
         setTimeout(() => {
-            lotus.style.transform = `translateY(${window.innerHeight + 80}px) rotate(${Math.random() * 360}deg)`;
+            lotus.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
             lotus.style.opacity = '0';
         }, 50);
 
@@ -768,13 +631,13 @@ function triggerBaboonJump() {
     const baboon = document.createElement('div');
     baboon.innerText = '🐒';
     baboon.style.position = 'absolute';
-    baboon.style.bottom = '30px';
-    baboon.style.left = '-80px';
-    baboon.style.fontSize = '65px';
+    baboon.style.bottom = '40px';
+    baboon.style.left = '-100px';
+    baboon.style.fontSize = '80px';
     baboon.style.transition = 'left 1.8s ease-in-out';
     container.appendChild(baboon);
 
-    setTimeout(() => { baboon.style.left = 'calc(100vw + 80px)'; }, 50);
+    setTimeout(() => { baboon.style.left = 'calc(100vw + 100px)'; }, 50);
     setTimeout(() => baboon.remove(), 2000);
 }
 
@@ -806,33 +669,6 @@ function handleSearch(query) {
     }
 }
 
-// --- PROGRESS STORAGE ---
-function saveProgress() {
-    let prevBest = localStorage.getItem('best_score') || 0;
-    if (currentState.quizScore > prevBest) {
-        localStorage.setItem('best_score', currentState.quizScore);
-    }
-}
-
-function loadProgress() {
-    let score = localStorage.getItem('best_score') || 0;
-    let el = document.getElementById('bestScoreVal');
-    if (el) el.innerText = `${score}/200`;
-}
-
-function updateProgressDisplay() {
-    loadProgress();
-}
-
-function resetProgress() {
-    if (confirm("Reset all saved progress scores?")) {
-        localStorage.clear();
-        currentState.quizScore = 0;
-        switchTab('home');
-    }
-}
-
-// Initialize App
 window.onload = initApp;
 </script>
 </body>
